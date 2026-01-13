@@ -19,7 +19,24 @@
     background-position: 100% 50%;
   }
 }
-
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(50px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(50px) rotate(-360deg);
+  }
+}
+@keyframes spin-orbit {
+  from {
+    /* Start: 0° orbit, 50px away, 0° self-spin */
+    transform: rotate(0deg) translateX(80px) rotate(0deg);
+  }
+  to {
+    /* End: 360° orbit, 50px away, 1440° self-spin (4 full turns) */
+    transform: rotate(360deg) translateX(80px) rotate(1440deg);
+  }
+}
 /* 3. Theme Tokens (Variables only) */
 @theme {
   --font-primary: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -41,6 +58,9 @@
   /* Configure animation variables here to generate .animate-gradient etc. */
   --animate-gradient: gradientShift 2s ease infinite;
   --animate-logo: gradientShift 5s ease infinite;
+  --animate-orbit: orbit 15s linear infinite;
+  --animate-orbit-slow: orbit 25s linear reverse infinite;
+  --animate-spin-orbit: spin-orbit 30s linear infinite;
 }
 
 /* 4. Base Styles */
