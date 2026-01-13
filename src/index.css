@@ -1,4 +1,65 @@
 @import "tailwindcss";
-/* @tailwind base;
-@tailwind components; */
-@tailwind utilities;
+/* Define dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+/* 1. Global @font-face (standard CSS) */
+@font-face {
+  font-family: "Roba";
+  src: url("../public/fonts/Roba-Regular.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* 2. Keyframes (standard CSS, outside @theme) */
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 3. Theme Tokens (Variables only) */
+@theme {
+  --font-primary: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-roba: "Roba", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary: #22c55e;
+  --color-secondary: #06b6d4;
+
+  --color-bg: #f9fafb;
+  --color-card: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+
+  --color-bg-dark: #020617;
+  --color-card-dark: #0b1020;
+  --color-text-dark: #e5e7eb;
+  --color-text-muted-dark: #94a3b8;
+
+  /* Configure animation variables here to generate .animate-gradient etc. */
+  --animate-gradient: gradientShift 2s ease infinite;
+  --animate-logo: gradientShift 5s ease infinite;
+}
+
+/* 4. Base Styles */
+@layer base {
+  body {
+    font-family: var(--font-primary);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .dark body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-dark);
+  }
+}
+
+/* 5. Custom Utilities (if not using the --animate- token approach) */
+@layer utilities {
+  .bg-300 {
+    background-size: 300% 300%;
+  }
+}
