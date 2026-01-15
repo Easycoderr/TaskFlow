@@ -34,7 +34,9 @@ function Landing() {
             TaskFlow helps you organize your daily tasks with clarity and
             intention — without overwhelm.
           </p>
-          <Button type="cta">Sign Up Now!</Button>
+          <Button type="cta" onClick={() => setShowForm("signup")}>
+            Sign Up Now!
+          </Button>
         </div>
         {/* footer */}
       </section>

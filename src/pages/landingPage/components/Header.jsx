@@ -1,4 +1,4 @@
-import { HiMoon, HiSun } from "react-icons/hi2";
+import { HiMoon, HiSun, HiUser } from "react-icons/hi2";
 import Logo from "../../../components/Logo";
 import { useEffect, useState } from "react";
 import Button from "./Button";
@@ -47,7 +47,7 @@ function Header({ setShowForm }) {
           )}
         </Button>
 
-        <div className="flex  text-gray-50  items-center gap-2">
+        <div className="sm:flex hidden text-gray-50 items-center gap-2">
           <Button
             type="primary"
             title="sign up for create new account"
@@ -61,6 +61,18 @@ function Header({ setShowForm }) {
             onClick={() => setShowForm("login")}
           >
             Log In
+          </Button>
+        </div>
+        <div className="sm:hidden flex items-center text-gray-50 ml-5">
+          <Button
+            type="iconSun"
+            title="click for sign up or login"
+            onClick={() => setShowForm("login")}
+          >
+            <HiUser
+              size={25}
+              className="text-text dark:text-text-dark hover:text-primary  transition-all duration-300"
+            />
           </Button>
         </div>
       </div>
