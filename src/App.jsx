@@ -1,8 +1,10 @@
-import Landing from "./pages/landingPage/Landing";
+// import Landing from "./pages/landingPage/Landing";
+import Layout from "./UI/layout";
 function App() {
   return (
     <div>
-      <Landing />
+      {/* <Landing /> */}
+      <Layout />
     </div>
   );
 }
