@@ -19,7 +19,7 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
       <aside
         aria-expanded={isExpand}
         ref={refEl}
-        className={`z-30 bg-bg dark:bg-bg-dark min-h-screen text-text dark:text-text-dark col-span-1 row-start-1 row-span-4 border-r border-gray-200 dark:border-gray-700`}
+        className={`row-span-2 overflow-hidden z-30 bg-bg dark:bg-bg-dark min-h-screen text-text dark:text-text-dark col-span-1 row-start-1 border-r border-gray-200 dark:border-gray-700`}
       >
         <div className="relative flex flex-col gap-3 min-h-screen">
           <div className="md:hidden absolute top-18 -right-2.5 text-xl">

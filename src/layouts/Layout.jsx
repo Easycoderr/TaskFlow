@@ -15,7 +15,7 @@ function Layout() {
     // layout
     <div
       className={`relative grid md:grid-cols-[250px_1fr] ${isExpand ? "grid-cols-[200px_1fr]" : "grid-cols-[70px_1fr]"} overflow-x-visible 
-      grid-rows-[70px_1fr] min-h-screen bg-bg dark:bg-bg-dark transition-all duration-300`}
+      grid-rows-[70px_1fr] h-screen bg-bg dark:bg-bg-dark transition-all duration-300`}
     >
       {/* top bar */}
       <TopBar />
@@ -26,7 +26,7 @@ function Layout() {
         isExpand={isExpand}
         refEl={refEl}
       />
-      <main className="bg-bg dark:bg-bg-dark p-6 col-start-2 row-start-2 col-span-3 row-span-3">
+      <main className="overflow-y-auto bg-bg dark:bg-bg-dark p-6 col-start-2 row-start-2 col-span-3 row-span-3">
         {/* <Dashboard /> */}
         <Tasks />
       </main>

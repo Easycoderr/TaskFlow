@@ -2,7 +2,7 @@ import DarkModeButton from "../components/DarkModeButton";
 
 function TopBar() {
   return (
-    <nav className="bg-bg dark:bg-bg-dark col-span-3 col-start-2 border-b border-gray-200 dark:border-gray-700 p-4 flex flex-row justify-end">
+    <header className="bg-bg dark:bg-bg-dark row-start-1 col-span-3 col-start-2 border-b border-gray-200 dark:border-gray-700 p-4 flex flex-row justify-end">
       <div className="flex flex-row items-center gap-1">
         <DarkModeButton
           layout="dashboard"
@@ -14,7 +14,7 @@ function TopBar() {
           <span>A</span>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }
 
