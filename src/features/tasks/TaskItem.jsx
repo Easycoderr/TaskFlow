@@ -29,9 +29,11 @@ function TaskItem({ title, completed, priority, dueDate, project }) {
             #{project}
           </div>
           {/* due date */}
-          <div className="text-sm">{dueDate}</div>
+          <div className="text-sm text-text-muted dark:text-text-muted-dark">
+            {dueDate}
+          </div>
           {/* status */}
-          <div className="text-sm flex items-center gap-1">
+          <div className="text-sm flex items-center gap-1 text-text-muted dark:text-text-muted-dark">
             <span>{completed ? "completed" : "incompleted"}</span>
             <span
               className={`h-2 w-2 rounded-full ${completed ? "bg-primary" : "bg-amber-500 animate-pulse"}`}
@@ -40,10 +42,10 @@ function TaskItem({ title, completed, priority, dueDate, project }) {
         </div>
         {/* actions */}
         <div className="flex gap-2">
-          <button className="bg-red-700 text-text-dark rounded-md px-2 py-1 text-sm flex items-center gap-1 cursor-pointer transition-all duration-300 hover:opacity-60">
+          <button className="bg-red-700/70 text-text-dark rounded-md px-2 py-1 text-sm flex items-center gap-1 cursor-pointer transition-all duration-300 hover:opacity-60">
             <BiTrash /> Delete
           </button>
-          <button className="bg-green-700 text-text-dark rounded-md px-2 py-1 text-sm flex items-center gap-1 cursor-pointer transition-all duration-300 hover:opacity-60">
+          <button className="bg-green-700/70 text-text-dark rounded-md px-2 py-1 text-sm flex items-center gap-1 cursor-pointer transition-all duration-300 hover:opacity-60">
             <BiEdit /> Edit
           </button>
         </div>

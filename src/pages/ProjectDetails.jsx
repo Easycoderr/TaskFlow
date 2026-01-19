@@ -43,7 +43,11 @@ function ProjectDetails() {
     <div className="">
       <div>
         {/* navigate to project */}
-        <button className="flex items-center group gap-1 cursor-pointer px-2 py-1">
+        <button
+          aria-label="back to projects"
+          title="back to projects"
+          className="flex items-center group gap-1 cursor-pointer px-3 py-2 border rounded-md border-gray-100 dark:border-gray-700 hover:border-primary transition-all duration-300"
+        >
           <BiLeftArrowAlt className="text-xl group-hover:scale-105 group-hover:-translate-x-1 transition-all duration-300" />
           <span className="">Back to projects</span>
         </button>
@@ -64,20 +68,20 @@ function ProjectDetails() {
             </div>
             {/* status duedate and action buttons */}
             <div className="flex md:justify-between gap-4 md:gap-0 md:items-center md:flex-row flex-col">
-              <div className="flex gap-4 md:gap-8">
+              <div className="flex gap-4 md:gap-8 text-text-muted dark:text-text-muted-dark">
                 <div className="text-sm flex items-center gap-2">
-                  <span className="h-2 w-2 bg-primary rounded-full animate-pulse"></span>
+                  <span className="h-2 w-2  bg-primary rounded-full animate-pulse"></span>
                   Active
                 </div>
                 {/* duedate */}
-                <div className="text-sm flex items-center gap-2">
+                <div className="text-sm text-text-muted dark:text-text-muted-dark flex items-center gap-2">
                   <LuAlarmClockOff className="text-red-500" />
                   2026/5/24
                 </div>
               </div>
               <div className="flex flex-row flex-wrap gap-2">
                 <Button
-                  colorClasses="bg-red-100 text-red-700"
+                  colorClasses="bg-red-100/70 text-red-700/90"
                   type="button"
                   title="Delete project"
                   label="delete button"
@@ -86,7 +90,7 @@ function ProjectDetails() {
                   <span className="text-sm">Delete</span>
                 </Button>
                 <Button
-                  colorClasses="bg-green-100 text-green-700"
+                  colorClasses="bg-green-100/70 text-green-700"
                   type="button"
                   title="Edit project"
                   label="Edit button"
