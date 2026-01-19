@@ -1,6 +1,6 @@
 import { BiPlus } from "react-icons/bi";
 import Button from "../components/Button";
-import Heading from "../UI/Heading";
+import Heading from "../components/Heading";
 
 import TasksList from "../features/tasks/TasksList";
 import SearchFilterRow from "../components/SearchFilterRow";
