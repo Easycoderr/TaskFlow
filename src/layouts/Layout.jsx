@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import SideBar from "../UI/SideBar";
 import TopBar from "../UI/TopBar";
-import Tasks from "../pages/Tasks";
+import Projects from "../pages/Projects";
+// import Tasks from "../pages/Tasks";
 // import Dashboard from "../pages/Dashboard";
 
 function Layout() {
@@ -28,7 +29,8 @@ function Layout() {
       />
       <main className="overflow-y-auto bg-bg dark:bg-bg-dark p-6 col-start-2 row-start-2 col-span-3 row-span-3">
         {/* <Dashboard /> */}
-        <Tasks />
+        {/* <Tasks /> */}
+        <Projects />
       </main>
     </div>
   );
