@@ -1,8 +1,8 @@
 import { BiSearch } from "react-icons/bi";
-import SimpleButtonIcon from "../../components/SimpleButtonIcon";
+import SimpleButtonIcon from "./SimpleButtonIcon";
 import { useState } from "react";
-import CustomSelect from "../../components/CustomSelect";
-
+import CustomSelect from "./CustomSelect";
+// fake
 const options = [
   { value: "all", label: "All" },
   { value: "today", label: "Today" },
@@ -10,10 +10,10 @@ const options = [
   { value: "incompleted", label: "Incompleted" },
   { value: "overdue", label: "Overdue" },
 ];
-function TaskFiltersRow() {
+function SearchFilterRow() {
   const [selectedValue, setSelectedValue] = useState(options[0].value);
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-center p-2">
+    <div className="flex flex-col sm:flex-row gap-4 items-center">
       {/* search */}
       <div className="relative min-w-2xs shadow-sm rounded-md">
         <input
@@ -48,4 +48,4 @@ function TaskFiltersRow() {
   );
 }
 
-export default TaskFiltersRow;
+export default SearchFilterRow;

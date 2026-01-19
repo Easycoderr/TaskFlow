@@ -1,8 +1,9 @@
-import { BiEdit, BiPlus, BiTrash } from "react-icons/bi";
+import { BiPlus } from "react-icons/bi";
 import Button from "../components/Button";
 import Heading from "../UI/Heading";
-import TaskFiltersRow from "../features/tasks/TaskFiltersRow";
+
 import TasksList from "../features/tasks/TasksList";
+import SearchFilterRow from "../components/SearchFilterRow";
 
 function Tasks() {
   return (
@@ -18,7 +19,7 @@ function Tasks() {
           </span>
         </Button>
       </div>
-      <TaskFiltersRow />
+      <SearchFilterRow />
       <TasksList />
     </div>
   );

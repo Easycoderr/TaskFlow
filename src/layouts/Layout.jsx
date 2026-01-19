@@ -27,7 +27,7 @@ function Layout() {
         isExpand={isExpand}
         refEl={refEl}
       />
-      <main className="overflow-y-auto bg-bg dark:bg-bg-dark p-6 col-start-2 row-start-2 col-span-3 row-span-3">
+      <main className="overflow-y-auto bg-bg dark:bg-bg-dark p-4 sm:p-6 col-start-2 row-start-2 col-span-3 row-span-3">
         {/* <Dashboard /> */}
         {/* <Tasks /> */}
         <Projects />
