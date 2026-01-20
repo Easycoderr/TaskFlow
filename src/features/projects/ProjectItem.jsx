@@ -81,9 +81,17 @@ function ProjectItem({
     </div>
   );
 }
-export function Button({ colorClasses, children, type, title, label }) {
+export function Button({
+  colorClasses,
+  children,
+  type,
+  title,
+  label,
+  onClick,
+}) {
   return (
     <button
+      onClick={onClick}
       aria-label={label}
       title={title}
       type={type}

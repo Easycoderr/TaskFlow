@@ -3,6 +3,9 @@ import Heading from "../components/Heading";
 import { BiEdit, BiLeftArrowAlt, BiTrash } from "react-icons/bi";
 import { Button } from "../features/projects/ProjectItem";
 import TaskItem from "../features/tasks/TaskItem";
+import Modal from "../UI/Modal";
+import ProjectForm from "../features/projects/ProjectForm";
+import { useState } from "react";
 export const fakeTasks = [
   {
     id: 1,
@@ -39,6 +42,10 @@ export const fakeTasks = [
 ];
 
 function ProjectDetails() {
+  const [isModalOpen, setIsModalOpen] = useState(null);
+  function handleOpenUpdateForm() {
+    setIsModalOpen("update");
+  }
   return (
     <div className="">
       <div>
@@ -48,8 +55,8 @@ function ProjectDetails() {
           title="back to projects"
           className="flex items-center group gap-1 cursor-pointer px-3 py-2 border rounded-md border-gray-100 dark:border-gray-700 hover:border-primary transition-all duration-300"
         >
-          <BiLeftArrowAlt className="text-xl group-hover:scale-105 group-hover:-translate-x-1 transition-all duration-300" />
-          <span className="">Back to projects</span>
+          <BiLeftArrowAlt className="text-lg group-hover:scale-105 group-hover:-translate-x-1 transition-all duration-300" />
+          <span className="text-sm">Back to projects</span>
         </button>
       </div>
 
@@ -90,6 +97,7 @@ function ProjectDetails() {
                   <span className="text-sm">Delete</span>
                 </Button>
                 <Button
+                  onClick={handleOpenUpdateForm}
                   colorClasses="bg-green-100/70 text-green-700"
                   type="button"
                   title="Edit project"
@@ -145,6 +153,11 @@ function ProjectDetails() {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <Modal setIsModalOpen={setIsModalOpen}>
+          <ProjectForm />
+        </Modal>
+      )}
     </div>
   );
 }

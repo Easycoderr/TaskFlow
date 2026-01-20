@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import SideBar from "../UI/SideBar";
 import TopBar from "../UI/TopBar";
 import ProjectDetails from "../pages/ProjectDetails";
+import Modal from "../UI/Modal";
 // import Projects from "../pages/Projects";
 // import Tasks from "../pages/Tasks";
 // import Dashboard from "../pages/Dashboard";

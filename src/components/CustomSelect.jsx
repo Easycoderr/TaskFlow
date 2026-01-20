@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { BiFilter } from "react-icons/bi";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
-const CustomSelect = ({ options, value, onChange, placeholder }) => {
+const CustomSelect = ({ options, value, onChange, placeholder, icon }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedOption =
@@ -18,11 +17,11 @@ const CustomSelect = ({ options, value, onChange, placeholder }) => {
       {/* Select Button */}
       <button
         type="button"
-        className="flex items-center justify-between w-full p-2 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+        className="flex items-center justify-between w-full p-3 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="truncate flex flex-row items-center text-text gap-1">
-          <BiFilter />
+          {icon}
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         {isOpen ? (
