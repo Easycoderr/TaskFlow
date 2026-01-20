@@ -4,15 +4,27 @@ import Heading from "../components/Heading";
 
 import TasksList from "../features/tasks/TasksList";
 import SearchFilterRow from "../components/SearchFilterRow";
+import { useState } from "react";
+import Modal from "../UI/Modal";
+import TaskForm from "../features/tasks/TaskForm";
 
 function Tasks() {
+  const [isModalOpen, setIsModalOpen] = useState(null);
+  function handleOpenUpdateForm() {
+    setIsModalOpen("update");
+  }
   return (
     <div className="col-start-2 row-start-2 bg-bg text-text dark:text-text-dark dark:bg-bg-dark space-y-10">
       <div className="text-text dark:text-text-dark space-y-3 flex items-center justify-between mb-5">
         <div>
           <Heading>Tasks</Heading>
         </div>
-        <Button type="primary" type2="button" title="Click to add new task">
+        <Button
+          type="primary"
+          type2="button"
+          title="Click to add new task"
+          onClick={handleOpenUpdateForm}
+        >
           <span className="flex items-center gap-1">
             <BiPlus className="text-xl font-bold" />
             Add Task
@@ -21,6 +33,11 @@ function Tasks() {
       </div>
       <SearchFilterRow />
       <TasksList />
+      {isModalOpen && (
+        <Modal setIsModalOpen={setIsModalOpen}>
+          <TaskForm />
+        </Modal>
+      )}
     </div>
   );
 }

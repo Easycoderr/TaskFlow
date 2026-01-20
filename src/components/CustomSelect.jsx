@@ -22,6 +22,7 @@ const CustomSelect = ({ options, value, onChange, placeholder, icon }) => {
       >
         <span className="truncate flex flex-row items-center text-text gap-1">
           {icon}
+
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         {isOpen ? (
