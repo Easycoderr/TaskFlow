@@ -1,6 +1,7 @@
 @import "tailwindcss";
 /* Define dark mode */
 @custom-variant dark (&:where(.dark, .dark *));
+
 /* 1. Global @font-face (standard CSS) */
 @font-face {
   font-family: "Roba";
@@ -78,8 +79,10 @@
 }
 
 /* 5. Custom Utilities (if not using the --animate- token approach) */
-@layer utilities {
-  .bg-300 {
-    background-size: 300% 300%;
-  }
+@utility bg-300 {
+  background-size: 300% 300%;
+}
+/* Active links */
+.active {
+  @apply from-primary/50 bg-300 animate-gradient to-secondary/50 bg-linear-to-tl;
 }

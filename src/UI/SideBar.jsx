@@ -6,7 +6,7 @@ import { FaTasks } from "react-icons/fa";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 import SimpleButtonIcon from "../components/SimpleButtonIcon";
 import UseOutSideClicker from "../hooks/useOutSideClicker";
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 
 function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
   // Outside click sidebar
@@ -87,7 +87,7 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
 function SideBarItem({ isExpand, children, label, toPage }) {
   return (
     <li className={`group md:px-4 ${isExpand ? "px-4" : "px-2"}`}>
-      <Link
+      <NavLink
         to={toPage}
         className={`group-hover:from-primary/50 bg-gray-100 dark:bg-gray-900  bg-300 group-hover:animate-gradient group-hover:to-secondary/50 bg-linear-to-tl transition-all duration-400 md:px-4 py-4 rounded-md flex items-center justify-center md:justify-start md:gap-6 ${isExpand && "px-4 justify-start gap-6"}`}
       >
@@ -95,7 +95,7 @@ function SideBarItem({ isExpand, children, label, toPage }) {
         <span className={`md:block ${isExpand ? "block" : "hidden"}`}>
           {label}
         </span>
-      </Link>
+      </NavLink>
     </li>
   );
 }
