@@ -5,6 +5,7 @@ import TopBar from "../UI/TopBar";
 // import Modal from "../UI/Modal";
 // import Projects from "../pages/Projects";
 import Tasks from "../pages/Tasks";
+import { Outlet } from "react-router";
 // import Dashboard from "../pages/Dashboard";
 
 function Layout() {
@@ -30,10 +31,7 @@ function Layout() {
         refEl={refEl}
       />
       <main className="overflow-y-auto bg-bg dark:bg-bg-dark p-4 sm:p-6 col-start-2 row-start-2 col-span-3 row-span-3">
-        {/* <Dashboard /> */}
-        <Tasks />
-        {/* <Projects /> */}
-        {/* <ProjectDetails /> */}
+        <Outlet />
       </main>
     </div>
   );

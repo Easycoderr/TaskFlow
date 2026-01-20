@@ -6,6 +6,7 @@ import { FaTasks } from "react-icons/fa";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 import SimpleButtonIcon from "../components/SimpleButtonIcon";
 import UseOutSideClicker from "../hooks/useOutSideClicker";
+import { Link } from "react-router";
 
 function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
   // Outside click sidebar
@@ -38,28 +39,32 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
             <Logo />
           </div>
           <ul className="flex flex-col gap-4 flex-1 overflow-hidden">
-            <SideBarItem isExpand={isExpand} label="Dashboard">
+            <SideBarItem
+              isExpand={isExpand}
+              label="Dashboard"
+              toPage="dashboard"
+            >
               <LuLayoutDashboard
                 size={19}
                 className="group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300"
               />
             </SideBarItem>
-            <SideBarItem isExpand={isExpand} label="Tasks">
+            <SideBarItem isExpand={isExpand} label="Tasks" toPage="tasks">
               <FaTasks
                 size={19}
                 className="group-hover:scale-110 group-hover:rotate-6 transition-all duration-300"
               />
             </SideBarItem>
-            <SideBarItem isExpand={isExpand} label="Projects">
+            <SideBarItem isExpand={isExpand} label="Projects" toPage="projects">
               <SiBlueprint
                 size={19}
                 className="group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300"
               />
             </SideBarItem>
-            <SideBarItem isExpand={isExpand} label="Calender">
+            <SideBarItem isExpand={isExpand} label="Calender" toPage="calender">
               <SlCalender className="group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
             </SideBarItem>
-            <SideBarItem isExpand={isExpand} label="Settings">
+            <SideBarItem isExpand={isExpand} label="Settings" toPage="settings">
               <SlSettings className="group-hover:-rotate-45 group-hover:scale-105 transition-all duration-400" />
             </SideBarItem>
             <li className="group mt-auto px-2 md:px-4 mb-5">
@@ -79,18 +84,18 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
     </>
   );
 }
-function SideBarItem({ isExpand, children, label }) {
+function SideBarItem({ isExpand, children, label, toPage }) {
   return (
     <li className={`group md:px-4 ${isExpand ? "px-4" : "px-2"}`}>
-      <a
-        href="#"
+      <Link
+        to={toPage}
         className={`group-hover:from-primary/50 bg-gray-100 dark:bg-gray-900  bg-300 group-hover:animate-gradient group-hover:to-secondary/50 bg-linear-to-tl transition-all duration-400 md:px-4 py-4 rounded-md flex items-center justify-center md:justify-start md:gap-6 ${isExpand && "px-4 justify-start gap-6"}`}
       >
         {children}
         <span className={`md:block ${isExpand ? "block" : "hidden"}`}>
           {label}
         </span>
-      </a>
+      </Link>
     </li>
   );
 }

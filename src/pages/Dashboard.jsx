@@ -2,7 +2,7 @@ import QuickActions from "../features/dashboard/QuickActions";
 import StatsCards from "../features/dashboard/StatsCards";
 import TodayTasks from "../features/dashboard/TodayTasks";
 import UpcomingList from "../features/dashboard/UpcomingList";
-import Heading from "../UI/Heading";
+import Heading from "../components/Heading";
 
 function Dashboard() {
   return (
