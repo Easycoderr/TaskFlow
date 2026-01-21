@@ -41,6 +41,7 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
           <ul className="flex flex-col gap-4 flex-1 overflow-hidden">
             <SideBarItem
               isExpand={isExpand}
+              setIsExpand={setIsExpand}
               label="Dashboard"
               toPage="dashboard"
             >
@@ -49,22 +50,42 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
                 className="group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300"
               />
             </SideBarItem>
-            <SideBarItem isExpand={isExpand} label="Tasks" toPage="tasks">
+            <SideBarItem
+              isExpand={isExpand}
+              setIsExpand={setIsExpand}
+              label="Tasks"
+              toPage="tasks"
+            >
               <FaTasks
                 size={19}
                 className="group-hover:scale-110 group-hover:rotate-6 transition-all duration-300"
               />
             </SideBarItem>
-            <SideBarItem isExpand={isExpand} label="Projects" toPage="projects">
+            <SideBarItem
+              isExpand={isExpand}
+              setIsExpand={setIsExpand}
+              label="Projects"
+              toPage="projects"
+            >
               <SiBlueprint
                 size={19}
                 className="group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300"
               />
             </SideBarItem>
-            <SideBarItem isExpand={isExpand} label="Calender" toPage="calender">
+            <SideBarItem
+              isExpand={isExpand}
+              setIsExpand={setIsExpand}
+              label="Calender"
+              toPage="calender"
+            >
               <SlCalender className="group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
             </SideBarItem>
-            <SideBarItem isExpand={isExpand} label="Settings" toPage="settings">
+            <SideBarItem
+              isExpand={isExpand}
+              setIsExpand={setIsExpand}
+              label="Settings"
+              toPage="settings"
+            >
               <SlSettings className="group-hover:-rotate-45 group-hover:scale-105 transition-all duration-400" />
             </SideBarItem>
             <li className="group mt-auto px-2 md:px-4 mb-5">
@@ -84,10 +105,11 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
     </>
   );
 }
-function SideBarItem({ isExpand, children, label, toPage }) {
+function SideBarItem({ isExpand, setIsExpand, children, label, toPage }) {
   return (
     <li className={`group md:px-4 ${isExpand ? "px-4" : "px-2"}`}>
       <NavLink
+        onClick={() => setIsExpand(false)}
         to={toPage}
         className={`group-hover:from-primary/50 bg-gray-100 dark:bg-gray-900  bg-300 group-hover:animate-gradient group-hover:to-secondary/50 bg-linear-to-tl transition-all duration-400 md:px-4 py-4 rounded-md flex items-center justify-center md:justify-start md:gap-6 ${isExpand && "px-4 justify-start gap-6"}`}
       >

@@ -1,21 +1,18 @@
 import { HiUser } from "react-icons/hi2";
 import Logo from "../../../components/Logo";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Button from "../../../components/Button";
 import DarkModeButton from "../../../components/DarkModeButton";
+
+import { useUiStates } from "../../../hooks/useUiContext";
 function Header({ setShowForm }) {
-  const [isDarkMode, setIsDarkMode] = useState(
-    JSON.parse(localStorage.getItem("isDarkMode")),
-  );
+  const { theme, dispatch } = useUiStates();
+
   useEffect(() => {
-    localStorage.setItem("isDarkMode", JSON.stringify(isDarkMode));
-    isDarkMode
-      ? document.querySelector("html").classList.add("dark")
-      : document.querySelector("html").classList.remove("dark");
     document.getElementById("year").innerHTML = new Date().getFullYear();
-  }, [isDarkMode]);
+  }, []);
   function handleDarkModeToggle() {
-    setIsDarkMode((darkMode) => !darkMode);
+    dispatch({ value: "TOGGLE_DARK_MODE" });
   }
 
   return (
@@ -27,7 +24,7 @@ function Header({ setShowForm }) {
       {/* CTA and dark mode btn*/}
       <div className="flex text-gray-50  items-center">
         <DarkModeButton
-          isDarkMode={isDarkMode}
+          theme={theme}
           handleDarkModeToggle={handleDarkModeToggle}
         />
 

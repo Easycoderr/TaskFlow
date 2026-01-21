@@ -1,6 +1,6 @@
 import { HiMoon, HiSun } from "react-icons/hi";
 
-function DarkModeButton({ handleDarkModeToggle, isDarkMode, layout }) {
+function DarkModeButton({ handleDarkModeToggle, theme, layout }) {
   return (
     <button
       type="button"
@@ -10,15 +10,15 @@ function DarkModeButton({ handleDarkModeToggle, isDarkMode, layout }) {
       onClick={handleDarkModeToggle}
       className="cursor-pointer mr-2 md:mr-10"
       title={
-        isDarkMode
+        theme === "dark"
           ? "click for switch to light mode"
           : "click for switch to dark mode"
       }
     >
-      {isDarkMode ? (
+      {theme === "dark" ? (
         <HiSun
           size={25}
-          className={`${layout === "dashboard" ? "text-gray-900 hover:text-yellow-500" : "text-gray-50 hover:text-yellow-300"} transition-all duration-300`}
+          className={`text-gray-50 ${layout === "dashboard" ? "hover:text-yellow-500" : " hover:text-yellow-300"} transition-all duration-300`}
         />
       ) : (
         <HiMoon
