@@ -1,24 +1,25 @@
 import Button from "../components/Button";
 import Footer from "../UI/Footer";
 import Header from "../features/landing/components/Header";
-import { useState } from "react";
 import Form from "../features/landing/Form";
 import LoginForm from "../features/landing/LoginForm";
 import SignupForm from "../features/landing/SignupForm";
+import Modal from "../UI/Modal";
+import { useUiStates } from "../hooks/useUiContext";
 
 function Landing() {
-  const [showForm, setShowForm] = useState(null);
+  const { modal, dispatch } = useUiStates();
   return (
     <div className="min-h-screen bg-bg dark:bg-bg-dark">
       {/* hero section */}
-      {showForm && (
-        <Form setShowForm={setShowForm} showForm={showForm}>
-          {showForm === "login" ? <LoginForm /> : <SignupForm />}
-        </Form>
+      {modal && (
+        <Modal>
+          <Form>{modal === "login" ? <LoginForm /> : <SignupForm />}</Form>
+        </Modal>
       )}
       <section id="hero" className="relative overflow-hidden min-h-screen">
         {/* header */}
-        <Header setShowForm={setShowForm} />
+        <Header />
         {/* animate shapes */}
         <div className="bg-primary h-48 w-48  md:h-68 md:w-68 rotate-45 absolute opacity-40 rounded-sm top-40 -right-40"></div>
         <div className="bg-secondary h-48 w-48 md:h-68 md:w-68 rotate-45 absolute opacity-40 rounded-sm bottom-40 -left-40"></div>
@@ -34,7 +35,12 @@ function Landing() {
             TaskFlow helps you organize your daily tasks with clarity and
             intention — without overwhelm.
           </p>
-          <Button type="cta" onClick={() => setShowForm("signup")}>
+          <Button
+            type="cta"
+            onClick={() =>
+              dispatch({ value: "OPEN_MODAL", payload: { modal: "signup" } })
+            }
+          >
             Sign Up Now!
           </Button>
         </div>

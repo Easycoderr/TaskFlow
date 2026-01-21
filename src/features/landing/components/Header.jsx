@@ -3,9 +3,8 @@ import Logo from "../../../components/Logo";
 import { useEffect } from "react";
 import Button from "../../../components/Button";
 import DarkModeButton from "../../../components/DarkModeButton";
-
 import { useUiStates } from "../../../hooks/useUiContext";
-function Header({ setShowForm }) {
+function Header() {
   const { theme, dispatch } = useUiStates();
 
   useEffect(() => {
@@ -32,14 +31,21 @@ function Header({ setShowForm }) {
           <Button
             type="primary"
             title="sign up for create new account"
-            onClick={() => setShowForm("signup")}
+            onClick={() =>
+              dispatch({ value: "OPEN_MODAL", payload: { modal: "signup" } })
+            }
           >
             Sign Up
           </Button>
           <Button
             type="secondary"
             title="Log in for open your account"
-            onClick={() => setShowForm("login")}
+            onClick={() =>
+              dispatch({
+                value: "OPEN_MODAL",
+                payload: { modal: "login" },
+              })
+            }
           >
             Log In
           </Button>
@@ -48,7 +54,12 @@ function Header({ setShowForm }) {
           <Button
             type="iconSun"
             title="click for sign up or login"
-            onClick={() => setShowForm("login")}
+            onClick={() =>
+              dispatch({
+                value: "OPEN_MODAL",
+                payload: { modal: "login" },
+              })
+            }
           >
             <HiUser
               size={25}

@@ -3,7 +3,8 @@ import { UiContext } from "./GlobalStateContexts";
 
 const initialState = {
   theme: JSON.parse(localStorage.getItem("theme")) || "light",
-  isModalOpen: null,
+  modal: null,
+  modalData: null,
 };
 
 function uiReducer(state, action) {
@@ -13,10 +14,17 @@ function uiReducer(state, action) {
         ...state,
         theme: state.theme === "light" ? "dark" : "light",
       };
-    case "TOGGLE_MODAL":
+    case "OPEN_MODAL":
       return {
         ...state,
-        isModalOpen: action.payload,
+        modal: action.payload.modal,
+        modalData: action.payload.data,
+      };
+    case "CLOSE_MODAL":
+      return {
+        ...state,
+        modal: null,
+        modalData: null,
       };
     default:
       return state;
@@ -25,7 +33,7 @@ function uiReducer(state, action) {
 
 function UIStateProvider({ children }) {
   // eslint-disable-next-line no-unused-vars
-  const [{ theme, isModalOpen }, dispatch] = useReducer(
+  const [{ modal, theme, isModalOpen }, dispatch] = useReducer(
     uiReducer,
     initialState,
   );
@@ -36,7 +44,7 @@ function UIStateProvider({ children }) {
   }, [theme]);
   localStorage.setItem("theme", JSON.stringify(theme));
   return (
-    <UiContext.Provider value={{ theme, isModalOpen, dispatch }}>
+    <UiContext.Provider value={{ modal, theme, isModalOpen, dispatch }}>
       {children}
     </UiContext.Provider>
   );

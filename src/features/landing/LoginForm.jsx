@@ -8,7 +8,7 @@ function LoginForm() {
     setShowPassword((show) => !show);
   }
   return (
-    <div className="mt-4 py-3 pb-4 px-6">
+    <div className="mt-4 py-3 pb-4 px-2">
       <form action="" className="space-y-5">
         {/* email */}
         <div className="relative">

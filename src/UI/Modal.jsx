@@ -2,18 +2,20 @@ import { useRef } from "react";
 import UseOutSideClicker from "../hooks/useOutSideClicker";
 import SimpleButtonIcon from "../components/SimpleButtonIcon";
 import { CgClose } from "react-icons/cg";
+import { useUiStates } from "../hooks/useUiContext";
 
-function Modal({ children, setIsModalOpen }) {
+function Modal({ children }) {
+  const { dispatch } = useUiStates();
   const refEl = useRef();
   function handleCloseModal() {
-    setIsModalOpen(null);
+    dispatch({ value: "CLOSE_MODAL" });
   }
   UseOutSideClicker(refEl, handleCloseModal, true);
   return (
-    <div className="flex items-center justify-center shadow-md bg-gray-200/30 backdrop-blur-sm absolute top-0 bottom-0 right-0 left-0 z-40">
+    <div className="flex items-center justify-center shadow-md bg-gray-200/30 backdrop-blur-sm fixed top-0 bottom-0 right-0 left-0 z-100">
       <div
         ref={refEl}
-        className="relative bg-card dark:bg-card-dark p-6 rounded-md"
+        className="relative bg-card dark:bg-card-dark p-6 mx-1 md:mx-0 rounded-md"
       >
         <span className="absolute top-1 right-1">
           <SimpleButtonIcon onClick={handleCloseModal}>
