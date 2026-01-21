@@ -1,5 +1,4 @@
 import { useRef } from "react";
-
 import UseOutSideClicker from "../../hooks/useOutSideClicker";
 import { useUiStates } from "../../hooks/useUiContext";
 

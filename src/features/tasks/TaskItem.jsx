@@ -1,6 +1,8 @@
 import { BiEdit, BiTrash } from "react-icons/bi";
+import { useUiStates } from "../../hooks/useUiContext";
 
 function TaskItem({ title, completed, priority, dueDate, project }) {
+  const { dispatch } = useUiStates();
   return (
     <div className="flex flex-col items-center py-4 sm:py-3 p-3 justify-between gap-4 border border-gray-200 dark:border-gray-700 hover:border-primary transition-all duration-300  shadow-md bg-bg dark:bg-card-dark rounded-md">
       {/* title checkbox */}
@@ -45,7 +47,15 @@ function TaskItem({ title, completed, priority, dueDate, project }) {
           <button className="bg-red-700/70 text-text-dark rounded-md px-2 py-1 text-sm flex items-center gap-1 cursor-pointer transition-all duration-300 hover:opacity-60">
             <BiTrash /> Delete
           </button>
-          <button className="bg-green-700/70 text-text-dark rounded-md px-2 py-1 text-sm flex items-center gap-1 cursor-pointer transition-all duration-300 hover:opacity-60">
+          <button
+            onClick={() =>
+              dispatch({
+                value: "OPEN_MODAL",
+                payload: { modal: "editTask" },
+              })
+            }
+            className="bg-green-700/70 text-text-dark rounded-md px-2 py-1 text-sm flex items-center gap-1 cursor-pointer transition-all duration-300 hover:opacity-60"
+          >
             <BiEdit /> Edit
           </button>
         </div>

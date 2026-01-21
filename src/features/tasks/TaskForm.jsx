@@ -5,6 +5,7 @@ import Input from "../../components/Input";
 
 import { GrPlan } from "react-icons/gr";
 import Button from "../../components/Button";
+import { useUiStates } from "../../hooks/useUiContext";
 
 const statusOptions = [
   { value: "active", label: "Active" },
@@ -18,12 +19,14 @@ const priorityOptions = [
 function TaskForm() {
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
-
+  const { modal } = useUiStates();
   return (
     <div className="space-y-6 max-w-xl sm:min-w-md">
       {/* header */}
       <div className="flex flex-col text-2xl text-text dark:text-text-dark tracking-tight font-medium">
-        <span className="mx-auto mb-2">Add task</span>
+        <span className="mx-auto mb-2">
+          {modal === "addTask" ? "Add task" : "Edit task"}
+        </span>
         <div className="bg-linear-to-l from-transparent via-primary to-transparent h-0.5"></div>
       </div>
       <form action="" className="space-y-4 flex flex-col">
@@ -64,7 +67,7 @@ function TaskForm() {
             Cancel
           </Button>
           <Button type="secondary" title="click to add the new project.">
-            Create task
+            {modal === "addTask" ? "Create task" : "Update task"}
           </Button>
         </div>
       </form>

@@ -5,7 +5,8 @@ import { Button } from "../features/projects/ProjectItem";
 import TaskItem from "../features/tasks/TaskItem";
 import Modal from "../UI/Modal";
 import ProjectForm from "../features/projects/ProjectForm";
-import { useState } from "react";
+
+import { useUiStates } from "../hooks/useUiContext";
 export const fakeTasks = [
   {
     id: 1,
@@ -42,10 +43,8 @@ export const fakeTasks = [
 ];
 
 function ProjectDetails() {
-  const [isModalOpen, setIsModalOpen] = useState(null);
-  function handleOpenUpdateForm() {
-    setIsModalOpen("update");
-  }
+  const { modal, dispatch } = useUiStates;
+
   return (
     <div className="">
       <div>
@@ -97,11 +96,14 @@ function ProjectDetails() {
                   <span className="text-sm">Delete</span>
                 </Button>
                 <Button
-                  onClick={handleOpenUpdateForm}
                   colorClasses="bg-green-100/70 text-green-700"
                   type="button"
                   title="Edit project"
                   label="Edit button"
+                  onClick={dispatch({
+                    value: "OPEN_MODAL",
+                    payload: { modal: "editProject" },
+                  })}
                 >
                   <BiEdit className="" />
                   <span className="text-sm">Edit</span>
@@ -153,8 +155,8 @@ function ProjectDetails() {
           </div>
         </div>
       </div>
-      {isModalOpen && (
-        <Modal setIsModalOpen={setIsModalOpen}>
+      {modal === "editProject" && (
+        <Modal>
           <ProjectForm />
         </Modal>
       )}

@@ -1,6 +1,7 @@
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { LuAlarmClockOff } from "react-icons/lu";
+import { useUiStates } from "../../hooks/useUiContext";
 
 function ProjectItem({
   title,
@@ -10,6 +11,7 @@ function ProjectItem({
   completedTasks,
   dueDate,
 }) {
+  const { dispatch } = useUiStates();
   const progress = tasksCount > 0 ? (completedTasks / tasksCount) * 100 : 0;
   return (
     <div className="bg-card dark:bg-card-dark space-y-3 rounded-md border hover:border-primary transition-all duration-300 p-4">
@@ -72,6 +74,12 @@ function ProjectItem({
             type="button"
             title="Edit"
             label="Edit button"
+            onClick={() =>
+              dispatch({
+                value: "OPEN_MODAL",
+                payload: { modal: "editProject" },
+              })
+            }
           >
             <BiEdit className="" />
             <span className="text-sm">Edit</span>
