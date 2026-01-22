@@ -38,6 +38,21 @@
     transform: rotate(360deg) translateX(80px) rotate(1440deg);
   }
 }
+/* spinner */
+@keyframes shimmer {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
 /* 3. Theme Tokens (Variables only) */
 @theme {
   --font-primary: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -62,6 +77,7 @@
   --animate-orbit: orbit 15s linear infinite;
   --animate-orbit-slow: orbit 25s linear reverse infinite;
   --animate-spin-orbit: spin-orbit 30s linear infinite;
+  --animate-shimmer: shimmer 1.5s infinite linear;
 }
 
 /* 4. Base Styles */

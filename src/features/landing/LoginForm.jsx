@@ -3,7 +3,12 @@ import { HiLockClosed } from "react-icons/hi2";
 import Button from "../../components/Button";
 import { useState } from "react";
 import { login } from "../../services/auth";
+import { useNavigate } from "react-router";
+import { useUiStates } from "../../hooks/useUiContext";
 function LoginForm() {
+  const navigate = useNavigate();
+  const { dispatch } = useUiStates();
+  // form field states
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,16 +24,15 @@ function LoginForm() {
     setLoading(true);
     setError("");
     try {
-      console.log(email, password);
-      const data = await login({ email, password });
-      console.log("data:", data);
-      alert("login successfuly", "data:", data);
+      await login({ email, password });
     } catch (error) {
       console.log(error.message);
     } finally {
       setLoading(false);
       setEmail("");
       setPassword("");
+      dispatch({ value: "CLOSE_MODAL" });
+      navigate("/dashboard");
     }
   }
   return (

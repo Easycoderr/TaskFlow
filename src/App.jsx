@@ -1,5 +1,5 @@
 // import Landing from "./pages/landingPage/Landing";
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import Layout from "./layouts/Layout";
 import Dashboard from "./pages/Dashboard";
 import Tasks from "./pages/Tasks";
@@ -8,21 +8,26 @@ import Projects from "./pages/Projects";
 import PageNotFound from "./pages/PageNotFound";
 import LandingLayout from "./layouts/landingLayout";
 import Landing from "./pages/Landing";
+import ProtectedRoute from "./components/ProtectedRoute";
+import GuestRoute from "./components/GuestRoute";
 
 function App() {
   return (
     <Routes>
-      <Route element={<Layout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route index element={<Dashboard />} />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/project/:id" element={<ProjectDetails />} />
-        <Route path="*" element={<PageNotFound />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/project/:id" element={<ProjectDetails />} />
+        </Route>
       </Route>
-      <Route element={<LandingLayout />}>
-        <Route path="/landing" element={<Landing />} />
+      <Route element={<GuestRoute />}>
+        <Route element={<LandingLayout />}>
+          <Route index element={<Landing />} />
+        </Route>
       </Route>
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }

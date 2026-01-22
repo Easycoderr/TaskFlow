@@ -4,8 +4,10 @@ import Button from "../../components/Button";
 import { useState } from "react";
 import { signUp } from "../../services/auth";
 import { useUiStates } from "../../hooks/useUiContext";
+import { useNavigate } from "react-router";
 
 function SignupForm() {
+  const navigate = useNavigate();
   const { dispatch } = useUiStates();
   const [showPassword, setShowPassword] = useState(false);
   const [fullName, setFullName] = useState("");
@@ -19,6 +21,7 @@ function SignupForm() {
   }
   async function handleSubmit(e) {
     e.preventDefault();
+
     setLoading(true);
     setError("");
     try {
@@ -32,6 +35,7 @@ function SignupForm() {
       setEmail("");
       setPassword("");
       dispatch({ value: "CLOSE_MODAL" });
+      navigate("/dashboard");
     }
   }
 

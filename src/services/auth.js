@@ -25,3 +25,9 @@ export async function login({ email, password }) {
   if (error) throw new Error(error.message);
   return data;
 }
+
+// logout
+
+export async function logout() {
+  await supabase.auth.signOut();
+}
