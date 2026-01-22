@@ -3,11 +3,16 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router";
-
+import UIStateProvider from "./context/UiStateProvider";
+import AuthProvider from "./context/AuthProvider.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <UIStateProvider>
+          <App />
+        </UIStateProvider>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>,
 );

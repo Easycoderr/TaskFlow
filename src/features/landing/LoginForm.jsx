@@ -2,14 +2,38 @@ import { HiMail } from "react-icons/hi";
 import { HiLockClosed } from "react-icons/hi2";
 import Button from "../../components/Button";
 import { useState } from "react";
+import { login } from "../../services/auth";
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [error, setError] = useState("");
   function handleShowPass() {
     setShowPassword((show) => !show);
   }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (email === "" || password === "") return;
+    setLoading(true);
+    setError("");
+    try {
+      console.log(email, password);
+      const data = await login({ email, password });
+      console.log("data:", data);
+      alert("login successfuly", "data:", data);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+      setEmail("");
+      setPassword("");
+    }
+  }
   return (
     <div className="mt-4 py-3 pb-4 px-2">
-      <form action="" className="space-y-5">
+      <form action="" className="space-y-5" onSubmit={handleSubmit}>
         {/* email */}
         <div className="relative">
           <input
@@ -19,6 +43,7 @@ function LoginForm() {
             required
             placeholder=" "
             className="peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary shadow-md w-full"
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <label
@@ -43,6 +68,7 @@ function LoginForm() {
             required
             placeholder=" "
             className="peer bg-bg rounded-sm text-text text-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary shadow-md w-full"
+            onChange={(e) => setPassword(e.target.value)}
           />
           {/* <!-- 2. Label follows the peer input --> */}
           <label
@@ -75,7 +101,7 @@ function LoginForm() {
             Show Password
           </label>
         </div>
-        <Button type="form">Log In</Button>
+        <Button type="form">{loading ? "login..." : "Login"}</Button>
         <span className="flex">
           <a
             href="#"

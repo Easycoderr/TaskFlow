@@ -1,22 +1,43 @@
 import { HiMail, HiUser } from "react-icons/hi";
-import {
-  HiClock,
-  HiKey,
-  HiLockClosed,
-  HiMiniLockClosed,
-  HiOutlineKey,
-} from "react-icons/hi2";
+import { HiKey, HiLockClosed } from "react-icons/hi2";
 import Button from "../../components/Button";
 import { useState } from "react";
+import { signUp } from "../../services/auth";
+import { useUiStates } from "../../hooks/useUiContext";
 
 function SignupForm() {
+  const { dispatch } = useUiStates();
   const [showPassword, setShowPassword] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [error, setError] = useState("");
   function handleShowPass() {
     setShowPassword((show) => !show);
   }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const data = await signUp({ email, password, fullName });
+      console.log("data:", data);
+      alert("Check your email to confirm!");
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+      setEmail("");
+      setPassword("");
+      dispatch({ value: "CLOSE_MODAL" });
+    }
+  }
+
   return (
     <div className="mt-4 py-3 pb-4 px-2">
-      <form action="" className="space-y-5">
+      <form action="" className="space-y-5" onSubmit={handleSubmit}>
         {/* full name */}
         <div className="relative">
           <input
@@ -26,6 +47,7 @@ function SignupForm() {
             required
             placeholder=" "
             className="peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary  w-full"
+            onChange={(e) => setFullName(e.target.value)}
           />
 
           <label
@@ -50,6 +72,7 @@ function SignupForm() {
             required
             placeholder=" "
             className="peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary  w-full"
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <label
@@ -74,6 +97,7 @@ function SignupForm() {
             required
             placeholder=" "
             className="peer bg-bg rounded-sm text-text text-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary shadow-md w-full"
+            onChange={(e) => setPassword(e.target.value)}
           />
           {/* <!-- 2. Label follows the peer input --> */}
           <label
@@ -129,7 +153,9 @@ function SignupForm() {
             Show Password
           </label>
         </div>
-        <Button type="form">Sign up</Button>
+        <Button loading={loading} type="form">
+          {loading ? "Signing up..." : "Sign up"}
+        </Button>
         <span className="text-xs block max-w-xs leading-relaxed text-center mx-auto">
           By clicking on Sign up, you agree to our{" "}
           <a

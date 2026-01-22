@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-function Button({ children, type, onClick, title, type2 }) {
+function Button({ children, type, onClick, title, type2, loading = false }) {
   const styles = {
-    form: "mb-2.5  text-sm font-medium text-gray-50 tracking-wider shadow-green-300 w-full bg-linear-to-br from-primary via-secondary to-primary bg-300 p-3 rounded-md transition-all duration-300 hover:shadow-sm cursor-pointer hover:animate-gradient",
+    form: `${loading && " cursor-not-allowed opacity-40"} mb-2.5  text-sm font-medium text-gray-50 tracking-wider shadow-green-300 w-full bg-linear-to-br from-primary via-secondary to-primary bg-300 p-3 rounded-md transition-all duration-300 hover:shadow-sm cursor-pointer hover:animate-gradient`,
     cta: "font-medium text-gray-50 tracking-wider shadow-green-400 bg-linear-to-br from-primary via-secondary to-primary bg-300 py-3 px-8 rounded-md transition-all duration-300 hover:shadow-md cursor-pointer hover:animate-gradient",
     primary:
       "text-sm text-white font-medium   tracking-wider shadow-green-200 bg-linear-to-br from-primary via-secondary to-primary bg-300 py-2 px-5 rounded-md transition-all duration-300 hover:shadow-sm cursor-pointer hover:animate-gradient",
@@ -17,6 +17,7 @@ function Button({ children, type, onClick, title, type2 }) {
       aria-label={children}
       className={styles[type]}
       onClick={onClick}
+      disabled={loading}
     >
       {children}
     </button>
