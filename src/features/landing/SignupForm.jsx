@@ -5,35 +5,41 @@ import { useState } from "react";
 import { signUp } from "../../services/auth";
 import { useUiStates } from "../../hooks/useUiContext";
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 
 function SignupForm() {
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    // eslint-disable-next-line no-unused-vars
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm();
+  // Watch the "password" field to use it for comparison
+  const password = watch("password");
+  console.log(password);
   const { dispatch } = useUiStates();
   const [showPassword, setShowPassword] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
   function handleShowPass() {
     setShowPassword((show) => !show);
   }
-  async function handleSubmit(e) {
-    e.preventDefault();
-
+  async function onSubmit(data) {
+    const { email, password, fullName } = data;
     setLoading(true);
     setError("");
     try {
-      const data = await signUp({ email, password, fullName });
-      console.log("data:", data);
-      alert("Check your email to confirm!");
+      await signUp({ email, password, fullName });
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
-      setEmail("");
-      setPassword("");
+      reset();
       dispatch({ value: "CLOSE_MODAL" });
       navigate("/dashboard");
     }
@@ -41,17 +47,23 @@ function SignupForm() {
 
   return (
     <div className="mt-4 py-3 pb-4 px-2">
-      <form action="" className="space-y-5" onSubmit={handleSubmit}>
+      <form action="" className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
         {/* full name */}
         <div className="relative">
           <input
+            {...register("fullName", {
+              required: "full name is requierd",
+              pattern: {
+                value: /^[A-Za-z," "]+$/i,
+                message: "fullname should only contain letters",
+              },
+              maxLength: 20,
+            })}
             id="fullName"
             name="fullName"
             type="fullName"
-            required
             placeholder=" "
             className="peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary  w-full"
-            onChange={(e) => setFullName(e.target.value)}
           />
 
           <label
@@ -61,7 +73,11 @@ function SignupForm() {
                    peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
                    peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
           >
-            Full name
+            {errors.fullName ? (
+              <span className="text-red-400">{errors.fullName.message}</span>
+            ) : (
+              "Full name"
+            )}
           </label>
           <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
             <HiUser />
@@ -70,15 +86,19 @@ function SignupForm() {
         {/* email */}
         <div className="relative">
           <input
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
+              },
+            })}
             id="email"
             name="email"
             type="email"
-            required
             placeholder=" "
             className="peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary  w-full"
-            onChange={(e) => setEmail(e.target.value)}
           />
-
           <label
             htmlFor="email"
             className="absolute  rounded-sm transition-all duration-300 ease-in-out pointer-events-none 
@@ -86,7 +106,11 @@ function SignupForm() {
                    peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
                    peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
           >
-            Email address
+            {errors.email ? (
+              <span className="text-red-400">{errors.email.message}</span>
+            ) : (
+              "Email address"
+            )}
           </label>
           <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
             <HiMail />
@@ -95,14 +119,28 @@ function SignupForm() {
         {/* password */}
         <div className="relative">
           <input
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+              validate: {
+                hasNumber: (value) =>
+                  /\d/.test(value) ||
+                  "Password must include at least one number",
+                hasSpecialChar: (value) =>
+                  /[!@#$%^&*]/.test(value) ||
+                  "Include at least one special character",
+              },
+            })}
             id="password"
             name="password"
             type={showPassword ? "text" : "password"}
-            required
             placeholder=" "
             className="peer bg-bg rounded-sm text-text text-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary shadow-md w-full"
-            onChange={(e) => setPassword(e.target.value)}
           />
+
           {/* <!-- 2. Label follows the peer input --> */}
           <label
             htmlFor="password"
@@ -111,7 +149,11 @@ function SignupForm() {
                    peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
                    peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
           >
-            Password
+            {errors.password ? (
+              <span className="text-red-400">{errors.password.message}</span>
+            ) : (
+              "password"
+            )}
           </label>
           <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
             <HiLockClosed />
@@ -120,10 +162,14 @@ function SignupForm() {
         {/* confirm password */}
         <div className="relative mb-2.5">
           <input
-            id="Confirm Password"
-            name="Confirm Password"
+            {...register("confirmPassword", {
+              required: "Please confirm your password",
+              validate: (value) =>
+                value === password || "The passwords do not match",
+            })}
+            id="confirmPassword"
+            name="confirmPassword"
             type={showPassword ? "text" : "password"}
-            required
             placeholder=" "
             className="peer bg-bg rounded-sm text-text text-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary shadow-md w-full"
           />
@@ -135,7 +181,13 @@ function SignupForm() {
                    peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
                    peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
           >
-            Confirm Password
+            {errors.confirmPassword ? (
+              <span className="text-red-400">
+                {errors.confirmPassword.message}
+              </span>
+            ) : (
+              "confirm password"
+            )}
           </label>
           <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
             <HiKey />
