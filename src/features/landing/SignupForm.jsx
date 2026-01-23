@@ -7,6 +7,7 @@ import { useUiStates } from "../../hooks/useUiContext";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import Input from "../../components/Input";
+import { toast } from "react-toastify";
 
 function SignupForm() {
   const navigate = useNavigate();
@@ -20,10 +21,8 @@ function SignupForm() {
   } = useForm();
   // Watch the "password" field to use it for comparison
   const password = watch("password");
-  console.log(password);
   const { dispatch } = useUiStates();
   const [showPassword, setShowPassword] = useState(false);
-
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
@@ -36,13 +35,14 @@ function SignupForm() {
     setError("");
     try {
       await signUp({ email, password, fullName });
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
       reset();
       dispatch({ value: "CLOSE_MODAL" });
       navigate("/dashboard");
+    } catch (error) {
+      setError(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 

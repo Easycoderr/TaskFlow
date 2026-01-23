@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { useUiStates } from "../../hooks/useUiContext";
 import { useForm } from "react-hook-form";
 import Input from "../../components/Input";
+import { toast, ToastContainer } from "react-toastify";
 function LoginForm() {
   const navigate = useNavigate();
   const {
@@ -33,13 +34,14 @@ function LoginForm() {
     setError("");
     try {
       await login({ email, password });
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      setLoading(false);
       reset();
       dispatch({ value: "CLOSE_MODAL" });
       navigate("/dashboard");
+    } catch (error) {
+      setError(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   }
   return (
@@ -70,16 +72,16 @@ function LoginForm() {
           {...register("password", {
             required: "Password is required",
             minLength: {
-              value: 8,
+              value: 6,
               message: "Password must be at least 8 characters",
             },
-            validate: {
-              hasNumber: (value) =>
-                /\d/.test(value) || "Password must include at least one number",
-              hasSpecialChar: (value) =>
-                /[!@#$%^&*]/.test(value) ||
-                "Include at least one special character",
-            },
+            // validate: {
+            //   hasNumber: (value) =>
+            //     /\d/.test(value) || "Password must include at least one number",
+            //   hasSpecialChar: (value) =>
+            //     /[!@#$%^&*]/.test(value) ||
+            //     "Include at least one special character",
+            // },
           })}
         />
         <div className="flex items-center gap-1 text-sm text-text dark:text-text-dark">
@@ -98,7 +100,9 @@ function LoginForm() {
             Show Password
           </label>
         </div>
-        <Button type="form">{loading ? "login..." : "Login"}</Button>
+        <Button type="form" loading={loading}>
+          {loading ? "login..." : "Login"}
+        </Button>
         <span className="flex">
           <a
             href="#"

@@ -6,11 +6,13 @@ import LoginForm from "../features/landing/LoginForm";
 import SignupForm from "../features/landing/SignupForm";
 import Modal from "../UI/Modal";
 import { useUiStates } from "../hooks/useUiContext";
+import { ToastContainer } from "react-toastify";
 
 function Landing() {
   const { modal, dispatch } = useUiStates();
   return (
     <div className="min-h-screen bg-bg dark:bg-bg-dark">
+      <ToastContainer position="top-right" autoClose={3000} />
       {/* hero section */}
       {modal && (
         <Modal>

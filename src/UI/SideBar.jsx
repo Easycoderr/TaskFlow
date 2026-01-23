@@ -8,19 +8,26 @@ import SimpleButtonIcon from "../components/SimpleButtonIcon";
 import UseOutSideClicker from "../hooks/useOutSideClicker";
 import { NavLink, useNavigate } from "react-router";
 import { logout } from "../services/auth";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   // handle logout
   async function handleLogout() {
+    setLoading(true);
     try {
       await logout();
-    } catch (error) {
-      console.log(error.message);
-    } finally {
+      setLoading(false);
       navigate("/");
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
     }
   }
+
   // Outside click sidebar
   UseOutSideClicker(refEl, () => setIsExpand(false), true);
   return (
@@ -102,14 +109,15 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
             </SideBarItem>
             <li className="group mt-auto px-2 md:px-4 mb-5">
               <button
+                disabled={loading}
                 aria-label="logout button"
                 type="button"
                 onClick={handleLogout}
-                className={`w-full cursor-pointer text-red-500 group-hover:from-red-300/50  bg-gray-100 dark:bg-gray-900 bg-300 group-hover:animate-gradient group-hover:via-red-200/60 group-hover:to-red-300/50 bg-linear-to-tl transition-all duration-400 md:px-4 py-4 rounded-md flex items-center justify-center md:justify-start md:gap-6 ${isExpand && "px-4 justify-start gap-6"}`}
+                className={`w-full cursor-pointer ${loading ? "text-red-300 opacity-25" : "text-red-500"} group-hover:from-red-300/50  bg-gray-100 dark:bg-gray-900 bg-300 group-hover:animate-gradient group-hover:via-red-200/60 group-hover:to-red-300/50 bg-linear-to-tl transition-all duration-400 md:px-4 py-4 rounded-md flex items-center justify-center md:justify-start md:gap-6 ${isExpand && "px-4 justify-start gap-6"}`}
               >
                 <LuLogOut className="group-hover:translate-x-0.5 group-hover:scale-105 transition-all duration-400" />
                 <span className={`md:block ${isExpand ? "block" : "hidden"}`}>
-                  Logout
+                  {loading ? "logout..." : "logout"}
                 </span>
               </button>
             </li>
