@@ -45,7 +45,7 @@ function AuthProvider({ children }) {
         } else if (event === "SIGNED_OUT") {
           dispatch({
             type: "SET_SESSION",
-            payload: { session, user: session.user },
+            payload: { session, user: session?.user },
           });
         }
         dispatch({ type: "SET_LOADING", payload: false });
