@@ -5,21 +5,29 @@ import { useState } from "react";
 import { login } from "../../services/auth";
 import { useNavigate } from "react-router";
 import { useUiStates } from "../../hooks/useUiContext";
+import { useForm } from "react-hook-form";
+import Input from "../../components/Input";
 function LoginForm() {
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    // eslint-disable-next-line no-unused-vars
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const { dispatch } = useUiStates();
   // form field states
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
   function handleShowPass() {
     setShowPassword((show) => !show);
   }
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function onSubmit(data) {
+    const { email, password } = data;
     if (email === "" || password === "") return;
     setLoading(true);
     setError("");
@@ -29,66 +37,51 @@ function LoginForm() {
       console.log(error.message);
     } finally {
       setLoading(false);
-      setEmail("");
-      setPassword("");
+      reset();
       dispatch({ value: "CLOSE_MODAL" });
       navigate("/dashboard");
     }
   }
   return (
     <div className="mt-4 py-3 pb-4 px-2">
-      <form action="" className="space-y-5" onSubmit={handleSubmit}>
+      <form action="" className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
         {/* email */}
-        <div className="relative">
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            placeholder=" "
-            className="peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary shadow-md w-full"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <label
-            htmlFor="email"
-            className="absolute  rounded-sm transition-all duration-300 ease-in-out pointer-events-none 
-                 top-1/2 -translate-y-1/2 left-2 text-text-muted dark:text-text-muted-dark text-sm
-                 peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
-                 peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
-          >
-            Email address
-          </label>
-          <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
-            <HiMail />
-          </span>
-        </div>
+        <Input
+          inputType="email"
+          inputName="email"
+          label="Email address"
+          icon={<HiMail />}
+          error={errors.email}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Invalid email address",
+            },
+          })}
+        />
         {/* password */}
-        <div className="relative mb-2.5">
-          <input
-            id="password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-            required
-            placeholder=" "
-            className="peer bg-bg rounded-sm text-text text-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary shadow-md w-full"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {/* <!-- 2. Label follows the peer input --> */}
-          <label
-            htmlFor="password"
-            className="absolute rounded-sm transition-all duration-300 ease-in-out pointer-events-none 
-                 top-1/2 -translate-y-1/2 left-2 text-text-muted  dark:text-text-muted-dark text-sm
-                 peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
-                 peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
-          >
-            Password
-          </label>
-          <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
-            <HiLockClosed />
-          </span>
-          {/* show password check */}
-        </div>
+        <Input
+          inputType={showPassword ? "text" : "password"}
+          inputName="password"
+          label="password"
+          icon={<HiLockClosed />}
+          error={errors.password}
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters",
+            },
+            validate: {
+              hasNumber: (value) =>
+                /\d/.test(value) || "Password must include at least one number",
+              hasSpecialChar: (value) =>
+                /[!@#$%^&*]/.test(value) ||
+                "Include at least one special character",
+            },
+          })}
+        />
         <div className="flex items-center gap-1 text-sm text-text dark:text-text-dark">
           <input
             type="checkbox"
