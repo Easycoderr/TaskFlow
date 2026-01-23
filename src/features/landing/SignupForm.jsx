@@ -6,6 +6,7 @@ import { signUp } from "../../services/auth";
 import { useUiStates } from "../../hooks/useUiContext";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import Input from "../../components/Input";
 
 function SignupForm() {
   const navigate = useNavigate();
@@ -49,150 +50,71 @@ function SignupForm() {
     <div className="mt-4 py-3 pb-4 px-2">
       <form action="" className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
         {/* full name */}
-        <div className="relative">
-          <input
-            {...register("fullName", {
-              required: "full name is requierd",
-              pattern: {
-                value: /^[A-Za-z," "]+$/i,
-                message: "fullname should only contain letters",
-              },
-              maxLength: 20,
-            })}
-            id="fullName"
-            name="fullName"
-            type="fullName"
-            placeholder=" "
-            className="peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary  w-full"
-          />
-
-          <label
-            htmlFor="fullName"
-            className="absolute  rounded-sm transition-all duration-300 ease-in-out pointer-events-none 
-                   top-1/2 -translate-y-1/2 left-2 text-text-muted dark:text-text-muted-dark text-sm
-                   peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
-                   peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
-          >
-            {errors.fullName ? (
-              <span className="text-red-400">{errors.fullName.message}</span>
-            ) : (
-              "Full name"
-            )}
-          </label>
-          <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
-            <HiUser />
-          </span>
-        </div>
+        <Input
+          inputType="text"
+          inputName="fullName"
+          label="Full name"
+          icon={<HiUser />}
+          error={errors.fullName}
+          {...register("fullName", {
+            required: "full name is requierd",
+            pattern: {
+              value: /^[A-Za-z," "]+$/i,
+              message: "fullname should only contain letters",
+            },
+            maxLength: 20,
+          })}
+        />
         {/* email */}
-        <div className="relative">
-          <input
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address",
-              },
-            })}
-            id="email"
-            name="email"
-            type="email"
-            placeholder=" "
-            className="peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary  w-full"
-          />
-          <label
-            htmlFor="email"
-            className="absolute  rounded-sm transition-all duration-300 ease-in-out pointer-events-none 
-                   top-1/2 -translate-y-1/2 left-2 text-text-muted dark:text-text-muted-dark text-sm
-                   peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
-                   peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
-          >
-            {errors.email ? (
-              <span className="text-red-400">{errors.email.message}</span>
-            ) : (
-              "Email address"
-            )}
-          </label>
-          <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
-            <HiMail />
-          </span>
-        </div>
+        <Input
+          inputType="email"
+          inputName="email"
+          label="Email address"
+          icon={<HiMail />}
+          error={errors.email}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Invalid email address",
+            },
+          })}
+        />
         {/* password */}
-        <div className="relative">
-          <input
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters",
-              },
-              validate: {
-                hasNumber: (value) =>
-                  /\d/.test(value) ||
-                  "Password must include at least one number",
-                hasSpecialChar: (value) =>
-                  /[!@#$%^&*]/.test(value) ||
-                  "Include at least one special character",
-              },
-            })}
-            id="password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-            placeholder=" "
-            className="peer bg-bg rounded-sm text-text text-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary shadow-md w-full"
-          />
-
-          {/* <!-- 2. Label follows the peer input --> */}
-          <label
-            htmlFor="password"
-            className="absolute rounded-sm transition-all duration-300 ease-in-out pointer-events-none 
-                   top-1/2 -translate-y-1/2 left-2 text-text-muted  dark:text-text-muted-dark text-sm
-                   peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
-                   peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
-          >
-            {errors.password ? (
-              <span className="text-red-400">{errors.password.message}</span>
-            ) : (
-              "password"
-            )}
-          </label>
-          <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
-            <HiLockClosed />
-          </span>
-        </div>
+        <Input
+          inputType={showPassword ? "text" : "password"}
+          inputName="password"
+          label="password"
+          icon={<HiLockClosed />}
+          error={errors.password}
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters",
+            },
+            validate: {
+              hasNumber: (value) =>
+                /\d/.test(value) || "Password must include at least one number",
+              hasSpecialChar: (value) =>
+                /[!@#$%^&*]/.test(value) ||
+                "Include at least one special character",
+            },
+          })}
+        />
         {/* confirm password */}
-        <div className="relative mb-2.5">
-          <input
-            {...register("confirmPassword", {
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === password || "The passwords do not match",
-            })}
-            id="confirmPassword"
-            name="confirmPassword"
-            type={showPassword ? "text" : "password"}
-            placeholder=" "
-            className="peer bg-bg rounded-sm text-text text-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary shadow-md w-full"
-          />
-          {/* <!-- 2. Label follows the peer input --> */}
-          <label
-            htmlFor="Confirm Password"
-            className="absolute rounded-sm transition-all duration-300 ease-in-out pointer-events-none 
-                   top-1/2 -translate-y-1/2 left-2 text-text-muted  dark:text-text-muted-dark text-sm
-                   peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
-                   peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
-          >
-            {errors.confirmPassword ? (
-              <span className="text-red-400">
-                {errors.confirmPassword.message}
-              </span>
-            ) : (
-              "confirm password"
-            )}
-          </label>
-          <span className="absolute dark:text-text peer-focus:text-primary top-1/2 -translate-y-1/2 right-2.5">
-            <HiKey />
-          </span>
-        </div>
+        <Input
+          inputType={showPassword ? "text" : "password"}
+          inputName="confirmPassword"
+          label="Confirm password"
+          icon={<HiKey />}
+          error={errors.confirmPassword}
+          {...register("confirmPassword", {
+            required: "Please confirm your password",
+            validate: (value) =>
+              value === password || "The passwords do not match",
+          })}
+        />
         <div className="flex items-center gap-1 text-sm text-text dark:text-text-dark">
           <input
             type="checkbox"
