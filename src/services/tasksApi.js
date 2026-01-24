@@ -1,9 +1,16 @@
 import { supabase } from "./supabase";
 // get tasks
 export async function getTasks() {
-  const { data, error } = await supabase.from("tasks").select("*");
+  const { data, error } = await supabase.from("tasks").select(`
+    *,
+    projects!tasks_project_id_fkey(
+      id,
+      name
+    )
+  `);
+  console.log(data, error);
   if (error) throw new Error(error.message);
-  return data;
+  return { data };
 }
 
 // create task
