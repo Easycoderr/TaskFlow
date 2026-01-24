@@ -6,10 +6,11 @@ import Input from "../../components/Input";
 import { GrPlan } from "react-icons/gr";
 import Button from "../../components/Button";
 import { useUiStates } from "../../hooks/useUiContext";
+import useUpdateTask from "./useUpdateTask";
 
 const statusOptions = [
-  { value: "active", label: "Active" },
   { value: "completed", label: "Completed" },
+  { value: "incomplete", label: "Incomplete" },
 ];
 const priorityOptions = [
   { value: "high", label: "High" },
@@ -17,9 +18,24 @@ const priorityOptions = [
   { value: "low", label: "Low" },
 ];
 function TaskForm() {
-  const [selectedStatus, setSelectedStatus] = useState(null);
-  const [selectedPriority, setSelectedPriority] = useState(null);
-  const { modal } = useUiStates();
+  const { mutate, isPending: isUpadating } = useUpdateTask();
+  const { modal, modalData } = useUiStates();
+  const [title, setTitle] = useState(modalData.title);
+  const [description, setDescription] = useState(modalData.description);
+  const [dueDate, setDueDate] = useState(modalData.dueDate);
+  const [selectedStatus, setSelectedStatus] = useState(modalData.status);
+  const [selectedPriority, setSelectedPriority] = useState(modalData.priority);
+  function handleUpdateTask(e) {
+    e.preventDefault();
+    const newTaskData = {
+      title,
+      description,
+      due_date: dueDate,
+      status: selectedStatus,
+      priority: selectedPriority,
+    };
+    mutate({ id: modalData.id, data: newTaskData });
+  }
   return (
     <div className="space-y-6 max-w-xl sm:min-w-md">
       {/* header */}
@@ -31,18 +47,28 @@ function TaskForm() {
       </div>
       <form action="" className="space-y-4 flex flex-col">
         <Input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           inputName="task-name"
           inputType="text"
           label="title"
           icon={<GrPlan />}
         />
         <Input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           inputName="description"
           inputType="text"
           label="Description"
           icon={<BsCardText />}
         />
-        <Input inputName="dueDate" inputType="date" label="Due date" />
+        <Input
+          onChange={(e) => setDueDate(e.target.value)}
+          value={dueDate}
+          inputName="dueDate"
+          inputType="date"
+          label="Due date"
+        />
         <div className="flex flex-col sm:flex-row gap-4">
           <CustomSelect
             options={statusOptions}
@@ -66,8 +92,15 @@ function TaskForm() {
           >
             Cancel
           </Button>
-          <Button type="secondary" title="click to add the new project.">
-            {modal === "addTask" ? "Create task" : "Update task"}
+          <Button
+            loading={isUpadating}
+            type="secondary"
+            title="click to add the new project."
+            onClick={handleUpdateTask}
+          >
+            {modal === "addTask"
+              ? "Create task"
+              : `${isUpadating ? "Updating..." : "Update task"}`}
           </Button>
         </div>
       </form>

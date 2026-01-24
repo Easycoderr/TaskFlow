@@ -4,12 +4,14 @@ import TopBar from "../UI/TopBar";
 // import ProjectDetails from "../pages/ProjectDetails";
 // import Modal from "../UI/Modal";
 // import Projects from "../pages/Projects";
-import Tasks from "../pages/Tasks";
 import { Outlet } from "react-router";
+import { useUiStates } from "../hooks/useUiContext";
+import { ToastContainer } from "react-toastify";
 // import Dashboard from "../pages/Dashboard";
 
 function Layout() {
   const [isExpand, setIsExpand] = useState(false);
+  const { theme } = useUiStates();
   const refEl = useRef();
   function handleExpanding() {
     setIsExpand((expand) => !expand);
@@ -21,6 +23,7 @@ function Layout() {
       className={`relative grid md:grid-cols-[250px_1fr] ${isExpand ? "grid-cols-[200px_1fr]" : "grid-cols-[70px_1fr]"} overflow-x-visible 
       grid-rows-[70px_1fr] h-screen bg-bg dark:bg-bg-dark transition-all duration-300`}
     >
+      <ToastContainer position="top-right" autoClose={3000} theme={theme} />
       {/* top bar */}
       <TopBar />
       {/* side bar */}

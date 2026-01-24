@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 
 const Input = forwardRef(
-  ({ inputName, inputType, icon, label, error, ...rest }, ref) => {
+  ({ inputName, inputType, icon, label, error, value, ...rest }, ref) => {
     return (
       <div className="relative">
         <input
@@ -10,6 +10,7 @@ const Input = forwardRef(
           id={inputName}
           name={inputName}
           type={inputType}
+          value={value}
           placeholder=" "
           className={`peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary ${error && "ring-red-400 border-red-400 focus:ring-red-400 focus:border-red-400"} w-full`}
         />

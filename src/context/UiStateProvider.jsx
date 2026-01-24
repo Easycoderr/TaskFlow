@@ -8,6 +8,7 @@ const initialState = {
 };
 
 function uiReducer(state, action) {
+  console.log(action);
   switch (action.value) {
     case "TOGGLE_DARK_MODE":
       return {
@@ -33,7 +34,7 @@ function uiReducer(state, action) {
 
 function UIStateProvider({ children }) {
   // eslint-disable-next-line no-unused-vars
-  const [{ modal, theme, isModalOpen }, dispatch] = useReducer(
+  const [{ modal, modalData, theme }, dispatch] = useReducer(
     uiReducer,
     initialState,
   );
@@ -44,7 +45,7 @@ function UIStateProvider({ children }) {
   }, [theme]);
   localStorage.setItem("theme", JSON.stringify(theme));
   return (
-    <UiContext.Provider value={{ modal, theme, isModalOpen, dispatch }}>
+    <UiContext.Provider value={{ modal, modalData, theme, dispatch }}>
       {children}
     </UiContext.Provider>
   );

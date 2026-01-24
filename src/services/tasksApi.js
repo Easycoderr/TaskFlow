@@ -8,7 +8,7 @@ export async function getTasks() {
       name
     )
   `);
-  console.log(data, error);
+
   if (error) throw new Error(error.message);
   return { data };
 }
