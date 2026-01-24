@@ -10,7 +10,6 @@ function TopBar() {
   } = useAuth();
   const userName = user.identities[0].identity_data.display_name;
   const avatarLetter = userName.split("")[0];
-  console.log(avatarLetter);
   return (
     <header className="bg-bg dark:bg-bg-dark row-start-1 col-span-3 col-start-2 border-b border-gray-200 dark:border-gray-700 p-4 flex flex-row justify-end">
       <div className="flex flex-row items-center gap-1">

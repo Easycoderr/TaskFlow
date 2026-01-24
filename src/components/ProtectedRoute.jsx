@@ -4,9 +4,7 @@ import Spinner from "./Spinner";
 
 function ProtectedRoute() {
   const { state } = useAuth();
-  console.log(state);
   if (state.loading) return <Spinner />;
-
   return state.user?.aud === "authenticated" ? (
     <Outlet />
   ) : (

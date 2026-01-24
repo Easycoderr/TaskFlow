@@ -14,7 +14,6 @@ function SignupForm() {
   const {
     register,
     handleSubmit,
-    // eslint-disable-next-line no-unused-vars
     reset,
     watch,
     formState: { errors },
