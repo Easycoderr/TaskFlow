@@ -17,7 +17,7 @@ function TasksList() {
           description={item.description}
           status={item.status}
           dueDate={item.due_date}
-          project={item.projects?.name}
+          project={item.projects}
           priority={item.priority}
         />
       ))}

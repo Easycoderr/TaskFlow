@@ -7,9 +7,8 @@ function useUpdateTask() {
   const { dispatch } = useUiStates();
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
-    mutationFn: ({ id, data }) => {
-      return updateTask(id, data);
-    },
+    mutationFn: ({ id, data }) => updateTask(id, data),
+
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       toast.success("Task updated successfully");

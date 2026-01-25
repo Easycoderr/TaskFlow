@@ -5,7 +5,7 @@ const CustomSelect = ({ options, value, onChange, placeholder, icon }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedOption =
-    options.find((option) => option.value === value) || null;
+    options?.find((option) => option.value === value) || null;
 
   const handleSelect = (option) => {
     onChange(option.value);

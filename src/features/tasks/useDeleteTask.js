@@ -7,11 +7,11 @@ function useDeleteTask() {
   const { mutate, isPending } = useMutation({
     mutationFn: (id) => deleteTask(id),
     onSuccess: () => {
-      toast.done("Task Deleted");
+      toast.success("Task deleted");
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
     onError: (error) => {
-      toast.done("There was an error while deleting task");
+      toast.error("There was an error while deleting task");
       console.log("Error:", error.message);
     },
   });

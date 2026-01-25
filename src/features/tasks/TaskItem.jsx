@@ -13,6 +13,9 @@ function TaskItem({
   dueDate,
   project,
 }) {
+  // make uniqe name or identity for check boxs by title
+  const uniqueId = title.toLowerCase().split(" ").join("-");
+
   // useUpdateTask for updating status
   const { mutate, isPending } = useUpdateTask();
 
@@ -30,8 +33,7 @@ function TaskItem({
   // update state and push that new status to supabase
   function handleUpdateTaskStatus() {
     const nextStatus = status === "incomplete" ? "completed" : "incomplete";
-    console.log("ID:", id);
-    console.log("DATA:", status);
+
     mutate({ id, data: { status: nextStatus } });
   }
 
@@ -43,13 +45,13 @@ function TaskItem({
           disabled={isPending}
           onChange={handleUpdateTaskStatus}
           type="checkbox"
-          name="task"
-          id="task"
-          defaultChecked={status === "completed"}
+          name={uniqueId}
+          id={uniqueId}
+          checked={status === "completed"}
           className="accent-primary h-4 w-4 cursor-pointer hover:accent-green-400"
         />
         <label
-          htmlFor="task"
+          htmlFor={uniqueId}
           className="select-none text-lg cursor-pointer flex items-center relative"
         >
           <div
@@ -62,7 +64,7 @@ function TaskItem({
         {/* project tag */}
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <div className="bg-linear-to-l from-primary via-secondary to-primary animate-logo bg-300 text-transparent bg-clip-text font-medium">
-            #{project}
+            #{project?.name}
           </div>
           {/* due date */}
           <div className="text-sm text-text-muted dark:text-text-muted-dark">
