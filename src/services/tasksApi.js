@@ -10,7 +10,7 @@ export async function getTasks() {
   `);
 
   if (error) throw new Error(error.message);
-  return { data };
+  return data;
 }
 
 // create task
@@ -31,6 +31,7 @@ export async function updateTask(taskId, updatedTask) {
   if (error) throw new Error(error.message);
   return data;
 }
+
 // update status task
 
 export async function updateStatusTask(taskId, newStatus) {

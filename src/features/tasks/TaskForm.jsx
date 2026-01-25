@@ -37,7 +37,7 @@ function TaskForm() {
     modalData?.status || "incomplete",
   );
   const [selectedPriority, setSelectedPriority] = useState(
-    modalData?.priority || "",
+    modalData?.priority || null,
   );
 
   // handle update and add task

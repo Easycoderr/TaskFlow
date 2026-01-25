@@ -9,7 +9,7 @@ function useAddTask() {
   const { mutate, isPending } = useMutation({
     mutationFn: ({ data, user_id }) => {
       const taskData = { ...data, user_id: user_id };
-      createTask(taskData);
+      return createTask(taskData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });

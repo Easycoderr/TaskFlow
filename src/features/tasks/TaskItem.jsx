@@ -1,6 +1,6 @@
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { useUiStates } from "../../hooks/useUiContext";
-import { useState } from "react";
+
 import useUpdateTask from "./useUpdateTask";
 import useDeleteTask from "./useDeleteTask";
 
@@ -13,28 +13,26 @@ function TaskItem({
   dueDate,
   project,
 }) {
-  // states
-  const [newStatus, setNewStatus] = useState(status);
-
   // useUpdateTask for updating status
   const { mutate, isPending } = useUpdateTask();
+
   // useDeleteTask for deleting task
   const { mutate: mutateDelete, isPending: isDeleting } = useDeleteTask();
 
   // dispatch for open form modal and get that current task data for modal
   const { dispatch } = useUiStates();
+
   // handle delete task
   function handleDeleteTask() {
-    console.log(id);
     mutateDelete(id);
   }
+
   // update state and push that new status to supabase
-  function handleUpdateTaskStatus(status) {
-    setNewStatus(status);
-    const newTaskData = {
-      status,
-    };
-    mutate({ id: id, data: newTaskData });
+  function handleUpdateTaskStatus() {
+    const nextStatus = status === "incomplete" ? "completed" : "incomplete";
+    console.log("ID:", id);
+    console.log("DATA:", status);
+    mutate({ id, data: { status: nextStatus } });
   }
 
   return (
@@ -43,15 +41,11 @@ function TaskItem({
       <div className="flex flex-row items-center gap-2 sm:mr-auto">
         <input
           disabled={isPending}
-          onChange={() =>
-            handleUpdateTaskStatus(
-              newStatus === "incomplete" ? "completed" : "incomplete",
-            )
-          }
+          onChange={handleUpdateTaskStatus}
           type="checkbox"
           name="task"
           id="task"
-          defaultChecked={newStatus === "completed"}
+          defaultChecked={status === "completed"}
           className="accent-primary h-4 w-4 cursor-pointer hover:accent-green-400"
         />
         <label
@@ -59,7 +53,7 @@ function TaskItem({
           className="select-none text-lg cursor-pointer flex items-center relative"
         >
           <div
-            className={`absolute transition-all duration-300 ${newStatus === "completed" ? "w-full" : "w-0"} bg-linear-to-r from-primary via-green-secondary to-primary opacity-80 h-0.5`}
+            className={`absolute transition-all duration-300 ${status === "completed" ? "w-full" : "w-0"} bg-linear-to-r from-primary via-green-secondary to-primary opacity-80 h-0.5`}
           ></div>
           {title}
         </label>
@@ -76,9 +70,9 @@ function TaskItem({
           </div>
           {/* status */}
           <div className="text-sm flex items-center gap-1 text-text-muted dark:text-text-muted-dark">
-            <span>{newStatus}</span>
+            <span>{status}</span>
             <span
-              className={`h-2 w-2 rounded-full ${newStatus === "completed" ? "bg-primary" : "bg-amber-500 animate-pulse"}`}
+              className={`h-2 w-2 rounded-full ${status === "completed" ? "bg-primary" : "bg-amber-500 animate-pulse"}`}
             ></span>
           </div>
         </div>

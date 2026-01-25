@@ -8,7 +8,7 @@ function useUpdateTask() {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: ({ id, data }) => {
-      updateTask(id, data);
+      return updateTask(id, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
