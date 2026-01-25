@@ -3,15 +3,14 @@ import { BsEye } from "react-icons/bs";
 import { LuAlarmClockOff } from "react-icons/lu";
 import { useUiStates } from "../../hooks/useUiContext";
 
-function ProjectItem({
-  title,
-  description,
-  status,
-  tasksCount,
-  completedTasks,
-  dueDate,
-}) {
+function ProjectItem({ id, title, description, status, dueDate, tasks }) {
   const { dispatch } = useUiStates();
+
+  const filteredTasks = tasks?.filter((task) => task.project_id === id);
+  const tasksCount = filteredTasks?.length;
+  const completedTasks = filteredTasks?.filter(
+    (task) => task.status === "completed",
+  ).length;
   const progress = tasksCount > 0 ? (completedTasks / tasksCount) * 100 : 0;
   return (
     <div className="bg-card dark:bg-card-dark space-y-3 rounded-md border hover:border-primary transition-all duration-300 p-4">
