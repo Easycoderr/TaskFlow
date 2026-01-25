@@ -7,6 +7,8 @@ import { GrPlan } from "react-icons/gr";
 import Button from "../../components/Button";
 import { useUiStates } from "../../hooks/useUiContext";
 import useUpdateTask from "./useUpdateTask";
+import useAddTask from "./useAddTask";
+import { useAuth } from "../../hooks/useAuth";
 
 const statusOptions = [
   { value: "completed", label: "Completed" },
@@ -18,23 +20,42 @@ const priorityOptions = [
   { value: "low", label: "Low" },
 ];
 function TaskForm() {
-  const { mutate, isPending: isUpadating } = useUpdateTask();
+  // get user id
+  const {
+    state: { user },
+  } = useAuth();
+  const { mutate: mutateUpdate, isPending: isUpadating } = useUpdateTask();
+  const { mutate: mutateAdd, isPending: isAdding } = useAddTask();
   const { modal, modalData } = useUiStates();
-  const [title, setTitle] = useState(modalData.title);
-  const [description, setDescription] = useState(modalData.description);
-  const [dueDate, setDueDate] = useState(modalData.dueDate);
-  const [selectedStatus, setSelectedStatus] = useState(modalData.status);
-  const [selectedPriority, setSelectedPriority] = useState(modalData.priority);
-  function handleUpdateTask(e) {
+
+  // form states
+
+  const [title, setTitle] = useState(modalData?.title || "");
+  const [description, setDescription] = useState(modalData?.description || "");
+  const [dueDate, setDueDate] = useState(modalData?.dueDate || "");
+  const [selectedStatus, setSelectedStatus] = useState(
+    modalData?.status || "incomplete",
+  );
+  const [selectedPriority, setSelectedPriority] = useState(
+    modalData?.priority || "",
+  );
+
+  // handle update and add task
+
+  function handleSubmitTask(e) {
     e.preventDefault();
-    const newTaskData = {
+    const data = {
       title,
       description,
       due_date: dueDate,
       status: selectedStatus,
       priority: selectedPriority,
     };
-    mutate({ id: modalData.id, data: newTaskData });
+    if (modal === "addTask") {
+      mutateAdd({ data, user_id: user.id });
+    } else {
+      mutateUpdate({ id: modalData.id, data });
+    }
   }
   return (
     <div className="space-y-6 max-w-xl sm:min-w-md">
@@ -70,12 +91,14 @@ function TaskForm() {
           label="Due date"
         />
         <div className="flex flex-col sm:flex-row gap-4">
-          <CustomSelect
-            options={statusOptions}
-            value={selectedStatus}
-            onChange={setSelectedStatus}
-            placeholder="Status"
-          />
+          {modal === "editTask" && (
+            <CustomSelect
+              options={statusOptions}
+              value={selectedStatus}
+              onChange={setSelectedStatus}
+              placeholder="Status"
+            />
+          )}
           <CustomSelect
             options={priorityOptions}
             value={selectedPriority}
@@ -96,10 +119,10 @@ function TaskForm() {
             loading={isUpadating}
             type="secondary"
             title="click to add the new project."
-            onClick={handleUpdateTask}
+            onClick={handleSubmitTask}
           >
             {modal === "addTask"
-              ? "Create task"
+              ? `${isAdding ? "Creating..." : "Create task"}`
               : `${isUpadating ? "Updating..." : "Update task"}`}
           </Button>
         </div>

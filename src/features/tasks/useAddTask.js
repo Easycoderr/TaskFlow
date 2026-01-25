@@ -1,26 +1,26 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateTask } from "../../services/tasksApi";
+import { createTask } from "../../services/tasksApi";
 import { toast } from "react-toastify";
 import { useUiStates } from "../../hooks/useUiContext";
 
-function useUpdateTask() {
-  const { dispatch } = useUiStates();
+function useAddTask() {
   const queryClient = useQueryClient();
+  const { dispatch } = useUiStates();
   const { mutate, isPending } = useMutation({
-    mutationFn: ({ id, data }) => {
-      updateTask(id, data);
+    mutationFn: ({ data, user_id }) => {
+      const taskData = { ...data, user_id: user_id };
+      createTask(taskData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
-      toast.success("Task updated successfully");
+      toast.success("Task added successfuly");
       dispatch({ value: "CLOSE_MODAL" });
     },
     onError: (error) => {
-      console.error(error);
-      toast.error("There was an error while updating task.");
+      toast.error("There was an error while adding task");
+      console.error("Error:", error.message);
     },
   });
   return { mutate, isPending };
 }
-
-export default useUpdateTask;
+export default useAddTask;

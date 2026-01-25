@@ -2,6 +2,7 @@ import { BiEdit, BiTrash } from "react-icons/bi";
 import { useUiStates } from "../../hooks/useUiContext";
 import { useState } from "react";
 import useUpdateTask from "./useUpdateTask";
+import useDeleteTask from "./useDeleteTask";
 
 function TaskItem({
   id,
@@ -17,10 +18,16 @@ function TaskItem({
 
   // useUpdateTask for updating status
   const { mutate, isPending } = useUpdateTask();
+  // useDeleteTask for deleting task
+  const { mutate: mutateDelete, isPending: isDeleting } = useDeleteTask();
 
   // dispatch for open form modal and get that current task data for modal
   const { dispatch } = useUiStates();
-
+  // handle delete task
+  function handleDeleteTask() {
+    console.log(id);
+    mutateDelete(id);
+  }
   // update state and push that new status to supabase
   function handleUpdateTaskStatus(status) {
     setNewStatus(status);
@@ -77,7 +84,11 @@ function TaskItem({
         </div>
         {/* actions */}
         <div className="flex gap-2">
-          <button className="bg-red-700/70 text-text-dark rounded-md px-2 py-1 text-sm flex items-center gap-1 cursor-pointer transition-all duration-300 hover:opacity-60">
+          <button
+            onClick={handleDeleteTask}
+            disabled={isDeleting}
+            className={`${isDeleting ? "opacity-40 bg-red-600/80" : "bg-red-700/70"} text-text-dark rounded-md px-2 py-1 text-sm flex items-center gap-1 cursor-pointer transition-all duration-300 hover:opacity-60`}
+          >
             <BiTrash /> Delete
           </button>
           <button

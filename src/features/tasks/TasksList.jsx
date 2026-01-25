@@ -4,7 +4,7 @@ import useTasks from "./useTasks";
 
 function TasksList() {
   const { data: tasks, isLoading } = useTasks();
-
+  console.log(tasks);
   if (isLoading) return <Spinner />;
   return (
     <div className="overflow-y-auto grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-2 gap-4 text-text dark:text-text-dark">

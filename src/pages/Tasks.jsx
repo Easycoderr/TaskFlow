@@ -6,7 +6,6 @@ import SearchFilterRow from "../components/SearchFilterRow";
 import Modal from "../UI/Modal";
 import TaskForm from "../features/tasks/TaskForm";
 import { useUiStates } from "../hooks/useUiContext";
-import { ToastContainer } from "react-toastify";
 
 function Tasks() {
   const { modal, dispatch } = useUiStates();
