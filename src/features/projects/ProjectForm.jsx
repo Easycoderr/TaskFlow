@@ -7,6 +7,7 @@ import Button from "../../components/Button";
 import { useUiStates } from "../../hooks/useUiContext";
 import useAddProject from "./useAddProject";
 import { useAuth } from "../../hooks/useAuth";
+import useUpdateProject from "./useUpdateProject";
 
 const options = [
   { value: "active", label: "Active" },
@@ -23,19 +24,24 @@ function ProjectForm() {
   const [description, setDescription] = useState(modalData?.description || "");
   const [dueDate, setDueDate] = useState(modalData?.dueDate || "");
 
-  const { mutate, isPending: isAdding } = useAddProject();
+  const { mutate: addMutate, isPending: isAdding } = useAddProject();
+  const { mutate: updateMutate, isPending: isUpdating } = useUpdateProject();
   // get user id
   const { state } = useAuth();
   function onSubmit(e) {
     e.preventDefault();
+    const user_id = state.user.id;
     const projectData = {
       name: projectName,
       description,
       status: selectedStatus,
       due_date: dueDate,
     };
-
-    mutate({ data: projectData, user_id: state.user.id });
+    if (modal === "addProject") {
+      addMutate({ data: projectData, user_id });
+    } else {
+      updateMutate({ id: modalData?.id, data: projectData });
+    }
   }
   return (
     <div className="space-y-6 max-w-xl sm:min-w-md">
@@ -93,7 +99,7 @@ function ProjectForm() {
           >
             {modal === "addProject"
               ? `${isAdding ? "Creating..." : "Create Project"}`
-              : "Update project"}
+              : `${isUpdating ? "Updating..." : "Update project"}`}
           </Button>
         </div>
       </form>

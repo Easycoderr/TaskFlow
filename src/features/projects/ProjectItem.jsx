@@ -3,7 +3,7 @@ import { BsEye } from "react-icons/bs";
 import { LuAlarmClockOff } from "react-icons/lu";
 import { useUiStates } from "../../hooks/useUiContext";
 
-function ProjectItem({ id, title, description, status, dueDate, tasks }) {
+function ProjectItem({ id, name, description, status, dueDate, tasks }) {
   const { dispatch } = useUiStates();
 
   const filteredTasks = tasks?.filter((task) => task.project_id === id);
@@ -16,7 +16,7 @@ function ProjectItem({ id, title, description, status, dueDate, tasks }) {
     <div className="bg-card dark:bg-card-dark space-y-3 rounded-md border hover:border-primary transition-all duration-300 p-4">
       {/* heade */}
       <h2 className="text-xl font-semibold leading-tight tracking tight">
-        {title}
+        {name}
       </h2>
       <p className="leading-relaxed text-sm text-text-muted dark:text-text-muted-dark">
         {description}
@@ -38,9 +38,11 @@ function ProjectItem({ id, title, description, status, dueDate, tasks }) {
       <div className="flex justify-between md:items-end flex-col gap-y-4 md:gap-y-0 md:flex-row">
         {/* status */}
         <div className="space-y-2">
-          <div className="text-sm flex items-center gap-2">
-            <span className="h-2 w-2 bg-primary rounded-full animate-pulse"></span>
-            {status}
+          <div className="text-sm flex items-center gap-x-2">
+            <span
+              className={`h-2 w-2 rounded-full ${status === "active" ? "bg-amber-500 animate-pulse" : "bg-primary"}`}
+            ></span>
+            <span className="mb-0.5">{status}</span>
           </div>
           {/* duedate */}
           <div className="text-sm flex items-center gap-2">
@@ -65,7 +67,7 @@ function ProjectItem({ id, title, description, status, dueDate, tasks }) {
             title="Delete"
             label="delete button"
           >
-            <BiTrash className="" />
+            <BiTrash />
             <span className="text-sm">Delete</span>
           </Button>
           <Button
@@ -76,11 +78,14 @@ function ProjectItem({ id, title, description, status, dueDate, tasks }) {
             onClick={() =>
               dispatch({
                 value: "OPEN_MODAL",
-                payload: { modal: "editProject" },
+                payload: {
+                  modal: "editProject",
+                  data: { id, name, description, status, dueDate },
+                },
               })
             }
           >
-            <BiEdit className="" />
+            <BiEdit />
             <span className="text-sm">Edit</span>
           </Button>
         </div>

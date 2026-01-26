@@ -18,7 +18,7 @@ function ProjectsList() {
         <ProjectItem
           key={project.id}
           id={project.id}
-          title={project.name}
+          name={project.name}
           description={project.description}
           status={project.status}
           dueDate={project.due_date}
