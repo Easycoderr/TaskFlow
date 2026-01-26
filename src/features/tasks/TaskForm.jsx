@@ -51,7 +51,7 @@ function TaskForm() {
     modalData?.priority || null,
   );
   const [selectedProject, setSelectedProject] = useState(
-    modalData?.project.name || null,
+    modalData?.project?.name || null,
   );
 
   // handle update and add task

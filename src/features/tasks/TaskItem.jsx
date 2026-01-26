@@ -63,8 +63,10 @@ function TaskItem({
       <div className="flex flex-col w-full items-center sm:flex-row sm:mr-auto sm:justify-between gap-4">
         {/* project tag */}
         <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <div className="bg-linear-to-l from-primary via-secondary to-primary animate-logo bg-300 text-transparent bg-clip-text font-medium">
-            #{project?.name}
+          <div
+            className={`${project ? "bg-linear-to-l from-primary via-secondary to-primary animate-logo bg-300 text-transparent bg-clip-text" : "text-red-400 opacity-60"} font-medium`}
+          >
+            {project ? `#${project?.name}` : "No project"}
           </div>
           {/* due date */}
           <div className="text-sm text-text-muted dark:text-text-muted-dark">

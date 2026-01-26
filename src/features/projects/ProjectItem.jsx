@@ -2,16 +2,22 @@ import { BiEdit, BiTrash } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { LuAlarmClockOff } from "react-icons/lu";
 import { useUiStates } from "../../hooks/useUiContext";
+import useDeleteProject from "./useDeleteProject";
 
 function ProjectItem({ id, name, description, status, dueDate, tasks }) {
+  const { mutate, isPending: isDeleting } = useDeleteProject();
   const { dispatch } = useUiStates();
-
+  // tasks logic find tasks number and completed number also progress.
   const filteredTasks = tasks?.filter((task) => task.project_id === id);
   const tasksCount = filteredTasks?.length;
   const completedTasks = filteredTasks?.filter(
     (task) => task.status === "completed",
   ).length;
   const progress = tasksCount > 0 ? (completedTasks / tasksCount) * 100 : 0;
+  // handle delete project function
+  function handleDeleteProject() {
+    mutate(id);
+  }
   return (
     <div className="bg-card dark:bg-card-dark space-y-3 rounded-md border hover:border-primary transition-all duration-300 p-4">
       {/* heade */}
@@ -62,6 +68,8 @@ function ProjectItem({ id, name, description, status, dueDate, tasks }) {
             <span className="text-sm">View</span>
           </Button>
           <Button
+            loading={isDeleting}
+            onClick={handleDeleteProject}
             colorClasses="bg-red-100 text-red-700"
             type="button"
             title="Delete"
@@ -100,9 +108,11 @@ export function Button({
   title,
   label,
   onClick,
+  loading,
 }) {
   return (
     <button
+      disabled={loading}
       onClick={onClick}
       aria-label={label}
       title={title}
