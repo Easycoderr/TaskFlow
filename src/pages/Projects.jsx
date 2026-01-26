@@ -37,11 +37,11 @@ function Projects() {
       {/* project card */}
       <ProjectsList />
       {/* form modal */}
-      {modal && (
+      {modal === "editProject" || modal === "addProject" ? (
         <Modal>
           <ProjectForm />
         </Modal>
-      )}
+      ) : null}
     </div>
   );
 }

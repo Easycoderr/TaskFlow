@@ -3,13 +3,17 @@ import { BsEye } from "react-icons/bs";
 import { LuAlarmClockOff } from "react-icons/lu";
 import { useUiStates } from "../../hooks/useUiContext";
 import useDeleteProject from "./useDeleteProject";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import Modal from "../../UI/Modal";
 
 function ProjectItem({ id, name, description, status, dueDate, tasks }) {
   const { mutate, isPending: isDeleting } = useDeleteProject();
-  const { dispatch } = useUiStates();
+  const { modal, dispatch } = useUiStates();
+  console.log(modal);
   // tasks logic find tasks number and completed number also progress.
   const filteredTasks = tasks?.filter((task) => task.project_id === id);
   const tasksCount = filteredTasks?.length;
+  console.log(tasksCount);
   const completedTasks = filteredTasks?.filter(
     (task) => task.status === "completed",
   ).length;
@@ -69,7 +73,16 @@ function ProjectItem({ id, name, description, status, dueDate, tasks }) {
           </Button>
           <Button
             loading={isDeleting}
-            onClick={handleDeleteProject}
+            onClick={() => {
+              tasksCount
+                ? dispatch({
+                    value: "OPEN_MODAL",
+                    payload: {
+                      modal: "deleteProject",
+                    },
+                  })
+                : handleDeleteProject();
+            }}
             colorClasses="bg-red-100 text-red-700"
             type="button"
             title="Delete"
@@ -98,6 +111,17 @@ function ProjectItem({ id, name, description, status, dueDate, tasks }) {
           </Button>
         </div>
       </div>
+      {modal === "deleteProject" && (
+        <Modal>
+          <ConfirmationModal
+            title="Deletion"
+            message={`This project has ${tasksCount > 1 ? tasksCount + "tasks" : tasksCount + " task"}. Deleting it will unlink those tasks from the project.
+            You can still find them in Tasks.
+            Are you sure?`}
+            onConfirm={handleDeleteProject}
+          />
+        </Modal>
+      )}
     </div>
   );
 }
