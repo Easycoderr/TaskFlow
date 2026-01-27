@@ -49,6 +49,7 @@ function ProjectDetails() {
   );
   function handleDeleteProject() {
     mutate(id);
+    navigate(-1);
   }
   if (isPending || isLoadingTasks) return <Spinner />;
 
@@ -78,7 +79,7 @@ function ProjectDetails() {
               {description}
             </div>
             {/* status duedate and action buttons */}
-            <div className="flex md:justify-between gap-4 md:gap-0 md:items-center md:flex-row flex-col">
+            <div className="flex md:justify-between gap-4  md:items-center md:flex-row flex-col">
               <div className="flex gap-4 md:gap-8 text-text-muted dark:text-text-muted-dark">
                 <div className="text-sm flex items-center gap-2">
                   <span

@@ -4,9 +4,9 @@ import TaskItem from "./TaskItem";
 import useTasks from "./useTasks";
 
 function TasksList() {
-  const { data: tasks, isLoading } = useTasks();
+  const { data: tasks, isPending } = useTasks();
 
-  if (isLoading) return <Spinner />;
+  if (isPending) return <Spinner />;
 
   if (!tasks.length)
     return <EmptyPage>There is no task add your first task</EmptyPage>;

@@ -1,27 +1,39 @@
 import { IoTodaySharp } from "react-icons/io5";
 import StatsCardItem from "./StatsCardItem";
 import { MdDoneAll, MdPendingActions } from "react-icons/md";
-
 import { LuAlarmClockOff } from "react-icons/lu";
+import { countTask, isOverDue, isToday } from "../../utils/taskUtils";
 
-function StatsCards() {
+function StatsCards({ tasks }) {
+  // today tasks status
+  const todayTasks = countTask(tasks, (t) => isToday(t.due_date))?.length;
+  console.log(todayTasks);
+  const completedTasks = countTask(
+    tasks,
+    (t) => t.status.toLowerCase() === "completed",
+  )?.length;
+  const incompleteTasks = countTask(
+    tasks,
+    (t) => t.status.toLowerCase() === "incomplete",
+  )?.length;
+  const overDueTasks = countTask(tasks, isOverDue)?.length;
   return (
     <div className="col-span-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 ">
       {/* card 1 */}
-      <StatsCardItem record="5" title="Today">
-        <IoTodaySharp />
+      <StatsCardItem record={todayTasks} title="Today">
+        <IoTodaySharp className="text-cyan-600" />
       </StatsCardItem>
       {/* card 2 */}
-      <StatsCardItem record="10" title="Completed">
+      <StatsCardItem record={completedTasks} title="Completed">
         <MdDoneAll />
       </StatsCardItem>
       {/* card 3 */}
-      <StatsCardItem record="20" title="incompleted">
-        <MdPendingActions />
+      <StatsCardItem record={incompleteTasks} title="incompleted">
+        <MdPendingActions className="text-amber-500" />
       </StatsCardItem>
       {/* card 3 */}
-      <StatsCardItem record="3" title="Overdue">
-        <LuAlarmClockOff />
+      <StatsCardItem record={overDueTasks} title="Overdue">
+        <LuAlarmClockOff className="text-red-500" />
       </StatsCardItem>
     </div>
   );

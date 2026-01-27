@@ -7,9 +7,13 @@ import Modal from "../UI/Modal";
 import TaskForm from "../features/tasks/TaskForm";
 import { useUiStates } from "../hooks/useUiContext";
 import ProjectForm from "../features/projects/ProjectForm";
+import useTasks from "../features/tasks/useTasks";
+import Spinner from "../components/Spinner";
 
 function Dashboard() {
   const { modal } = useUiStates();
+  const { data: tasks, isPending } = useTasks();
+  if (isPending) return <Spinner />;
   return (
     <div className="bg-bg dark:bg-bg-dark space-y-10 overflow-y-auto grid grid-cols-2 gap-x-4">
       <div className="text-text dark:text-text-dark space-y-3 col-span-2 flex items-center justify-between">
@@ -21,7 +25,7 @@ function Dashboard() {
         </div>
       </div>
       {/* Stats cards */}
-      <StatsCards />
+      <StatsCards tasks={tasks} />
       <TodayTasks />
       <UpcomingList />
       <QuickActions />
