@@ -1,9 +1,23 @@
-import { useState } from "react";
 import { BsFire } from "react-icons/bs";
+import { isOverDue, isToday } from "../../utils/taskUtils";
 
-function TodayTasks() {
-  // just for test
-  const [isCheck, setIsCheck] = useState(true);
+function TodayTasks({ tasks }) {
+  const filteredTasks = tasks
+    // 1. Sort by date (Earliest first)
+    ?.sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
+    .filter((task) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Normalize to start of today
+
+      const dueDate = new Date(task.due_date);
+      dueDate.setHours(0, 0, 0, 0); // Normalize to start of due date
+
+      // Comparison is now safe because we are using Date objects
+      const isToday = dueDate.getTime() === today.getTime();
+      const overDue = isOverDue(task);
+      return isToday || overDue;
+    });
+
   return (
     <div className="p-4 space-y-5 rounded-md col-span-2 md:col-span-1 bg-card  text-text dark:text-text-dark dark:bg-card-dark shadow-md">
       <h3 className="text-lg flex items-center gap-1 sm:text-xl font-medium tracking-tight">
@@ -12,35 +26,21 @@ function TodayTasks() {
       {/* list of today items */}
       <div className="flex flex-col gap-4">
         {/* items */}
-        <TodayItem
-          isCheck={false}
-          setIsCheck={setIsCheck}
-          title="Fix login validation"
-          date="Today"
-        />
-        <TodayItem
-          isCheck={false}
-          setIsCheck={setIsCheck}
-          title="Finish dashboard UI"
-          date="Today"
-        />
-        <TodayItem
-          isCheck={isCheck}
-          setIsCheck={setIsCheck}
-          title="API integration"
-          date="Done"
-        />
-        <TodayItem
-          isCheck={false}
-          setIsCheck={setIsCheck}
-          title="Landing page completed"
-          date="Tommorow"
-        />
+        {filteredTasks.map((task) => (
+          <TodayItem
+            key={task.id}
+            id={task.id}
+            title={task.title}
+            status={task.status}
+            dueDate={task.due_date}
+          />
+        ))}
       </div>
     </div>
   );
 }
-function TodayItem({ isCheck, setIsCheck, title, date }) {
+function TodayItem({ status, title, dueDate }) {
+  const isCompleted = status === "completed";
   return (
     <div className="flex flex-row items-center justify-between">
       {/* checkbox */}
@@ -49,24 +49,23 @@ function TodayItem({ isCheck, setIsCheck, title, date }) {
           type="checkbox"
           name="task"
           id="task"
-          checked={isCheck}
+          checked={isCompleted}
           className="accent-primary cursor-pointer hover:accent-green-400"
-          onChange={() => setIsCheck((item) => !item)}
         />
         <label
           htmlFor="task"
           className="select-none cursor-pointer flex items-center relative"
         >
           <div
-            className={`absolute transition-all duration-300 ${isCheck ? "w-full" : "w-0"} bg-linear-to-r from-primary via-green-secondary to-primary opacity-80 h-0.5`}
+            className={`absolute transition-all duration-300 ${isCompleted ? "w-full" : "w-0"} bg-linear-to-r from-primary via-green-secondary to-primary opacity-80 h-0.5`}
           ></div>
           {title}
         </label>
       </div>
       <div className="text-xs flex items-center gap-1">
-        <span>{date}</span>
+        <span>{isToday(dueDate) ? "Today" : "Over due"}</span>
         <span
-          className={`h-2 w-2 rounded-full ${isCheck ? "bg-primary" : "bg-yellow-500 animate-pulse"}`}
+          className={`h-2 w-2 rounded-full ${isCompleted ? "bg-primary" : "bg-yellow-500 animate-pulse"}`}
         ></span>
       </div>
     </div>

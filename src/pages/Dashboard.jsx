@@ -26,7 +26,7 @@ function Dashboard() {
       </div>
       {/* Stats cards */}
       <StatsCards tasks={tasks} />
-      <TodayTasks />
+      <TodayTasks tasks={tasks} />
       <UpcomingList />
       <QuickActions />
       {modal && (
