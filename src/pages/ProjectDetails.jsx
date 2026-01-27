@@ -15,6 +15,7 @@ import { countTasks } from "../utils/countTasks";
 import EmptyPage from "../components/EmptyPage";
 
 import { PiEmpty } from "react-icons/pi";
+import TaskForm from "../features/tasks/TaskForm";
 
 function ProjectDetails() {
   const navigate = useNavigate();
@@ -26,6 +27,14 @@ function ProjectDetails() {
 
   // manage Remote states projects and tasks data
   const { data: project, isPending } = useProject(Number(projectId));
+
+  const {
+    id = null,
+    name = "",
+    description = "",
+    due_date = null,
+    status = "pending",
+  } = project || {};
 
   const { data: tasks, isLoading: isLoadingTasks } = useTasks();
   // get current project tasks
@@ -57,24 +66,24 @@ function ProjectDetails() {
         <div className="text-text dark:text-text-dark gap-8 md:gap-0 col-span-2 flex flex-col md:flex-row items-center md:justify-between">
           <div className="space-y-3">
             <div>
-              <Heading>{project?.name}</Heading>
+              <Heading>{name}</Heading>
             </div>
             <div className="leading-relaxed max-w-2xl text-text-muted dark:text-text-muted-dark">
-              {project?.description}
+              {description}
             </div>
             {/* status duedate and action buttons */}
             <div className="flex md:justify-between gap-4 md:gap-0 md:items-center md:flex-row flex-col">
               <div className="flex gap-4 md:gap-8 text-text-muted dark:text-text-muted-dark">
                 <div className="text-sm flex items-center gap-2">
                   <span
-                    className={`h-2 w-2 rounded-full ${project?.status === "active" ? "bg-amber-500  animate-pulse" : "bg-primary"}`}
+                    className={`h-2 w-2 rounded-full ${status === "active" ? "bg-amber-500  animate-pulse" : "bg-primary"}`}
                   ></span>
-                  <span className="mb-0.5">{project?.status}</span>
+                  <span className="mb-0.5">{status}</span>
                 </div>
                 {/* duedate */}
                 <div className="text-sm text-text-muted dark:text-text-muted-dark flex items-center gap-2">
                   <LuAlarmClockOff className="text-red-500" />
-                  {project?.due_date}
+                  {due_date}
                 </div>
               </div>
               <div className="flex flex-row flex-wrap gap-2">
@@ -95,7 +104,16 @@ function ProjectDetails() {
                   onClick={() =>
                     dispatch({
                       value: "OPEN_MODAL",
-                      payload: { modal: "editProject" },
+                      payload: {
+                        modal: "editProject",
+                        data: {
+                          id,
+                          name,
+                          description,
+                          status,
+                          dueDate: due_date,
+                        },
+                      },
                     })
                   }
                 >
@@ -118,7 +136,7 @@ function ProjectDetails() {
               {/* Inner circle (the "hole") to make it a ring */}
               <div className="absolute inset-2 rounded-full bg-white dark:bg-card-dark flex items-center justify-center">
                 <div className="flex flex-col items-center">
-                  <span className="text-xl md:text-3xl font-bold">
+                  <span className="text-xl md:text-3xl font-bold  transition-all duration-300">
                     {Math.round(progress)}%
                   </span>
                   <span className="text-sm md:text-lg text-text-muted">
@@ -140,7 +158,7 @@ function ProjectDetails() {
                 <EmptyPage>
                   <span className="flex items-center flex-col gap-2 text-red-400">
                     <PiEmpty className="text-red-500" size={40} />
-                    Therre is no task yet for "{project?.name}" project.
+                    Therre is no task yet for "{name}" project.
                   </span>
                 </EmptyPage>
               )}
@@ -148,7 +166,9 @@ function ProjectDetails() {
             {filteredTasks.map((item) => (
               <TaskItem
                 key={item.id}
+                id={item.id}
                 title={item.title}
+                description={item.description}
                 status={item.status}
                 dueDate={item.due_date}
                 project={item.projects}
@@ -161,6 +181,11 @@ function ProjectDetails() {
       {modal === "editProject" && (
         <Modal>
           <ProjectForm />
+        </Modal>
+      )}
+      {modal === "editTask" && (
+        <Modal>
+          <TaskForm />
         </Modal>
       )}
     </div>

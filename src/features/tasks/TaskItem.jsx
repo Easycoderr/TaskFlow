@@ -76,7 +76,7 @@ function TaskItem({
           <div className="text-sm flex items-center gap-1 text-text-muted dark:text-text-muted-dark">
             <span>{status}</span>
             <span
-              className={`h-2 w-2 rounded-full ${status === "completed" ? "bg-primary" : "bg-amber-500 animate-pulse"}`}
+              className={`mt-0.5 h-2 w-2 rounded-full ${status === "completed" ? "bg-primary" : "bg-amber-500 animate-pulse"}`}
             ></span>
           </div>
         </div>
