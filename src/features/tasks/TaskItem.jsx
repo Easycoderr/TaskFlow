@@ -3,6 +3,7 @@ import { useUiStates } from "../../hooks/useUiContext";
 
 import useUpdateTask from "./useUpdateTask";
 import useDeleteTask from "./useDeleteTask";
+import generateCharecter from "../../utils/generateCharecter";
 
 function TaskItem({
   id,
@@ -14,7 +15,7 @@ function TaskItem({
   project,
 }) {
   // make uniqe name or identity for check boxs by title
-  const uniqueId = title.toLowerCase().split(" ").join("-");
+  const uniqueId = generateCharecter();
 
   // useUpdateTask for updating status
   const { mutate, isPending } = useUpdateTask();

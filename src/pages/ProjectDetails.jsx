@@ -16,6 +16,8 @@ import EmptyPage from "../components/EmptyPage";
 
 import { PiEmpty } from "react-icons/pi";
 import TaskForm from "../features/tasks/TaskForm";
+import useDeleteProject from "../features/projects/useDeleteProject";
+import ConfirmationModal from "../components/ConfirmationModal";
 
 function ProjectDetails() {
   const navigate = useNavigate();
@@ -28,6 +30,8 @@ function ProjectDetails() {
   // manage Remote states projects and tasks data
   const { data: project, isPending } = useProject(Number(projectId));
 
+  // delete project
+  const { mutate, isPending: isDeleting } = useDeleteProject();
   const {
     id = null,
     name = "",
@@ -43,7 +47,9 @@ function ProjectDetails() {
     tasks,
     Number(projectId),
   );
-
+  function handleDeleteProject() {
+    mutate(id);
+  }
   if (isPending || isLoadingTasks) return <Spinner />;
 
   return (
@@ -88,13 +94,25 @@ function ProjectDetails() {
               </div>
               <div className="flex flex-row flex-wrap gap-2">
                 <Button
+                  onClick={() => {
+                    tasksCount
+                      ? dispatch({
+                          value: "OPEN_MODAL",
+                          payload: {
+                            modal: "deleteProject",
+                          },
+                        })
+                      : handleDeleteProject();
+                  }}
                   colorClasses="bg-red-100/70 text-red-700/90"
                   type="button"
                   title="Delete project"
                   label="delete button"
                 >
                   <BiTrash className="" />
-                  <span className="text-sm">Delete</span>
+                  <span className="text-sm">
+                    {isDeleting ? "Deleting..." : "Delete"}
+                  </span>
                 </Button>
                 <Button
                   colorClasses="bg-green-100/70 text-green-700"
@@ -186,6 +204,17 @@ function ProjectDetails() {
       {modal === "editTask" && (
         <Modal>
           <TaskForm />
+        </Modal>
+      )}
+      {modal === "deleteProject" && (
+        <Modal>
+          <ConfirmationModal
+            title="Deletion"
+            message={`This project has ${tasksCount > 1 ? tasksCount + "tasks" : tasksCount + " task"}. Deleting it will unlink those tasks from the project.
+            You can still find them in Tasks.
+            Are you sure?`}
+            onConfirm={handleDeleteProject}
+          />
         </Modal>
       )}
     </div>
