@@ -5,19 +5,15 @@ import { useUiStates } from "../../hooks/useUiContext";
 import useDeleteProject from "./useDeleteProject";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import Modal from "../../UI/Modal";
+import { useNavigate } from "react-router";
+import { countTasks } from "../../utils/countTasks";
 
 function ProjectItem({ id, name, description, status, dueDate, tasks }) {
   const { mutate, isPending: isDeleting } = useDeleteProject();
   const { modal, dispatch } = useUiStates();
-  console.log(modal);
+  const navigate = useNavigate();
   // tasks logic find tasks number and completed number also progress.
-  const filteredTasks = tasks?.filter((task) => task.project_id === id);
-  const tasksCount = filteredTasks?.length;
-  console.log(tasksCount);
-  const completedTasks = filteredTasks?.filter(
-    (task) => task.status === "completed",
-  ).length;
-  const progress = tasksCount > 0 ? (completedTasks / tasksCount) * 100 : 0;
+  const { tasksCount, completedTasks, progress } = countTasks(tasks, id);
   // handle delete project function
   function handleDeleteProject() {
     mutate(id);
@@ -63,6 +59,9 @@ function ProjectItem({ id, name, description, status, dueDate, tasks }) {
         {/* actions */}
         <div className="flex flex-row flex-wrap gap-2">
           <Button
+            onClick={() => {
+              navigate(`/project/${id}`);
+            }}
             colorClasses="bg-cyan-100 text-cyan-700"
             type="button"
             title="View"

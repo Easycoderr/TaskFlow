@@ -19,7 +19,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/project/:id" element={<ProjectDetails />} />
+          <Route path="/project/:projectId" element={<ProjectDetails />} />
         </Route>
       </Route>
       <Route element={<GuestRoute />}>

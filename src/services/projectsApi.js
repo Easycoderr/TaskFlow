@@ -6,6 +6,16 @@ export async function getProjects() {
   return data;
 }
 
+// fetch project by id for project details
+export async function getProject(projectId) {
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .eq("id", projectId)
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
 // create Project
 export async function createProject(newProject) {
   const { data, error } = await supabase
