@@ -9,10 +9,15 @@ import { useUiStates } from "../hooks/useUiContext";
 import ProjectForm from "../features/projects/ProjectForm";
 import useTasks from "../features/tasks/useTasks";
 import Spinner from "../components/Spinner";
+import { useAuth } from "../hooks/useAuth";
 
 function Dashboard() {
   const { modal } = useUiStates();
   const { data: tasks, isPending } = useTasks();
+  const {
+    state: { user },
+  } = useAuth();
+
   if (isPending) return <Spinner />;
   return (
     <div className="bg-bg dark:bg-bg-dark space-y-10 overflow-y-auto grid grid-cols-2 gap-x-4">
@@ -20,7 +25,7 @@ function Dashboard() {
         <div>
           <Heading>Dashboard</Heading>
           <h3 className="text-lg sm:text-xl font-medium tracking-tight">
-            Good morning, EasyCoder
+            Good morning, {user.user_metadata.display_name}
           </h3>
         </div>
       </div>

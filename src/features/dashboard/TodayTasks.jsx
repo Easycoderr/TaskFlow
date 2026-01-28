@@ -1,4 +1,4 @@
-import { BsFire } from "react-icons/bs";
+import { BsDot, BsFire } from "react-icons/bs";
 import { isOverDue, isToday } from "../../utils/taskUtils";
 
 function TodayTasks({ tasks }) {
@@ -16,7 +16,9 @@ function TodayTasks({ tasks }) {
       const isToday = dueDate.getTime() === today.getTime();
       const overDue = isOverDue(task);
       return isToday || overDue;
-    });
+    })
+    //  limit task we want display first 4 indexs
+    .slice(0, 5);
 
   return (
     <div className="p-4 space-y-5 rounded-md col-span-2 md:col-span-1 bg-card  text-text dark:text-text-dark dark:bg-card-dark shadow-md">
@@ -26,6 +28,7 @@ function TodayTasks({ tasks }) {
       {/* list of today items */}
       <div className="flex flex-col gap-4">
         {/* items */}
+
         {filteredTasks.map((task) => (
           <TodayItem
             key={task.id}
@@ -62,10 +65,17 @@ function TodayItem({ status, title, dueDate }) {
           {title}
         </label>
       </div>
-      <div className="text-xs flex items-center gap-1">
+      <div
+        title={`Due Date: ${dueDate}`}
+        className="text-xs flex items-center gap-1"
+      >
+        <span className="hidden md:block">{dueDate}</span>
+        <span className="hidden md:block">
+          <BsDot />
+        </span>
         <span>{isToday(dueDate) ? "Today" : "Over due"}</span>
         <span
-          className={`h-2 w-2 rounded-full ${isCompleted ? "bg-primary" : "bg-yellow-500 animate-pulse"}`}
+          className={`h-2 w-2 rounded-full ${isToday(dueDate) ? "bg-amber-500" : "bg-red-500/70 animate-pulse"}`}
         ></span>
       </div>
     </div>

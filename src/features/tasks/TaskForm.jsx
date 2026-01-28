@@ -61,7 +61,7 @@ function TaskForm() {
     if (!title || !dueDate || !selectedPriority) return null;
     const projectId = projectOptions.find(
       (project) => project.value === selectedProject,
-    ).id;
+    )?.id;
 
     const data = {
       title,
