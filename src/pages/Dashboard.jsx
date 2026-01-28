@@ -32,7 +32,7 @@ function Dashboard() {
       {/* Stats cards */}
       <StatsCards tasks={tasks} />
       <TodayTasks tasks={tasks} />
-      <UpcomingList />
+      <UpcomingList tasks={tasks} />
       <QuickActions />
       {modal && (
         <Modal>
