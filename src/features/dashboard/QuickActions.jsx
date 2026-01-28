@@ -11,7 +11,7 @@ function QuickActions() {
         type2="button"
         title="Click to add new task"
         onClick={() =>
-          dispatch({ value: "OPEN_MODAL", payload: { modal: "taskForm" } })
+          dispatch({ value: "OPEN_MODAL", payload: { modal: "addTask" } })
         }
       >
         <span className="flex items-center gap-1">
@@ -23,7 +23,7 @@ function QuickActions() {
         type="secondary"
         title="Click to add new project"
         onClick={() =>
-          dispatch({ value: "OPEN_MODAL", payload: { modal: "projectForm" } })
+          dispatch({ value: "OPEN_MODAL", payload: { modal: "addProject" } })
         }
       >
         <span className="flex items-center gap-1">

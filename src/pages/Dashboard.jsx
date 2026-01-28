@@ -36,10 +36,10 @@ function Dashboard() {
       <QuickActions />
       {modal && (
         <Modal>
-          {modal === "taskForm" ? (
+          {modal === "addTask" ? (
             <TaskForm />
           ) : (
-            modal === "projectForm" && <ProjectForm />
+            modal === "addProject" && <ProjectForm />
           )}
         </Modal>
       )}
