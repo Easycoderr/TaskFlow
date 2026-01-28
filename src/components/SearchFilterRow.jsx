@@ -1,17 +1,15 @@
 import { BiSearch } from "react-icons/bi";
 import SimpleButtonIcon from "./SimpleButtonIcon";
-import { useState } from "react";
 import CustomSelect from "./CustomSelect";
 // fake
 const options = [
   { value: "all", label: "All" },
   { value: "today", label: "Today" },
   { value: "completed", label: "Completed" },
-  { value: "incompleted", label: "Incompleted" },
+  { value: "incomplete", label: "Incomplete" },
   { value: "overdue", label: "Overdue" },
 ];
-function SearchFilterRow() {
-  const [selectedValue, setSelectedValue] = useState(options[0].value);
+function SearchFilterRow({ selectedValue, setSelectedValue }) {
   return (
     <div className="flex flex-col sm:flex-row gap-4 items-center">
       {/* search */}

@@ -6,9 +6,12 @@ import SearchFilterRow from "../components/SearchFilterRow";
 import Modal from "../UI/Modal";
 import TaskForm from "../features/tasks/TaskForm";
 import { useUiStates } from "../hooks/useUiContext";
+import { useState } from "react";
 
 function Tasks() {
   const { modal, modalData, dispatch } = useUiStates();
+  // filter state
+  const [selectedValue, setSelectedValue] = useState("all");
   return (
     <div className="col-start-2 row-start-2 bg-bg text-text dark:text-text-dark dark:bg-bg-dark space-y-10">
       <div className="text-text dark:text-text-dark space-y-3 flex items-center justify-between mb-5">
@@ -32,8 +35,11 @@ function Tasks() {
           </span>
         </Button>
       </div>
-      <SearchFilterRow />
-      <TasksList />
+      <SearchFilterRow
+        selectedValue={selectedValue}
+        setSelectedValue={setSelectedValue}
+      />
+      <TasksList selectedValue={selectedValue} />
       {modal && (
         <Modal>
           <TaskForm key={modalData?.id || "new-task"} />

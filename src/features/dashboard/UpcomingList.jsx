@@ -1,4 +1,4 @@
-import { BiSolidTimer, BiTime, BiTimer } from "react-icons/bi";
+import { BiSolidTimer } from "react-icons/bi";
 import { GoDotFill } from "react-icons/go";
 import { isOverDue } from "../../utils/taskUtils";
 import { BsDash } from "react-icons/bs";

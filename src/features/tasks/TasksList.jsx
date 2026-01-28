@@ -1,20 +1,25 @@
+import { SlEarphones } from "react-icons/sl";
 import EmptyPage from "../../components/EmptyPage";
 import Spinner from "../../components/Spinner";
+import { countTask } from "../../utils/taskUtils";
 import TaskItem from "./TaskItem";
 import useTasks from "./useTasks";
 
-function TasksList() {
+function TasksList({ selectedValue }) {
   const { data: tasks, isPending } = useTasks();
-
   if (isPending) return <Spinner />;
-
+  // we make sure there is a data and thin start our logic.
   if (!tasks.length)
     return <EmptyPage>There is no task add your first task</EmptyPage>;
+  const filteredTask =
+    selectedValue === "all"
+      ? tasks
+      : countTask(tasks, (t) => t.status === selectedValue);
   return (
     <div className="overflow-y-auto grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-2 gap-4 text-text dark:text-text-dark">
       {/* task card */}
 
-      {tasks.map((item) => (
+      {filteredTask.map((item) => (
         <TaskItem
           key={item.id}
           id={item.id}

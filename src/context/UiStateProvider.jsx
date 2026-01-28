@@ -8,7 +8,6 @@ const initialState = {
 };
 
 function uiReducer(state, action) {
-  console.log(action);
   switch (action.value) {
     case "TOGGLE_DARK_MODE":
       return {
@@ -27,6 +26,7 @@ function uiReducer(state, action) {
         modal: null,
         modalData: null,
       };
+
     default:
       return state;
   }
