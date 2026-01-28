@@ -1,5 +1,7 @@
 import { BsDot, BsFire } from "react-icons/bs";
 import { isOverDue, isToday } from "../../utils/taskUtils";
+import useUpdateTaskStatus from "../tasks/useUpdateTaskStatus";
+import generateCharecter from "../../utils/generateCharecter";
 
 function TodayTasks({ tasks }) {
   const filteredTasks = tasks
@@ -42,22 +44,33 @@ function TodayTasks({ tasks }) {
     </div>
   );
 }
-function TodayItem({ status, title, dueDate }) {
+function TodayItem({ id, status, title, dueDate }) {
+  const uniqeId = generateCharecter();
+  const { mutate, isPending: isUpdating } = useUpdateTaskStatus();
   const isCompleted = status === "completed";
+  function handleUpdateStatus() {
+    const data = {
+      status: status === "completed" ? "incomplete" : "completed",
+    };
+    mutate({ id, data });
+  }
   return (
     <div className="flex flex-row items-center justify-between">
       {/* checkbox */}
       <div className="flex items-center gap-2">
         <input
+          onChange={handleUpdateStatus}
+          disabled={isUpdating}
           type="checkbox"
-          name="task"
-          id="task"
+          name={uniqeId}
+          id={uniqeId}
           checked={isCompleted}
           className="accent-primary cursor-pointer hover:accent-green-400"
         />
         <label
-          htmlFor="task"
-          className="select-none cursor-pointer flex items-center relative"
+          disabled={isUpdating}
+          htmlFor={uniqeId}
+          className={`select-none ${isUpdating && "opacity-50"} cursor-pointer flex items-center relative`}
         >
           <div
             className={`absolute transition-all duration-300 ${isCompleted ? "w-full" : "w-0"} bg-linear-to-r from-primary via-green-secondary to-primary opacity-80 h-0.5`}
