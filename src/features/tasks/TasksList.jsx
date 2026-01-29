@@ -1,7 +1,7 @@
 import { SlEarphones } from "react-icons/sl";
 import EmptyPage from "../../components/EmptyPage";
 import Spinner from "../../components/Spinner";
-import { countTask } from "../../utils/taskUtils";
+import { countTask, isOverDue } from "../../utils/taskUtils";
 import TaskItem from "./TaskItem";
 import useTasks from "./useTasks";
 
@@ -14,7 +14,11 @@ function TasksList({ selectedValue }) {
   const filteredTask =
     selectedValue === "all"
       ? tasks
-      : countTask(tasks, (t) => t.status === selectedValue);
+      : selectedValue === "overdue"
+        ? countTask(tasks, isOverDue)
+        : countTask(tasks, (t) => t.status === selectedValue);
+  if (!filteredTask.length)
+    return <EmptyPage>There is no task for "{selectedValue}"</EmptyPage>;
   return (
     <div className="overflow-y-auto grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-2 gap-4 text-text dark:text-text-dark">
       {/* task card */}
