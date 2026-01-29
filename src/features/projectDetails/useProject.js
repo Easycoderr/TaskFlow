@@ -3,13 +3,13 @@ import { getProject } from "../../services/projectsApi";
 
 function useProject(projectId) {
   const queryClient = useQueryClient();
-  const { data, isPending } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: ["projects", projectId],
     queryFn: () => getProject(projectId),
     initialData: () =>
       queryClient.getQueryData(["projects"])?.find((p) => p.id === projectId),
   });
-  return { data, isPending };
+  return { data, isPending, isError };
 }
 
 export default useProject;

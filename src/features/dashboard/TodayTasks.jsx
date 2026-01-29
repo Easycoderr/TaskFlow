@@ -30,7 +30,9 @@ function TodayTasks({ tasks }) {
       {/* list of today items */}
       <div className="flex flex-col gap-4">
         {/* items */}
-
+        {!filteredTasks?.length && (
+          <div className="text-center">No task yet, add your first one</div>
+        )}
         {filteredTasks.map((task) => (
           <TodayItem
             key={task.id}

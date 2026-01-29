@@ -1,4 +1,5 @@
 import EmptyPage from "../../components/EmptyPage";
+import ErrorState from "../../components/ErrorState";
 import Spinner from "../../components/Spinner";
 import {
   countTask as filterProject,
@@ -10,13 +11,18 @@ import ProjectItem from "./ProjectItem";
 import useProjects from "./useProjects";
 
 function ProjectsList({ selectedValue }) {
-  const { data: projects, isLoading } = useProjects();
+  const { data: projects, isLoading, isError } = useProjects();
   const { data: tasks, isLoading: loadingTasks } = useTasks();
 
   if (isLoading || loadingTasks) return <Spinner />;
-
+  if (isError)
+    return <ErrorState message="Something went wrong. Please try again." />;
   if (!projects.length)
-    return <EmptyPage>There is no project add your first project</EmptyPage>;
+    return (
+      <EmptyPage>
+        You don't have any projects yet. Add your first project.
+      </EmptyPage>
+    );
   const filteredTask =
     selectedValue === "all"
       ? tasks
@@ -25,8 +31,8 @@ function ProjectsList({ selectedValue }) {
         : selectedValue === "today"
           ? filterProject(projects, (p) => isToday(p.due_date))
           : filterProject(projects, (p) => p.status === selectedValue);
-  if (!filteredTask.length)
-    return <EmptyPage>There is no project for "{selectedValue}"</EmptyPage>;
+  if (selectedValue !== "all" && !filteredTask?.length)
+    return <EmptyPage>No {selectedValue} projects found.</EmptyPage>;
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
       {projects.map((project) => (

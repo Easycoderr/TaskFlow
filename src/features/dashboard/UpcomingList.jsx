@@ -2,6 +2,7 @@ import { BiSolidTimer } from "react-icons/bi";
 import { GoDotFill } from "react-icons/go";
 import { isOverDue } from "../../utils/taskUtils";
 import { BsDash } from "react-icons/bs";
+import EmptyPage from "../../components/EmptyPage";
 
 function UpcomingList({ tasks }) {
   const filteredTasks = tasks
@@ -26,6 +27,9 @@ function UpcomingList({ tasks }) {
         <BiSolidTimer size={22} className="text-primary" /> Upcoming
       </h3>
       {/* list of today items */}
+      {!filteredTasks?.length && (
+        <div className="mx-auto text-center">Keep it up! add more task.</div>
+      )}
       <ul className="divide-y divide-gray-200 dark:divide-gray-700 p-0">
         {filteredTasks.map((item, index) => (
           <UpcomingItem key={index} task={item} />

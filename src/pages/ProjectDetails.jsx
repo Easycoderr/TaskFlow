@@ -18,6 +18,7 @@ import { PiEmpty } from "react-icons/pi";
 import TaskForm from "../features/tasks/TaskForm";
 import useDeleteProject from "../features/projects/useDeleteProject";
 import ConfirmationModal from "../components/ConfirmationModal";
+import ErrorState from "../components/ErrorState";
 
 function ProjectDetails() {
   const navigate = useNavigate();
@@ -28,7 +29,11 @@ function ProjectDetails() {
   const { modal, dispatch } = useUiStates();
 
   // manage Remote states projects and tasks data
-  const { data: project, isPending } = useProject(Number(projectId));
+  const {
+    data: project,
+    isPending,
+    isError: isProjectError,
+  } = useProject(Number(projectId));
 
   // delete project
   const { mutate, isPending: isDeleting } = useDeleteProject();
@@ -40,7 +45,11 @@ function ProjectDetails() {
     status = "pending",
   } = project || {};
 
-  const { data: tasks, isLoading: isLoadingTasks } = useTasks();
+  const {
+    data: tasks,
+    isLoading: isLoadingTasks,
+    isError: isTaskError,
+  } = useTasks();
   // get current project tasks
 
   const { filteredTasks, tasksCount, completedTasks, progress } = countTasks(
@@ -52,7 +61,8 @@ function ProjectDetails() {
     navigate(-1);
   }
   if (isPending || isLoadingTasks) return <Spinner />;
-
+  if (isProjectError)
+    return <ErrorState message="Something went wrong. Please try again." />;
   return (
     <div className="">
       <div>
@@ -182,6 +192,9 @@ function ProjectDetails() {
                 </EmptyPage>
               )}
             </div>
+            {isTaskError && (
+              <ErrorState message="Something went wrong. Please try again." />
+            )}
             {filteredTasks.map((item) => (
               <TaskItem
                 key={item.id}
