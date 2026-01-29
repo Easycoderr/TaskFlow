@@ -7,7 +7,6 @@ import { countTask, isOverDue, isToday } from "../../utils/taskUtils";
 function StatsCards({ tasks }) {
   // today tasks status
   const todayTasks = countTask(tasks, (t) => isToday(t.due_date))?.length;
-  console.log(todayTasks);
   const completedTasks = countTask(
     tasks,
     (t) => t.status.toLowerCase() === "completed",

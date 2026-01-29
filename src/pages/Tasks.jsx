@@ -7,7 +7,13 @@ import Modal from "../UI/Modal";
 import TaskForm from "../features/tasks/TaskForm";
 import { useUiStates } from "../hooks/useUiContext";
 import { useState } from "react";
-
+const options = [
+  { value: "all", label: "All" },
+  { value: "today", label: "Today" },
+  { value: "completed", label: "Completed" },
+  { value: "incomplete", label: "Incomplete" },
+  { value: "overdue", label: "Overdue" },
+];
 function Tasks() {
   const { modal, modalData, dispatch } = useUiStates();
   // filter state
@@ -36,6 +42,7 @@ function Tasks() {
         </Button>
       </div>
       <SearchFilterRow
+        options={options}
         selectedValue={selectedValue}
         setSelectedValue={setSelectedValue}
       />

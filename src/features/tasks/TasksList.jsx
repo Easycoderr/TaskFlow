@@ -1,7 +1,7 @@
 import { SlEarphones } from "react-icons/sl";
 import EmptyPage from "../../components/EmptyPage";
 import Spinner from "../../components/Spinner";
-import { countTask, isOverDue } from "../../utils/taskUtils";
+import { countTask, isOverDue, isToday } from "../../utils/taskUtils";
 import TaskItem from "./TaskItem";
 import useTasks from "./useTasks";
 
@@ -16,7 +16,9 @@ function TasksList({ selectedValue }) {
       ? tasks
       : selectedValue === "overdue"
         ? countTask(tasks, isOverDue)
-        : countTask(tasks, (t) => t.status === selectedValue);
+        : selectedValue === "today"
+          ? countTask(tasks, (t) => isToday(t.due_date))
+          : countTask(tasks, (t) => t.status === selectedValue);
   if (!filteredTask.length)
     return <EmptyPage>There is no task for "{selectedValue}"</EmptyPage>;
   return (
