@@ -1,6 +1,7 @@
 import EmptyPage from "../../components/EmptyPage";
 import ErrorState from "../../components/ErrorState";
 import Spinner from "../../components/Spinner";
+import searchFilter from "../../utils/searchUtils";
 import {
   countTask as filterProject,
   isOverDue,
@@ -10,7 +11,7 @@ import useTasks from "../tasks/useTasks";
 import ProjectItem from "./ProjectItem";
 import useProjects from "./useProjects";
 
-function ProjectsList({ selectedValue }) {
+function ProjectsList({ selectedValue, searchValue }) {
   const { data: projects, isLoading, isError } = useProjects();
   const { data: tasks, isLoading: loadingTasks } = useTasks();
 
@@ -23,19 +24,44 @@ function ProjectsList({ selectedValue }) {
         You don't have any projects yet. Add your first project.
       </EmptyPage>
     );
-  const filteredTask =
-    selectedValue === "all"
-      ? tasks
-      : selectedValue === "overdue"
-        ? filterProject(projects, isOverDue)
-        : selectedValue === "today"
-          ? filterProject(projects, (p) => isToday(p.due_date))
-          : filterProject(projects, (p) => p.status === selectedValue);
-  if (selectedValue !== "all" && !filteredTask?.length)
+
+  // project logic
+  let filteredProjects;
+  switch (selectedValue) {
+    case "all":
+      filteredProjects = projects;
+      break;
+
+    case "overdue":
+      filteredProjects = filterProject(projects, isOverDue);
+      break;
+
+    case "today":
+      filteredProjects = filterProject(projects, (p) => isToday(p.due_date));
+      break;
+
+    default:
+      // This handles any specific status (e.g., "completed", "pending")
+      filteredProjects = filterProject(
+        projects,
+        (p) => p.status === selectedValue,
+      );
+      break;
+  }
+
+  // search logic
+  if (searchValue) {
+    filteredProjects = searchFilter(filteredProjects, (p) =>
+      p.name.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+    console.log(filteredProjects);
+  }
+
+  if (selectedValue !== "all" && !filteredProjects?.length)
     return <EmptyPage>No {selectedValue} projects found.</EmptyPage>;
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      {projects.map((project) => (
+      {filteredProjects?.map((project) => (
         <ProjectItem
           key={project.id}
           id={project.id}

@@ -17,7 +17,7 @@ const options = [
 function Projects() {
   const { dispatch, modal } = useUiStates();
   const [selectedValue, setSelectedValue] = useState("all");
-
+  const [searchValue, setSearchValue] = useState("");
   return (
     <div className="col-start-2 row-start-2 bg-bg text-text dark:text-text-dark dark:bg-bg-dark space-y-10">
       <div className="text-text dark:text-text-dark space-y-3 flex items-center justify-between mb-5">
@@ -43,12 +43,14 @@ function Projects() {
       </div>
       <SearchFilterRow
         options={options}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
         selectedValue={selectedValue}
         setSelectedValue={setSelectedValue}
       />
 
       {/* project card */}
-      <ProjectsList selectedValue={selectedValue} />
+      <ProjectsList searchValue={searchValue} selectedValue={selectedValue} />
       {/* form modal */}
       {modal === "editProject" || modal === "addProject" ? (
         <Modal>

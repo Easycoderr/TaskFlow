@@ -1,6 +1,7 @@
 import { BiSearch } from "react-icons/bi";
 import SimpleButtonIcon from "./SimpleButtonIcon";
 import CustomSelect from "./CustomSelect";
+import { FiFilter } from "react-icons/fi";
 
 function SearchFilterRow({
   options,
@@ -38,6 +39,7 @@ function SearchFilterRow({
       </div>
       {/* Filter */}
       <CustomSelect
+        icon={<FiFilter size={17} className="text-primary" />}
         options={options}
         value={selectedValue}
         onChange={setSelectedValue}
