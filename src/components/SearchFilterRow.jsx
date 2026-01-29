@@ -12,7 +12,7 @@ function SearchFilterRow({ options, selectedValue, setSelectedValue }) {
           name="search"
           id="search"
           placeholder=" "
-          className="border border-gray-300 z-20 w-full p-2 bg-bg dark:bg-gray-200 text-bg-dark outline-none focus:ring-2 focus:ring-primary text-sm rounded-md peer"
+          className="border border-gray-300 z-20 w-full p-3 bg-bg dark:bg-gray-200 text-bg-dark outline-none focus:ring-2 focus:ring-primary text-sm rounded-md peer"
         />
         <label
           htmlFor="Search"

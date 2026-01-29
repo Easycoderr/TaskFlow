@@ -26,7 +26,7 @@ function ProjectsList({ selectedValue }) {
           ? filterProject(projects, (p) => isToday(p.due_date))
           : filterProject(projects, (p) => p.status === selectedValue);
   if (!filteredTask.length)
-    return <EmptyPage>There is no task for "{selectedValue}"</EmptyPage>;
+    return <EmptyPage>There is no project for "{selectedValue}"</EmptyPage>;
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
       {projects.map((project) => (

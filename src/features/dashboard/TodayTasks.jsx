@@ -88,7 +88,7 @@ function TodayItem({ id, status, title, dueDate }) {
         </span>
         <span>{isToday(dueDate) ? "Today" : "Over due"}</span>
         <span
-          className={`h-2 w-2 rounded-full ${isToday(dueDate) ? "bg-amber-500" : "bg-red-500/70 animate-pulse"}`}
+          className={`h-2 w-2 rounded-full ${isToday(dueDate) ? "bg-amber-500" : "bg-red-500 animate-pulse"}`}
         ></span>
       </div>
     </div>
