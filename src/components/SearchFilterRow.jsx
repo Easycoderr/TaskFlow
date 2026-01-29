@@ -2,12 +2,20 @@ import { BiSearch } from "react-icons/bi";
 import SimpleButtonIcon from "./SimpleButtonIcon";
 import CustomSelect from "./CustomSelect";
 
-function SearchFilterRow({ options, selectedValue, setSelectedValue }) {
+function SearchFilterRow({
+  options,
+  searchValue,
+  setSearchValue,
+  selectedValue,
+  setSelectedValue,
+}) {
   return (
     <div className="flex flex-col sm:flex-row gap-4 items-center">
       {/* search */}
       <div className="relative min-w-2xs shadow-sm rounded-md">
         <input
+          onChange={(e) => setSearchValue(e.target.value)}
+          value={searchValue}
           type="text"
           name="search"
           id="search"
@@ -15,7 +23,7 @@ function SearchFilterRow({ options, selectedValue, setSelectedValue }) {
           className="border border-gray-300 z-20 w-full p-3 bg-bg dark:bg-gray-200 text-bg-dark outline-none focus:ring-2 focus:ring-primary text-sm rounded-md peer"
         />
         <label
-          htmlFor="Search"
+          htmlFor="search"
           className="transition-all pointer-events-none px-1 rounded-md duration-300 absolute top-1/2 -translate-y-1/2 left-2 text-text-muted dark:text-text-muted-dark text-sm
                  peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary
                  peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"

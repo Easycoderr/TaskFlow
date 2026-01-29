@@ -19,6 +19,6 @@ export function isOverDue(task) {
   return dueDate < today && task.status.toLowerCase() !== "completed";
 }
 
-export function countTask(tasks, predicate) {
-  return tasks?.filter(predicate);
+export function countTask(data, predicate) {
+  return data?.filter(predicate);
 }

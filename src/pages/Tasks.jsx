@@ -18,6 +18,7 @@ function Tasks() {
   const { modal, modalData, dispatch } = useUiStates();
   // filter state
   const [selectedValue, setSelectedValue] = useState("all");
+  const [searchValue, setSearchValue] = useState("");
   return (
     <div className="col-start-2 row-start-2 bg-bg text-text dark:text-text-dark dark:bg-bg-dark space-y-10">
       <div className="text-text dark:text-text-dark space-y-3 flex items-center justify-between mb-5">
@@ -43,10 +44,12 @@ function Tasks() {
       </div>
       <SearchFilterRow
         options={options}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
         selectedValue={selectedValue}
         setSelectedValue={setSelectedValue}
       />
-      <TasksList selectedValue={selectedValue} />
+      <TasksList searchValue={searchValue} selectedValue={selectedValue} />
       {modal && (
         <Modal>
           <TaskForm key={modalData?.id || "new-task"} />

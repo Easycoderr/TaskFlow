@@ -183,18 +183,18 @@ function ProjectDetails() {
           <div className="overflow-y-auto grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-2 gap-4 text-text dark:text-text-dark">
             {/* header */}
             <div className="col-span-2">
+              {isTaskError && (
+                <ErrorState message="Something went wrong. Please try again." />
+              )}
               {!filteredTasks.length && (
                 <EmptyPage>
                   <span className="flex items-center flex-col gap-2 text-red-400">
                     <PiEmpty className="text-red-500" size={40} />
-                    Therre is no task yet for "{name}" project.
+                    There is no task yet for "{name}" project.
                   </span>
                 </EmptyPage>
               )}
             </div>
-            {isTaskError && (
-              <ErrorState message="Something went wrong. Please try again." />
-            )}
             {filteredTasks.map((item) => (
               <TaskItem
                 key={item.id}
