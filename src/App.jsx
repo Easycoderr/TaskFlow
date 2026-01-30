@@ -10,6 +10,7 @@ import LandingLayout from "./layouts/landingLayout";
 import Landing from "./pages/Landing";
 import ProtectedRoute from "./components/ProtectedRoute";
 import GuestRoute from "./components/GuestRoute";
+import Calendar from "./pages/Calendar";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/project/:projectId" element={<ProjectDetails />} />
+          <Route path="/calendar" element={<Calendar />} />
         </Route>
       </Route>
       <Route element={<GuestRoute />}>

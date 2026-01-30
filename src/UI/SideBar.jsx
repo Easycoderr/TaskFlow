@@ -94,8 +94,8 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
             <SideBarItem
               isExpand={isExpand}
               setIsExpand={setIsExpand}
-              label="Calender"
-              toPage="calender"
+              label="Calendar"
+              toPage="calendar"
             >
               <SlCalender className="group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
             </SideBarItem>
