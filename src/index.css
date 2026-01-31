@@ -53,6 +53,14 @@
     opacity: 0.5;
   }
 }
+@keyframes border-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 /* 3. Theme Tokens (Variables only) */
 @theme {
   --font-primary: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -101,4 +109,40 @@
 /* Active links */
 .active {
   @apply from-primary/50 bg-300 animate-gradient to-secondary/50 bg-linear-to-tl;
+}
+
+.snake-border-container {
+  position: relative;
+  overflow: hidden; /* Clips the rotating gradient to stay within the border area */
+}
+
+/* The actual "Snake" layer */
+.snake-border-container::before {
+  content: "";
+  position: absolute;
+  /* Make it larger than the container to ensure the "corners" are covered during rotation */
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  /* Conic gradient creates the 'snake' segments (Green and Cyan) */
+  background: conic-gradient(
+    transparent 0deg,
+    transparent 160deg,
+    #22c55e 180deg,
+    /* Green (Tailwind primary) */ transparent 200deg,
+    transparent 340deg,
+    #06b6d4 360deg /* Cyan (Tailwind secondary) */
+  );
+  animation: border-rotate 4s linear infinite;
+  z-index: 0;
+}
+
+/* The "Mask" layer to make the border small/thin */
+.snake-border-inner {
+  position: relative;
+  z-index: 10;
+  background: inherit; /* Matches your card/background color */
+  margin: 1px; /* This margin defines the THICKNESS of the border (1px = small) */
+  border-radius: inherit;
 }
