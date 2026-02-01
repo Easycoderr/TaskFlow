@@ -45,16 +45,16 @@ function TasksList({ selectedValue, searchValue }) {
     <div className="overflow-y-auto grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-2 gap-4 text-text dark:text-text-dark">
       {/* task card */}
 
-      {filteredTask.map((item) => (
+      {filteredTask.map((task) => (
         <TaskItem
-          key={item.id}
-          id={item.id}
-          title={item.title}
-          description={item.description}
-          status={item.status}
-          dueDate={item.due_date}
-          project={item.projects}
-          priority={item.priority}
+          key={task.id}
+          id={task.id}
+          title={task.title}
+          description={task.description}
+          status={task.status}
+          dueDate={task.due_date}
+          project={task.projects}
+          priority={task.priority}
         />
       ))}
     </div>
