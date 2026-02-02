@@ -11,6 +11,7 @@ import Landing from "./pages/Landing";
 import ProtectedRoute from "./components/ProtectedRoute";
 import GuestRoute from "./components/GuestRoute";
 import Calendar from "./pages/Calendar";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/project/:projectId" element={<ProjectDetails />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Route>
       <Route element={<GuestRoute />}>
