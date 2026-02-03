@@ -1,10 +1,25 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
+import { BsEyeSlash } from "react-icons/bs";
 
 const Input = forwardRef(
   (
-    { type = null, inputName, inputType, icon, label, error, value, ...rest },
+    {
+      type = null,
+      onShowPassword,
+      inputName,
+      inputType,
+      icon,
+      label,
+      error,
+      value,
+      ...rest
+    },
     ref,
   ) => {
+    const [showPassword, setShowPassword] = useState();
+    function handleShowPassword() {
+      setShowPassword((pass) => !pass);
+    }
     return (
       <div className="relative">
         <input
@@ -12,7 +27,7 @@ const Input = forwardRef(
           ref={ref}
           id={inputName}
           name={inputName}
-          type={inputType}
+          type={showPassword ? "text" : inputType}
           value={value}
           placeholder=" "
           className={`peer bg-bg text-text  text-sm rounded-sm ${type === "settings" ? "p-2" : "p-3"} outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary ${error && "ring-red-400 border-red-400 focus:ring-red-400 focus:border-red-400"} w-full`}
@@ -32,13 +47,13 @@ const Input = forwardRef(
           )}
         </label>
         <span
-          className={`absolute text-text peer-focus:text-primary ${error && "text-red-400 dark:text-red-400 peer-focus:text-red-400"} top-1/2 -translate-y-1/2 right-2.5`}
+          onClick={() => onShowPassword(handleShowPassword)}
+          className={`absolute text-text peer-focus:text-primary ${onShowPassword && "cursor-pointer"} ${error && "text-red-400 dark:text-red-400 peer-focus:text-red-400"} top-1/2 -translate-y-1/2 right-2.5`}
         >
-          {icon}
+          {showPassword ? <BsEyeSlash /> : icon}
         </span>
       </div>
     );
   },
 );
-
 export default Input;

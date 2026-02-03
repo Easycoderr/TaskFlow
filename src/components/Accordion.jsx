@@ -1,0 +1,32 @@
+import { useState } from "react";
+import { BiUpArrow } from "react-icons/bi";
+
+function Accordion({ children, title, icon }) {
+  const [isAccordion, setIsAccordion] = useState(false);
+  return (
+    <div
+      className={`${isAccordion && "space-y-4"} flex flex-col bg-card dark:bg-gray-800 shadow-sm p-4 rounded-md transition-all duration-300`}
+    >
+      <div
+        onClick={() => setIsAccordion((drawer) => !drawer)}
+        className={`transition-all duration-200 font-simebold tracking-wide flex items-center justify-between`}
+      >
+        <div className="flex items-center gap-1">
+          {icon}
+          <h3 className="select-none">{title}</h3>
+        </div>
+        <span className="cursor-pointer">
+          <BiUpArrow
+            className={`${isAccordion && "rotate-180"} transition-all duration-400`}
+          />
+        </span>
+      </div>
+      <div
+        className={`w-0 h-0.5 bg-linear-to-r from-trasnparent animate-logo bg-300 via-primary to-transparent ${isAccordion && "w-full"} transition-all duration-300`}
+      ></div>
+      <div className={`${!isAccordion && "hidden"}`}>{children}</div>
+    </div>
+  );
+}
+
+export default Accordion;
