@@ -3,11 +3,28 @@ import { BiLockAlt } from "react-icons/bi";
 import Accordion from "../../components/Accordion";
 import Input from "../../components/Input";
 import { LuLogOut } from "react-icons/lu";
-import Button from "../../components/Button";
+import { useAuth } from "../../hooks/useAuth";
+import { useForm } from "react-hook-form";
 function Profile() {
+  const { state: user } = useAuth();
+  const { display_name: name, email } = user.user.user_metadata;
+  // USE FORM
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      fullName: name,
+    },
+  });
   function handleShowPassword(callBack) {
     callBack();
   }
+  function onSave() {}
   return (
     <div className="rounded-md p-4 max-w-2xl  bg-card dark:bg-card-dark flex flex-col gap-6">
       <div className="flex items-center gap-8">
@@ -18,78 +35,88 @@ function Profile() {
         {/* name and email */}
         <div className="flex flex-col gap-y-1">
           <span className="text-lg font-semibold tracking-wider text-text dark:text-text-dark">
-            Rauf Rezgar
+            {name}
           </span>
           <span className="text-sm tracking-wider text-text-muted dark:text-text-muted-dark">
-            example@gmail.com
+            {email}
           </span>
         </div>
       </div>
       {/* fields */}
-      <div className="flex gap-2 flex-col">
-        <Accordion
-          title="Personal Information"
-          icon={<BsPerson className="text-primary" />}
-        >
-          <Input
-            type="settings"
-            inputType="text"
-            inputName="fullname"
-            label="Full name"
-          />
-        </Accordion>
-        <Accordion
-          title="Chnage password"
-          icon={<BiLockAlt className="text-primary" />}
-        >
-          <div className="flex gap-3 flex-col">
+      <form action="" onSubmit={handleSubmit(onSave)}>
+        <div className="flex gap-2 flex-col">
+          <Accordion
+            title="Personal Information"
+            icon={<BsPerson className="text-primary" />}
+          >
             <Input
-              onShowPassword={handleShowPassword}
-              type="settings"
-              inputType="password"
-              inputName="Password"
-              label="Password"
-              icon={<BsEye />}
+              inputType="text"
+              inputName="fullName"
+              label="Full name"
+              error={errors.fullName}
+              {...register("fullName", {
+                required: "full name is requierd",
+                pattern: {
+                  value: /^[A-Za-z," "]+$/i,
+                  message: "fullname should only contain letters",
+                },
+                maxLength: 20,
+              })}
             />
-            <Input
-              onShowPassword={handleShowPassword}
-              type="settings"
-              inputType="password"
-              inputName="confirmPassword"
-              label="Confirm password"
-              icon={<BsEye />}
-            />
-            <Input
-              onShowPassword={handleShowPassword}
-              type="settings"
-              inputType="password"
-              inputName="currentPassword"
-              label="Current password"
-              icon={<BsEye />}
-            />
-          </div>
-        </Accordion>
-        {/* save & Cancel */}
-        <div className="flex items-center justify-end">
-          <div className="flex gap-2 ">
-            <button
-              type="button"
-              aria-label="cancel"
-              className="bg-red-600/80 text-red-100 hover:bg-red-600/50 transition-all duration-300 cursor-pointer rounded-md px-3 py-1.5"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              aria-label="save"
-              disabled={true}
-              className="bg-green-600/80 text-green-100 hover:bg-green-600/50 transition-all duration-300 cursor-pointer rounded-md px-3 py-1.5"
-            >
-              Save
-            </button>
+          </Accordion>
+          <Accordion
+            title="Chnage password"
+            icon={<BiLockAlt className="text-primary" />}
+          >
+            <div className="flex gap-3 flex-col">
+              <Input
+                onShowPassword={handleShowPassword}
+                type="settings"
+                inputType="password"
+                inputName="Password"
+                label="Password"
+                icon={<BsEye />}
+              />
+              <Input
+                onShowPassword={handleShowPassword}
+                type="settings"
+                inputType="password"
+                inputName="confirmPassword"
+                label="Confirm password"
+                icon={<BsEye />}
+              />
+              <Input
+                onShowPassword={handleShowPassword}
+                type="settings"
+                inputType="password"
+                inputName="currentPassword"
+                label="Current password"
+                icon={<BsEye />}
+              />
+            </div>
+          </Accordion>
+          {/* save & Cancel */}
+          <div className="flex items-center justify-end">
+            <div className="flex gap-2 ">
+              <button
+                onClick={reset}
+                type="button"
+                aria-label="cancel"
+                className="bg-red-600/80 text-red-100 hover:bg-red-600/50 transition-all duration-300 cursor-pointer rounded-md px-3 py-1.5"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                aria-label="save"
+                className="bg-green-600/80 text-green-100 hover:bg-green-600/50 transition-all duration-300 cursor-pointer rounded-md px-3 py-1.5"
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
       {/* danger zone */}
       <div className="mt-5 flex flex-col gap-2">
         {/* log out */}
