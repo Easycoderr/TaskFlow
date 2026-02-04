@@ -26,7 +26,11 @@ function ProfileForm({ name }) {
       <div className="flex gap-2 flex-col">
         <Accordion
           title="Personal Information"
-          icon={<BsPerson className="text-primary" />}
+          icon={
+            <span className="bg-primary/20 p-1 rounded-md">
+              <BsPerson className="text-primary" />
+            </span>
+          }
         >
           <Input
             inputType="text"
@@ -45,7 +49,11 @@ function ProfileForm({ name }) {
         </Accordion>
         <Accordion
           title="Chnage password"
-          icon={<BiLockAlt className="text-primary" />}
+          icon={
+            <span className="bg-secondary/20 p-1 rounded-md">
+              <BiLockAlt className="text-secondary" />
+            </span>
+          }
         >
           <div className="flex gap-3 flex-col">
             <Input

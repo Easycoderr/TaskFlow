@@ -5,13 +5,13 @@ function Accordion({ children, title, icon }) {
   const [isAccordion, setIsAccordion] = useState(false);
   return (
     <div
-      className={`${isAccordion && "space-y-4"} flex flex-col bg-card dark:bg-gray-800 shadow-sm p-4 rounded-md transition-all duration-300`}
+      className={`${isAccordion && "space-y-4"} flex flex-col bg-card dark:bg-gray-800 shadow-sm p-3 rounded-md transition-all duration-300`}
     >
       <div
         onClick={() => setIsAccordion((drawer) => !drawer)}
         className={`transition-all duration-200 font-simebold tracking-wide flex items-center justify-between`}
       >
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           {icon}
           <h3 className="select-none text-sm font-medium tracking-">{title}</h3>
         </div>

@@ -8,7 +8,7 @@ function ProfileDangerActions() {
       <button
         type="button"
         aria-label="logout account"
-        className="flex items-center gap-2 border shadow-sm rounded-md p-3 justify-center border-red-300 bg-red-300/20 dark:text-red-100 text-red-950  cursor-pointer group"
+        className="flex items-center gap-2 border shadow-sm rounded-md p-3 justify-center border-red-300 bg-red-100/10 hover:bg-red-100/40 transition-all duration-300 dark:text-red-100 text-red-950  cursor-pointer group"
       >
         <span>
           <LuLogOut className="group-hover:translate-x-1 transition-all duration-300" />
