@@ -35,8 +35,9 @@ export async function logout() {
 // update user data
 
 export async function updateUser(userData) {
+  console.log(userData);
   const { data, error } = await supabase.auth.updateUser({
-    userData,
+    data: userData,
   });
   if (error) throw new Error("Error updating metadata:", error.message);
 

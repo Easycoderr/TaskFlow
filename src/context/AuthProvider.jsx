@@ -16,6 +16,12 @@ function authReducer(state, action) {
         user: action.payload.user,
         loading: false,
       };
+    case "UPDATE_USER":
+      return {
+        ...state,
+        user: action.payload.user,
+        loading: false,
+      };
     case "CLEAR_SESSION":
       return {
         ...state,

@@ -14,7 +14,7 @@ function Settings() {
           <Heading>Settings</Heading>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-8">
+      <div className="grid grid-cols-1 gap-4">
         {/*tabs  */}
         <SettingTabs setting={setting} setSetting={setSetting} />
 

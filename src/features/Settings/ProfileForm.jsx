@@ -3,24 +3,34 @@ import { BiLockAlt } from "react-icons/bi";
 import Accordion from "../../components/Accordion";
 import Input from "../../components/Input";
 import { useForm } from "react-hook-form";
+import useUpdateUser from "./useUpdateUser";
 function ProfileForm({ name }) {
+  const { mutate: updateMutate, isPending } = useUpdateUser();
   const {
     register,
     handleSubmit,
     reset,
-    watch,
-
+    // watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       fullName: name,
     },
   });
-  const password = watch("password");
+  //   const password = watch("password");
   function handleShowPassword(callBack) {
     callBack();
   }
-  function onSave() {}
+  async function onSave(data) {
+    console.log("h");
+    const { password, fullName } = data;
+    console.log(fullName);
+    if (!fullName === "" || !(fullName.toLowerCase() === name.toLowerCase())) {
+      console.log("jjuj");
+      const userData = { display_name: fullName };
+      updateMutate(userData);
+    }
+  }
   return (
     <form action="" onSubmit={handleSubmit(onSave)}>
       <div className="flex gap-2 flex-col">
@@ -60,24 +70,23 @@ function ProfileForm({ name }) {
               onShowPassword={handleShowPassword}
               inputType="password"
               inputName="password"
-              label="Password"
+              label="New Password"
               icon={<BsEye />}
               error={errors.password}
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-                validate: {
-                  hasNumber: (value) =>
-                    /\d/.test(value) ||
-                    "Password must include at least one number",
-                  hasSpecialChar: (value) =>
-                    /[!@#$%^&*]/.test(value) ||
-                    "Include at least one special character",
-                },
-              })}
+              //   {...register("password", {
+              //     minLength: {
+              //       value: 8,
+              //       message: "Password must be at least 8 characters",
+              //     },
+              //     validate: {
+              //       hasNumber: (value) =>
+              //         /\d/.test(value) ||
+              //         "Password must include at least one number",
+              //       hasSpecialChar: (value) =>
+              //         /[!@#$%^&*]/.test(value) ||
+              //         "Include at least one special character",
+              //     },
+              //   })}
             />
             {/* confirm password */}
             <Input
@@ -86,12 +95,12 @@ function ProfileForm({ name }) {
               inputName="confirmPassword"
               label="Confirm password"
               icon={<BsEye />}
-              error={errors.confirmPassword}
-              {...register("confirmPassword", {
-                required: "Please confirm your password",
-                validate: (value) =>
-                  value === password || "The passwords do not match",
-              })}
+              //   error={errors.confirmPassword}
+              //   {...register("confirmPassword", {
+              //     // required: "Please confirm your password",
+              //     validate: (value) =>
+              //       value === password || "The passwords do not match",
+              //   })}
             />
 
             <Input
@@ -101,21 +110,21 @@ function ProfileForm({ name }) {
               label="Current password"
               icon={<BsEye />}
               error={errors.password}
-              {...register("currentPassword", {
-                required: "Current password is required",
-                minLength: {
-                  value: 8,
-                  message: "password must be at least 8 characters",
-                },
-                validate: {
-                  hasNumber: (value) =>
-                    /\d/.test(value) ||
-                    "Password must include at least one number",
-                  hasSpecialChar: (value) =>
-                    /[!@#$%^&*]/.test(value) ||
-                    "Include at least one special character",
-                },
-              })}
+              //   {...register("currentPassword", {
+              //     // required: "Current password is required",
+              //     minLength: {
+              //       value: 8,
+              //       message: "password must be at least 8 characters",
+              //     },
+              //     validate: {
+              //       hasNumber: (value) =>
+              //         /\d/.test(value) ||
+              //         "Password must include at least one number",
+              //       hasSpecialChar: (value) =>
+              //         /[!@#$%^&*]/.test(value) ||
+              //         "Include at least one special character",
+              //     },
+              //   })}
             />
           </div>
         </Accordion>
@@ -123,6 +132,7 @@ function ProfileForm({ name }) {
         <div className="flex items-center justify-end">
           <div className="flex gap-2 ">
             <button
+              disabled={isPending}
               type="reset"
               onClick={() => reset}
               aria-label="cancel"
@@ -131,11 +141,12 @@ function ProfileForm({ name }) {
               Cancel
             </button>
             <button
+              disabled={isPending}
               type="submit"
               aria-label="save"
-              className="tracking-wide text-sm bg-green-600/80 text-green-100 hover:bg-green-600/50 transition-all duration-300 cursor-pointer rounded-md px-3 py-1.5"
+              className={`${isPending ? "bg-green-600/40 cursor-not-allowed" : "bg-green-600/80 cursor-pointer"} tracking-wide text-sm  text-green-100 hover:bg-green-600/50 transition-all duration-300 rounded-md px-3 py-1.5`}
             >
-              Save
+              {isPending ? "Saving..." : "Save"}
             </button>
           </div>
         </div>
