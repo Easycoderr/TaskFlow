@@ -2,7 +2,7 @@ import { BsEye, BsPerson, BsTrash, BsTrash2 } from "react-icons/bs";
 import { BiLockAlt } from "react-icons/bi";
 import Accordion from "../../components/Accordion";
 import Input from "../../components/Input";
-import { LuLogOut } from "react-icons/lu";
+import { LuLogOut, LuTriangleAlert } from "react-icons/lu";
 import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 function Profile() {
@@ -21,6 +21,7 @@ function Profile() {
       fullName: name,
     },
   });
+  const password = watch("password");
   function handleShowPassword(callBack) {
     callBack();
   }
@@ -71,27 +72,64 @@ function Profile() {
             <div className="flex gap-3 flex-col">
               <Input
                 onShowPassword={handleShowPassword}
-                type="settings"
                 inputType="password"
-                inputName="Password"
+                inputName="password"
                 label="Password"
                 icon={<BsEye />}
+                error={errors.password}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                  validate: {
+                    hasNumber: (value) =>
+                      /\d/.test(value) ||
+                      "Password must include at least one number",
+                    hasSpecialChar: (value) =>
+                      /[!@#$%^&*]/.test(value) ||
+                      "Include at least one special character",
+                  },
+                })}
               />
+              {/* confirm password */}
               <Input
                 onShowPassword={handleShowPassword}
-                type="settings"
                 inputType="password"
                 inputName="confirmPassword"
                 label="Confirm password"
                 icon={<BsEye />}
+                error={errors.confirmPassword}
+                {...register("confirmPassword", {
+                  required: "Please confirm your password",
+                  validate: (value) =>
+                    value === password || "The passwords do not match",
+                })}
               />
+
               <Input
                 onShowPassword={handleShowPassword}
-                type="settings"
                 inputType="password"
                 inputName="currentPassword"
                 label="Current password"
                 icon={<BsEye />}
+                error={errors.password}
+                {...register("currentPassword", {
+                  required: "Current password is required",
+                  minLength: {
+                    value: 8,
+                    message: "password must be at least 8 characters",
+                  },
+                  validate: {
+                    hasNumber: (value) =>
+                      /\d/.test(value) ||
+                      "Password must include at least one number",
+                    hasSpecialChar: (value) =>
+                      /[!@#$%^&*]/.test(value) ||
+                      "Include at least one special character",
+                  },
+                })}
               />
             </div>
           </Accordion>
@@ -99,17 +137,17 @@ function Profile() {
           <div className="flex items-center justify-end">
             <div className="flex gap-2 ">
               <button
-                onClick={reset}
-                type="button"
+                type="reset"
+                onClick={() => reset}
                 aria-label="cancel"
-                className="bg-red-600/80 text-red-100 hover:bg-red-600/50 transition-all duration-300 cursor-pointer rounded-md px-3 py-1.5"
+                className="tracking-wide text-sm bg-red-600/80 text-red-100 hover:bg-red-600/50 transition-all duration-300 cursor-pointer rounded-md px-3 py-1.5"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 aria-label="save"
-                className="bg-green-600/80 text-green-100 hover:bg-green-600/50 transition-all duration-300 cursor-pointer rounded-md px-3 py-1.5"
+                className="tracking-wide text-sm bg-green-600/80 text-green-100 hover:bg-green-600/50 transition-all duration-300 cursor-pointer rounded-md px-3 py-1.5"
               >
                 Save
               </button>
@@ -118,29 +156,41 @@ function Profile() {
         </div>
       </form>
       {/* danger zone */}
-      <div className="mt-5 flex flex-col gap-2">
+      <div className="mt-5 flex flex-col gap-4">
         {/* log out */}
         <button
           type="button"
           aria-label="logout account"
-          className="flex items-center gap-2 border rounded-md p-3 justify-center border-red-300 bg-red-300/20 dark:text-red-100 text-red-950  cursor-pointer group"
+          className="flex items-center gap-2 border shadow-sm rounded-md p-3 justify-center border-red-300 bg-red-300/20 dark:text-red-100 text-red-950  cursor-pointer group"
         >
-          <span>Logout</span>
           <span>
             <LuLogOut className="group-hover:translate-x-1 transition-all duration-300" />
           </span>
+          <span className="tracking-wide text-sm">Logout</span>
         </button>
         {/* delete account */}
-        <button
-          type="button"
-          aria-label="logout account"
-          className="flex items-center gap-2 border rounded-md p-3 justify-center border-red-500 bg-red-500/20 dark:text-red-100 text-red-950  cursor-pointer group"
-        >
-          <span>Delete Account</span>
-          <span>
-            <BsTrash className="group-hover:animate-bounce transition-all duration-300" />
-          </span>
-        </button>
+        <div className="flex flex-col gap-2 shadow-sm  bg-red-200/30 dark:bg-transparent p-2 border border-red-500/20 rounded-md">
+          <h3 className="font-semibold flex items-center gap-1 text-red-600/80">
+            <span>
+              <LuTriangleAlert />
+            </span>
+            <span>Danger zone</span>
+          </h3>
+          <p className="leading-relaxed text-sm">
+            This action cannot be undone. All your data will be permanently
+            deleted.
+          </p>
+          <button
+            type="button"
+            aria-label="logout account"
+            className="flex items-center gap-2 border rounded-md p-3 justify-center border-red-500 bg-red-500/20 dark:text-red-50 text-red-950  cursor-pointer group"
+          >
+            <span>
+              <BsTrash className="transition-all duration-300" />
+            </span>
+            <span className="tracking-wide text-sm">Delete Account</span>
+          </button>
+        </div>
       </div>
     </div>
   );

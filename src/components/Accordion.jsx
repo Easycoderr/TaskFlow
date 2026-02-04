@@ -13,7 +13,7 @@ function Accordion({ children, title, icon }) {
       >
         <div className="flex items-center gap-1">
           {icon}
-          <h3 className="select-none">{title}</h3>
+          <h3 className="select-none text-sm font-medium tracking-">{title}</h3>
         </div>
         <span className="cursor-pointer">
           <BiUpArrow

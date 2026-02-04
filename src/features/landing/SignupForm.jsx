@@ -83,7 +83,7 @@ function SignupForm() {
         <Input
           inputType={showPassword ? "text" : "password"}
           inputName="password"
-          label="password"
+          label="Password"
           icon={<HiLockClosed />}
           error={errors.password}
           {...register("password", {

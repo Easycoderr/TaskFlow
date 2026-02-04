@@ -17,10 +17,10 @@ function Appearance() {
             className="sr-only peer"
           />
           {/* Main Container: Increased to w-12 h-6.5 */}
-          <div className="relative w-12 h-6.5 bg-gray-200 peer-focus:outline-none peer-focus:ring-1 peer-focus:ring-primary dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[4px] after:start-[4px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+          <div className="relative w-12 h-6.5 bg-gray-200 peer-focus:outline-none peer-focus:ring-1 peer-focus:ring-primary dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[3px] after:start-[4px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
             {/* Icon Container: Centered logic updated for size */}
             <div
-              className={`absolute top-1/2 -translate-y-[45%] transition-all duration-300 ${
+              className={`absolute top-1/2 -translate-y-[50%] transition-all duration-300 ${
                 isDark ? "right-2" : "left-2"
               } z-10 flex items-center justify-center pointer-events-none`}
             >
