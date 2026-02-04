@@ -31,3 +31,14 @@ export async function login({ email, password }) {
 export async function logout() {
   await supabase.auth.signOut();
 }
+
+// update user data
+
+export async function updateUser(userData) {
+  const { data, error } = await supabase.auth.updateUser({
+    userData,
+  });
+  if (error) throw new Error("Error updating metadata:", error.message);
+
+  return data;
+}
