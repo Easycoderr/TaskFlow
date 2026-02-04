@@ -4,7 +4,7 @@ import Spinner from "./Spinner";
 
 function GuestRoute() {
   const { state } = useAuth();
-  console.log(state);
+
   if (state.loading) return <Spinner />;
 
   return state.user?.aud === "authenticated" ? (
