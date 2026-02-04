@@ -4,31 +4,59 @@ import Accordion from "../../components/Accordion";
 import Input from "../../components/Input";
 import { useForm } from "react-hook-form";
 import useUpdateUser from "./useUpdateUser";
-function ProfileForm({ name }) {
+import { login } from "../../services/auth";
+import useUpdatePassword from "./useUpdatePassword";
+import { toast } from "react-toastify";
+function ProfileForm({ name, email }) {
   const { mutate: updateMutate, isPending } = useUpdateUser();
+  const { mutate: updatePassMutate, isPending: isChangingPass } =
+    useUpdatePassword();
   const {
     register,
     handleSubmit,
     reset,
-    // watch,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       fullName: name,
     },
   });
-  //   const password = watch("password");
+  const password = watch("currentPassword");
   function handleShowPassword(callBack) {
     callBack();
   }
   async function onSave(data) {
-    console.log("h");
-    const { password, fullName } = data;
-    console.log(fullName);
-    if (!fullName === "" || !(fullName.toLowerCase() === name.toLowerCase())) {
-      console.log("jjuj");
-      const userData = { display_name: fullName };
-      updateMutate(userData);
+    const { currentPassword, password, fullName } = data;
+    const isNameChanged =
+      fullName && fullName.toLowerCase() !== name.toLowerCase();
+    const isPasswordProvided = password && password.length > 0;
+    // 1. Handle Name Update
+    if (isNameChanged) {
+      updateMutate({ display_name: fullName });
+    }
+    // 2. Handle Password Update (requires re-auth)
+    if (isPasswordProvided) {
+      try {
+        // Assuming 'login' is your Supabase signIn function
+        const { data: loginData, error: loginError } = await login({
+          email,
+          password: currentPassword,
+        });
+
+        if (loginError) throw new Error("Incorrect current password");
+
+        // If login succeeds, trigger the mutation
+        if (loginData) {
+          updatePassMutate({ password: password });
+        }
+      } catch (err) {
+        toast.error(err.message);
+      }
+    }
+    // 3. If nothing happened
+    if (!isNameChanged && !isPasswordProvided) {
+      toast.info("No changes detected.");
     }
   }
   return (
@@ -69,24 +97,25 @@ function ProfileForm({ name }) {
             <Input
               onShowPassword={handleShowPassword}
               inputType="password"
-              inputName="password"
-              label="New Password"
+              inputName="currentPassword"
+              label="Current password"
               icon={<BsEye />}
               error={errors.password}
-              //   {...register("password", {
-              //     minLength: {
-              //       value: 8,
-              //       message: "Password must be at least 8 characters",
-              //     },
-              //     validate: {
-              //       hasNumber: (value) =>
-              //         /\d/.test(value) ||
-              //         "Password must include at least one number",
-              //       hasSpecialChar: (value) =>
-              //         /[!@#$%^&*]/.test(value) ||
-              //         "Include at least one special character",
-              //     },
-              //   })}
+              {...register("currentPassword", {
+                // required: "Current password is required",
+                // minLength: {
+                //   value: 8,
+                //   message: "password must be at least 8 characters",
+                // },
+                //   validate: {
+                //     hasNumber: (value) =>
+                //       /\d/.test(value) ||
+                //       "Password must include at least one number",
+                //     hasSpecialChar: (value) =>
+                //       /[!@#$%^&*]/.test(value) ||
+                //       "Include at least one special character",
+                //   },
+              })}
             />
             {/* confirm password */}
             <Input
@@ -95,36 +124,34 @@ function ProfileForm({ name }) {
               inputName="confirmPassword"
               label="Confirm password"
               icon={<BsEye />}
-              //   error={errors.confirmPassword}
-              //   {...register("confirmPassword", {
-              //     // required: "Please confirm your password",
-              //     validate: (value) =>
-              //       value === password || "The passwords do not match",
-              //   })}
+              error={errors.confirmPassword}
+              {...register("confirmPassword", {
+                // required: "Please confirm your password",
+                validate: (value) =>
+                  value === password || "The passwords do not match",
+              })}
             />
-
             <Input
               onShowPassword={handleShowPassword}
               inputType="password"
-              inputName="currentPassword"
-              label="Current password"
+              inputName="password"
+              label="New Password"
               icon={<BsEye />}
               error={errors.password}
-              //   {...register("currentPassword", {
-              //     // required: "Current password is required",
-              //     minLength: {
-              //       value: 8,
-              //       message: "password must be at least 8 characters",
-              //     },
-              //     validate: {
-              //       hasNumber: (value) =>
-              //         /\d/.test(value) ||
-              //         "Password must include at least one number",
-              //       hasSpecialChar: (value) =>
-              //         /[!@#$%^&*]/.test(value) ||
-              //         "Include at least one special character",
-              //     },
-              //   })}
+              {...register("password", {
+                // minLength: {
+                //   value: 8,
+                //   message: "Password must be at least 8 characters",
+                // },
+                // validate: {
+                //   hasNumber: (value) =>
+                //     /\d/.test(value) ||
+                //     "Password must include at least one number",
+                //   hasSpecialChar: (value) =>
+                //     /[!@#$%^&*]/.test(value) ||
+                //     "Include at least one special character",
+                // },
+              })}
             />
           </div>
         </Accordion>
@@ -132,7 +159,7 @@ function ProfileForm({ name }) {
         <div className="flex items-center justify-end">
           <div className="flex gap-2 ">
             <button
-              disabled={isPending}
+              disabled={isPending || isChangingPass}
               type="reset"
               onClick={() => reset}
               aria-label="cancel"
@@ -141,12 +168,12 @@ function ProfileForm({ name }) {
               Cancel
             </button>
             <button
-              disabled={isPending}
+              disabled={isPending || isChangingPass}
               type="submit"
               aria-label="save"
               className={`${isPending ? "bg-green-600/40 cursor-not-allowed" : "bg-green-600/80 cursor-pointer"} tracking-wide text-sm  text-green-100 hover:bg-green-600/50 transition-all duration-300 rounded-md px-3 py-1.5`}
             >
-              {isPending ? "Saving..." : "Save"}
+              {isPending || isChangingPass ? "Saving..." : "Save"}
             </button>
           </div>
         </div>

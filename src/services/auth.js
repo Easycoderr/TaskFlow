@@ -23,7 +23,7 @@ export async function login({ email, password }) {
     password,
   });
   if (error) throw new Error(error.message);
-  return data;
+  return { data, error };
 }
 
 // logout
@@ -41,5 +41,12 @@ export async function updateUser(userData) {
   });
   if (error) throw new Error("Error updating metadata:", error.message);
 
+  return data;
+}
+// update user data
+export async function updateUserPass({ password }) {
+  console.log(password);
+  const { data, error } = await supabase.auth.updateUser({ password });
+  if (error) throw new Error(error.message);
   return data;
 }
