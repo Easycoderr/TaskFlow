@@ -50,3 +50,11 @@ export async function updateUserPass({ password }) {
   if (error) throw new Error(error.message);
   return data;
 }
+
+// delete user
+
+export async function deleteUserAccount() {
+  const { data, error } = await supabase.rpc("delete_user_by_id");
+  if (error) throw new Error(error.message);
+  return data;
+}

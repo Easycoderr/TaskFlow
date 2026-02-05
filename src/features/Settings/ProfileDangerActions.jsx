@@ -4,10 +4,16 @@ import { logout } from "../../services/auth";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import useDeleteAccount from "./useDeleteAccount";
+import { useUiStates } from "../../hooks/useUiContext";
+import Modal from "../../UI/Modal";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 function ProfileDangerActions() {
   const navigate = useNavigate();
+  const { modal, dispatch } = useUiStates();
   const [loading, setLoading] = useState(false);
+  const { mutate: mutateDelete, isPending } = useDeleteAccount();
 
   // handle logout
   async function handleLogout() {
@@ -21,7 +27,9 @@ function ProfileDangerActions() {
       setLoading(false);
     }
   }
-  function handleDeleteAccount() {}
+  function handleDeleteAccount() {
+    mutateDelete();
+  }
   return (
     <div className="mt-5 flex flex-col gap-4">
       {/* log out */}
@@ -52,10 +60,18 @@ function ProfileDangerActions() {
           deleted.
         </p>
         <button
-          onClick={handleDeleteAccount}
+          disabled={isPending}
+          onClick={() =>
+            dispatch({
+              value: "OPEN_MODAL",
+              payload: {
+                modal: "deleteAccount",
+              },
+            })
+          }
           type="button"
           aria-label="logout account"
-          className="flex items-center gap-2 border rounded-md p-3 justify-center border-red-500 bg-red-500/20 dark:text-red-50 text-red-950  cursor-pointer group"
+          className={`flex items-center gap-2 border rounded-md p-3 justify-center ${isPending ? "border-red-300 bg-red-500/10" : "border-red-500 bg-red-500/20"} dark:text-red-50 text-red-950  cursor-pointer group`}
         >
           <span>
             <BsTrash className="transition-all duration-300" />
@@ -63,6 +79,15 @@ function ProfileDangerActions() {
           <span className="tracking-wide text-sm">Delete Account</span>
         </button>
       </div>
+      {modal === "deleteAccount" && (
+        <Modal>
+          <ConfirmationModal
+            title="Deletion"
+            message="You're about to delete your account. This will permanently remove all of your data and cannot be undone. Are you sure you want to proceed?"
+            onConfirm={handleDeleteAccount}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

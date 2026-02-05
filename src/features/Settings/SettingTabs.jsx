@@ -9,7 +9,7 @@ function SettingTabs({ setting, setSetting }) {
           className="flex items-center gap-1 relative group cursor-pointer transition-all duration-300 hover:bg-primary/30 p-1 px-2 rounded-md"
         >
           <CgProfile />
-          <span className="transition-all duration-200 cursor-pointer">
+          <span className="transition-all font-medium duration-200 cursor-pointer">
             Profile
           </span>
           <div
@@ -21,7 +21,7 @@ function SettingTabs({ setting, setSetting }) {
           className="flex items-center gap-1 relative group cursor-pointer transition-all duration-300 hover:bg-primary/30 p-1 px-2 rounded-md"
         >
           <MdStyle />
-          <span className="transition-all duration-200 cursor-pointer">
+          <span className="transition-all font-medium duration-200 cursor-pointer">
             Appearance
           </span>
           <div

@@ -2,6 +2,8 @@ import { format, isSameDay } from "date-fns";
 
 import EmptyPage from "../../components/EmptyPage";
 import CalendarTask from "./CalendarTask";
+import { FcEmptyTrash } from "react-icons/fc";
+import { GiNothingToSay } from "react-icons/gi";
 
 function CalendarTaskList({ tasks, selectedDay }) {
   const todayTasks = isSameDay(new Date(), selectedDay);
@@ -24,14 +26,16 @@ function CalendarTaskList({ tasks, selectedDay }) {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 gap-y-4">
         {filteredTask?.length === 0 && (
-          <EmptyPage>
-            <span className="text-sm">
-              No tasks yet for{" "}
-              <span>
-                {todayTasks ? "today" : format(selectedDay, "MMMM do, yyyy")}
+          <div className="mx-auto">
+            <EmptyPage>
+              <span className="text-sm">
+                No tasks yet for{" "}
+                <span>
+                  {todayTasks ? "today" : format(selectedDay, "MMMM do, yyyy")}
+                </span>
               </span>
-            </span>
-          </EmptyPage>
+            </EmptyPage>
+          </div>
         )}
         {filteredTask.map((task) => (
           <CalendarTask

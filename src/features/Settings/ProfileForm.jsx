@@ -13,6 +13,7 @@ function ProfileForm({ name, email }) {
     useUpdatePassword();
   const {
     register,
+    resetField,
     handleSubmit,
     reset,
     watch,
@@ -22,7 +23,7 @@ function ProfileForm({ name, email }) {
       fullName: name,
     },
   });
-  const password = watch("currentPassword");
+  const password = watch("password");
   function handleShowPassword(callBack) {
     callBack();
   }
@@ -49,6 +50,9 @@ function ProfileForm({ name, email }) {
         // If login succeeds, trigger the mutation
         if (loginData) {
           updatePassMutate({ password: password });
+          resetField("password");
+          resetField("currentPassword");
+          resetField("confirmPassword");
         }
       } catch (err) {
         toast.error(err.message);
@@ -117,20 +121,7 @@ function ProfileForm({ name, email }) {
                 //   },
               })}
             />
-            {/* confirm password */}
-            <Input
-              onShowPassword={handleShowPassword}
-              inputType="password"
-              inputName="confirmPassword"
-              label="Confirm password"
-              icon={<BsEye />}
-              error={errors.confirmPassword}
-              {...register("confirmPassword", {
-                // required: "Please confirm your password",
-                validate: (value) =>
-                  value === password || "The passwords do not match",
-              })}
-            />
+
             <Input
               onShowPassword={handleShowPassword}
               inputType="password"
@@ -151,6 +142,20 @@ function ProfileForm({ name, email }) {
                 //     /[!@#$%^&*]/.test(value) ||
                 //     "Include at least one special character",
                 // },
+              })}
+            />
+            {/* confirm password */}
+            <Input
+              onShowPassword={handleShowPassword}
+              inputType="password"
+              inputName="confirmPassword"
+              label="Confirm new password"
+              icon={<BsEye />}
+              error={errors.confirmPassword}
+              {...register("confirmPassword", {
+                // required: "Please confirm your password",
+                validate: (value) =>
+                  value === password || "The passwords do not match",
               })}
             />
           </div>
