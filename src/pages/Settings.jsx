@@ -8,7 +8,7 @@ function Settings() {
   const [setting, setSetting] = useState("profile");
 
   return (
-    <div className="col-start-2 row-start-2 bg-bg text-text dark:text-text-dark dark:bg-bg-dark space-y-10">
+    <div className="col-start-2 row-start-2 bg-bg text-text dark:text-text-dark dark:bg-bg-dark space-y-10 overflow-x-hidden">
       <div className="text-text dark:text-text-dark space-y-3 flex items-center justify-between mb-5">
         <div>
           <Heading>Settings</Heading>

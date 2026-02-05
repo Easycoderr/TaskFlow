@@ -20,7 +20,7 @@ function Dashboard() {
 
   if (isPending) return <Spinner />;
   return (
-    <div className="bg-bg dark:bg-bg-dark space-y-10 overflow-y-auto grid grid-cols-2 gap-x-4">
+    <div className="bg-bg dark:bg-bg-dark space-y-10 overflow-y-auto grid grid-cols-2 gap-x-4 overflow-x-hidden">
       <div className="text-text dark:text-text-dark space-y-3 col-span-2 flex items-center justify-between">
         <div>
           <Heading>Dashboard</Heading>

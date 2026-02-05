@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BiUpArrow } from "react-icons/bi";
+import { BiChevronUp, BiUpArrow } from "react-icons/bi";
 
 function Accordion({ children, title, icon }) {
   const [isAccordion, setIsAccordion] = useState(false);
@@ -16,8 +16,8 @@ function Accordion({ children, title, icon }) {
           <h3 className="select-none text-sm font-medium tracking-">{title}</h3>
         </div>
         <span className="cursor-pointer">
-          <BiUpArrow
-            className={`${isAccordion && "rotate-180"} transition-all duration-400`}
+          <BiChevronUp
+            className={`${isAccordion && "rotate-180 text-primary"} transition-all duration-400 text-2xl`}
           />
         </span>
       </div>

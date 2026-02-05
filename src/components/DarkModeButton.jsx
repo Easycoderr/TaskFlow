@@ -8,7 +8,7 @@ function DarkModeButton({ handleDarkModeToggle, theme, layout }) {
       aria-label="Toggle dark mode"
       aria-controls="page-content"
       onClick={handleDarkModeToggle}
-      className="cursor-pointer mr-2 md:mr-10"
+      className="cursor-pointer"
       title={
         theme === "dark"
           ? "click for switch to light mode"

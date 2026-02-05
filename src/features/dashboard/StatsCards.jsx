@@ -20,19 +20,19 @@ function StatsCards({ tasks }) {
     <div className="col-span-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 ">
       {/* card 1 */}
       <StatsCardItem record={todayTasks} title="Today">
-        <IoTodaySharp className="text-cyan-600" />
+        <IoTodaySharp className="text-cyan-600 text-4xl" />
       </StatsCardItem>
       {/* card 2 */}
       <StatsCardItem record={completedTasks} title="Completed">
-        <MdDoneAll />
+        <MdDoneAll className="text-4xl" />
       </StatsCardItem>
       {/* card 3 */}
-      <StatsCardItem record={incompleteTasks} title="incompleted">
-        <MdPendingActions className="text-amber-500" />
+      <StatsCardItem record={incompleteTasks} title="Incompleted">
+        <MdPendingActions className="text-amber-500 text-4xl" />
       </StatsCardItem>
       {/* card 3 */}
       <StatsCardItem record={overDueTasks} title="Overdue">
-        <LuAlarmClockOff className="text-red-500" />
+        <LuAlarmClockOff className="text-red-500 text-4xl" />
       </StatsCardItem>
     </div>
   );
