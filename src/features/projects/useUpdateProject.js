@@ -7,15 +7,34 @@ function useUpdateProject() {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: ({ id, data }) => updateProject(id, data),
+    onMutate: async (id, data) => {
+      const { name, description, status, due_date } = data;
+      await queryClient.cancelQueries(["projects"]);
 
+      const previous = queryClient.getQueryData(["projects"]);
+
+      queryClient.setQueryData(["projects"], (old = []) =>
+        old.map((project) =>
+          project.id === id
+            ? { ...project, name, description, status, due_date }
+            : project,
+        ),
+      );
+      return { previous };
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-      toast.success("Project updated successfully");
+      toast.success("Project updated.");
       dispatch({ value: "CLOSE_MODAL" });
     },
-    onError: (error) => {
+    onError: (error, vars, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["projects"], context.previous);
+      }
       console.error(error);
       toast.error("There was an error while updating project.");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["projects"]);
     },
   });
   return { mutate, isPending };
