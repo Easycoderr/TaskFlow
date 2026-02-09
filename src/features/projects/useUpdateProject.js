@@ -31,7 +31,9 @@ function useUpdateProject() {
         queryClient.setQueryData(["projects"], context.previous);
       }
       console.error(error);
-      toast.error("There was an error while updating project.");
+      toast.error(
+        "There was an error while updating project, changes reverted",
+      );
     },
     onSettled: () => {
       queryClient.invalidateQueries(["projects"]);

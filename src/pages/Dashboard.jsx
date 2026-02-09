@@ -10,6 +10,7 @@ import ProjectForm from "../features/projects/ProjectForm";
 import useTasks from "../features/tasks/useTasks";
 import Spinner from "../components/Spinner";
 import { useAuth } from "../hooks/useAuth";
+import DashboardSkeleton from "../components/skeletons/DashboardSkeleton";
 
 function Dashboard() {
   const { modal } = useUiStates();
@@ -18,7 +19,7 @@ function Dashboard() {
     state: { user },
   } = useAuth();
 
-  if (isPending) return <Spinner />;
+  if (isPending) return <DashboardSkeleton />;
   return (
     <div className="bg-bg dark:bg-bg-dark space-y-10 overflow-y-auto grid grid-cols-2 gap-x-4 overflow-x-hidden">
       <div className="text-text dark:text-text-dark space-y-3 col-span-2 flex items-center justify-between">

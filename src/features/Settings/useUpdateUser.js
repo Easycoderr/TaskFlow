@@ -7,6 +7,7 @@ function useUpdateUser() {
   const { dispatch } = useAuth();
   const { mutate, isPending } = useMutation({
     mutationFn: (userData) => updateUser(userData),
+
     onSuccess: (data) => {
       toast.success("Profile updated successfully.");
       dispatch({
