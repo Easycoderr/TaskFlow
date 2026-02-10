@@ -1,13 +1,9 @@
 import { useRef, useState } from "react";
 import SideBar from "../UI/SideBar";
 import TopBar from "../UI/TopBar";
-// import ProjectDetails from "../pages/ProjectDetails";
-// import Modal from "../UI/Modal";
-// import Projects from "../pages/Projects";
 import { Outlet } from "react-router";
 import { useUiStates } from "../hooks/useUiContext";
 import { ToastContainer } from "react-toastify";
-// import Dashboard from "../pages/Dashboard";
 
 function Layout() {
   const [isExpand, setIsExpand] = useState(false);

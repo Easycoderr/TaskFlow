@@ -2,7 +2,6 @@ import { BiSolidTimer } from "react-icons/bi";
 import { GoDotFill } from "react-icons/go";
 import { isOverDue } from "../../utils/taskUtils";
 import { BsDash } from "react-icons/bs";
-import EmptyPage from "../../components/EmptyPage";
 
 function UpcomingList({ tasks }) {
   const filteredTasks = tasks
@@ -22,7 +21,7 @@ function UpcomingList({ tasks }) {
     })
     //  limit task we want display first 3 indexs
     .slice(0, 3);
-  console.log(filteredTasks);
+
   return (
     <div className="p-4 space-y-4 rounded-md col-span-2 md:col-span-1 bg-card  text-text dark:text-text-dark dark:bg-card-dark shadow-md">
       <h3 className="text-lg flex items-center gap-1 sm:text-xl font-medium tracking-tight">

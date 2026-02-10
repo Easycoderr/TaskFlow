@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import DarkModeButton from "../components/DarkModeButton";
 import { useAuth } from "../hooks/useAuth";
 import { useUiStates } from "../hooks/useUiContext";

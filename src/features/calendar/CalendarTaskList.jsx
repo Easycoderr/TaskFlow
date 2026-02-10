@@ -2,8 +2,6 @@ import { format, isSameDay } from "date-fns";
 
 import EmptyPage from "../../components/EmptyPage";
 import CalendarTask from "./CalendarTask";
-import { FcEmptyTrash } from "react-icons/fc";
-import { GiNothingToSay } from "react-icons/gi";
 
 function CalendarTaskList({ tasks, selectedDay }) {
   const todayTasks = isSameDay(new Date(), selectedDay);
