@@ -1,15 +1,15 @@
 import EmptyPage from "../../components/EmptyPage";
-import Spinner from "../../components/Spinner";
 import { countTask, isOverDue, isToday } from "../../utils/taskUtils";
 import TaskItem from "./TaskItem";
 import useTasks from "./useTasks";
 import ErrorState from "../../components/ErrorState";
-
 import searchFilter from "../../utils/searchUtils";
+import TaskSkeleton from "../../components/skeletons/TaskSkeleton";
 
 function TasksList({ selectedValue, searchValue }) {
   const { data: tasks, isPending, isError } = useTasks();
-  if (isPending) return <Spinner />;
+
+  if (isPending) return <TaskSkeleton />;
   if (isError)
     return <ErrorState message="Something went wrong. Please try again." />;
   // we make sure there is a data and thin start our functionality & logic.

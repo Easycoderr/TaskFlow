@@ -17,26 +17,26 @@ function DashboardSkeleton() {
       </div>
       {/* today focus */}
       <div className="p-4 space-y-5 rounded-md col-span-2 md:col-span-1 bg-gray-200 dark:bg-card-dark animate-pulse">
-        <h3 className="w-15 h-6 bg-gray-200 dark:bg-gray-900 rounded-md"></h3>
+        <h3 className="w-15 h-6 bg-gray-100 dark:bg-gray-900 rounded-md"></h3>
         {/* list of today items */}
         <div className="flex flex-col gap-4">
           {/* items */}
-          <div className="w-full h-8 bg-gray-200 dark:bg-gray-900 rounded-md"></div>
-          <div className="w-full h-8 bg-gray-200 dark:bg-gray-900 rounded-md"></div>
-          <div className="w-full h-8 bg-gray-200 dark:bg-gray-900 rounded-md"></div>
-          <div className="w-full h-8 bg-gray-200 dark:bg-gray-900 rounded-md"></div>
+          <div className="w-full h-8 bg-gray-100 dark:bg-gray-900 rounded-md"></div>
+          <div className="w-full h-8 bg-gray-100 dark:bg-gray-900 rounded-md"></div>
+          <div className="w-full h-8 bg-gray-100 dark:bg-gray-900 rounded-md"></div>
+          <div className="w-full h-8 bg-gray-100 dark:bg-gray-900 rounded-md"></div>
         </div>
       </div>
       {/* upcomming  */}
       <div className="p-4 space-y-4 rounded-md col-span-2 md:col-span-1 bg-gray-200 dark:bg-card-dark animate-pulse">
-        <h3 className="w-15 h-6 bg-gray-200 dark:bg-gray-900 rounded-md"></h3>
+        <h3 className="w-15 h-6 bg-gray-100 dark:bg-gray-900 rounded-md"></h3>
         {/* list of today items */}
         <div className="flex flex-col gap-4">
           {/* items */}
-          <div className="w-full h-8 bg-gray-200 dark:bg-gray-900 rounded-md"></div>
-          <div className="w-full h-8 bg-gray-200 dark:bg-gray-900 rounded-md"></div>
-          <div className="w-full h-8 bg-gray-200 dark:bg-gray-900 rounded-md"></div>
-          <div className="w-full h-8 bg-gray-200 dark:bg-gray-900 rounded-md"></div>
+          <div className="w-full h-8 bg-gray-100 dark:bg-gray-900 rounded-md"></div>
+          <div className="w-full h-8 bg-gray-100 dark:bg-gray-900 rounded-md"></div>
+          <div className="w-full h-8 bg-gray-100 dark:bg-gray-900 rounded-md"></div>
+          <div className="w-full h-8 bg-gray-100 dark:bg-gray-900 rounded-md"></div>
         </div>
       </div>
       {/* Quick Actions */}
