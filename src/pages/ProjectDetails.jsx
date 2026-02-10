@@ -19,6 +19,7 @@ import TaskForm from "../features/tasks/TaskForm";
 import useDeleteProject from "../features/projects/useDeleteProject";
 import ConfirmationModal from "../components/ConfirmationModal";
 import ErrorState from "../components/ErrorState";
+import ProjectDetailsSkeleton from "../components/skeletons/ProjectDetailsSkeleton";
 
 function ProjectDetails() {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ function ProjectDetails() {
     mutate(id);
     navigate(-1);
   }
-  if (isPending || isLoadingTasks) return <Spinner />;
+  if (isPending || isLoadingTasks) return <ProjectDetailsSkeleton />;
   if (isProjectError)
     return <ErrorState message="Something went wrong. Please try again." />;
   return (
@@ -186,7 +187,7 @@ function ProjectDetails() {
               {isTaskError && (
                 <ErrorState message="Something went wrong. Please try again." />
               )}
-              {!filteredTasks.length && (
+              {!filteredTasks?.length && (
                 <EmptyPage>
                   <span className="flex items-center flex-col gap-2 text-red-400">
                     <PiEmpty className="text-red-500" size={40} />
@@ -195,7 +196,7 @@ function ProjectDetails() {
                 </EmptyPage>
               )}
             </div>
-            {filteredTasks.map((item) => (
+            {filteredTasks?.map((item) => (
               <TaskItem
                 key={item.id}
                 id={item.id}

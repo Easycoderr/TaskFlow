@@ -1,11 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { BiBell, BiNotification, BiVector } from "react-icons/bi";
 import DarkModeButton from "../components/DarkModeButton";
 import { useAuth } from "../hooks/useAuth";
 import { useUiStates } from "../hooks/useUiContext";
-import { BsBell } from "react-icons/bs";
-import { CgBell } from "react-icons/cg";
-import { FaBell } from "react-icons/fa6";
+
 import { GoBell } from "react-icons/go";
 
 function TopBar() {
@@ -13,7 +10,7 @@ function TopBar() {
   const {
     state: { user },
   } = useAuth();
-  console.log(user);
+
   const userName = user.user_metadata.display_name;
   const avatarLetter = userName.split("")[0];
   return (
