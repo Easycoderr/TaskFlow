@@ -1,5 +1,6 @@
 import EmptyPage from "../../components/EmptyPage";
 import ErrorState from "../../components/ErrorState";
+import ProjectSkeleton from "../../components/skeletons/ProjectSkeleton";
 import Spinner from "../../components/Spinner";
 import searchFilter from "../../utils/searchUtils";
 import {
@@ -15,7 +16,7 @@ function ProjectsList({ selectedValue, searchValue }) {
   const { data: projects, isLoading, isError } = useProjects();
   const { data: tasks, isLoading: loadingTasks } = useTasks();
 
-  if (isLoading || loadingTasks) return <Spinner />;
+  if (isLoading || loadingTasks) return <ProjectSkeleton />;
   if (isError)
     return <ErrorState message="Something went wrong. Please try again." />;
   if (!projects.length)
