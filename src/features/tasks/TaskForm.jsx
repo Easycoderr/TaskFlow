@@ -39,7 +39,7 @@ function TaskForm() {
   const { mutate: mutateAdd, isPending: isAdding } = useAddTask();
   const { modal, modalData } = useUiStates();
 
-  // form states
+  // useForm hook
   const {
     register,
     control,
