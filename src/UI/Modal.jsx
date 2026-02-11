@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import UseOutSideClicker from "../hooks/useOutSideClicker";
 import SimpleButtonIcon from "../components/SimpleButtonIcon";
 import { CgClose } from "react-icons/cg";
@@ -7,8 +7,16 @@ import { useUiStates } from "../hooks/useUiContext";
 function Modal({ children }) {
   const { dispatch } = useUiStates();
   const refEl = useRef();
-  function handleCloseModal() {
-    dispatch({ value: "CLOSE_MODAL" });
+  useEffect(() => {
+    document.addEventListener("keydown", handleCloseModal);
+    return () => {
+      document.addEventListener("keydown", handleCloseModal);
+    };
+  }, []);
+  function handleCloseModal(event) {
+    if (event?.key && event?.key === "Escape") {
+      dispatch({ value: "CLOSE_MODAL" });
+    } else if (!event?.key) dispatch({ value: "CLOSE_MODAL" });
   }
   UseOutSideClicker(refEl, handleCloseModal, true);
   return (
