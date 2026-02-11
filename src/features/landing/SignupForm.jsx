@@ -55,6 +55,7 @@ function SignupForm() {
           label="Full name"
           icon={<HiUser />}
           error={errors.fullName}
+          focus={true}
           {...register("fullName", {
             required: "full name is requierd",
             pattern: {

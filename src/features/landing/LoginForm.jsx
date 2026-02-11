@@ -53,6 +53,7 @@ function LoginForm() {
           label="Email address"
           icon={<HiMail />}
           error={errors.email}
+          focus={true}
           {...register("email", {
             required: "Email is required",
             pattern: {

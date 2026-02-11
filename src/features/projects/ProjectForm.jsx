@@ -71,6 +71,7 @@ function ProjectForm() {
           label="Project name"
           icon={<GrPlan />}
           error={errors.name}
+          focus={true}
           {...register("name", { required: "Name is required" })}
         />
         <Input

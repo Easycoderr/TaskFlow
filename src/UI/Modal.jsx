@@ -14,7 +14,7 @@ function Modal({ children }) {
     };
   }, []);
   function handleCloseModal(event) {
-    if (event?.key && event?.key === "Escape") {
+    if (event?.key === "Escape") {
       dispatch({ value: "CLOSE_MODAL" });
     } else if (!event?.key) dispatch({ value: "CLOSE_MODAL" });
   }

@@ -104,6 +104,7 @@ function TaskForm() {
           label="title"
           error={errors.title}
           icon={<GrPlan />}
+          focus={true}
           {...register("title", { required: "Title is required" })}
         />
         <Input

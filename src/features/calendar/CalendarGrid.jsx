@@ -29,6 +29,8 @@ function CalendarGrid({
 
           return (
             <div
+              role="button"
+              tabIndex={0}
               onClick={() => setSelectedDay(day)}
               onMouseLeave={() => setIsMouseHover(null)}
               onMouseOver={() => setIsMouseHover(idx)}
