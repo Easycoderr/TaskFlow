@@ -11,11 +11,11 @@ function CalendarGrid({
   days,
 }) {
   return (
-    <div className="border p-2 border-primary">
+    <div className="bg-card dark:bg-card-dark rounded-md p-2">
       {/* days of the week */}
-      <div className="grid grid-cols-7 font-semibold mb-2">
+      <div className="grid grid-cols-7 font-semibold mb-2 divide-x divide-gray-800">
         {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((d) => (
-          <div key={d} className="border-primary p-4 text-xs text-center ">
+          <div key={d} className="p-4 text-xs text-center ">
             {d}
           </div>
         ))}

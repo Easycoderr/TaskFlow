@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BsCardText } from "react-icons/bs";
 import CustomSelect from "../../components/CustomSelect";
 import Input from "../../components/Input";
@@ -10,6 +9,7 @@ import useUpdateTask from "./useUpdateTask";
 import useAddTask from "./useAddTask";
 import { useAuth } from "../../hooks/useAuth";
 import useProjects from "../projects/useProjects";
+import { Controller, useForm } from "react-hook-form";
 
 const statusOptions = [
   { value: "completed", label: "Completed" },
@@ -40,41 +40,48 @@ function TaskForm() {
   const { modal, modalData } = useUiStates();
 
   // form states
+  const {
+    register,
+    control,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: modalData?.title || "",
+      description: modalData?.description || "",
+      dueDate: modalData?.dueDate || "",
+      status: modalData?.status || "incomplete",
+      priority: modalData?.priority || null,
+      project: modalData?.project?.name || null,
+    },
+  });
 
-  const [title, setTitle] = useState(modalData?.title || "");
-  const [description, setDescription] = useState(modalData?.description || "");
-  const [dueDate, setDueDate] = useState(modalData?.dueDate || "");
-  const [selectedStatus, setSelectedStatus] = useState(
-    modalData?.status || "incomplete",
-  );
-  const [selectedPriority, setSelectedPriority] = useState(
-    modalData?.priority || null,
-  );
-  const [selectedProject, setSelectedProject] = useState(
-    modalData?.project?.name || null,
-  );
-
-  // handle update and add task
-
-  function handleSubmitTask(e) {
-    e.preventDefault();
-    if (!title || !dueDate || !selectedPriority) return null;
+  function onSubmit(data) {
+    const {
+      title,
+      description,
+      dueDate,
+      status,
+      priority,
+      project: selectedProject,
+    } = data;
     const projectId = projectOptions.find(
       (project) => project.value === selectedProject,
     )?.id;
 
-    const data = {
+    const taskData = {
       title,
       description,
       due_date: dueDate,
-      status: selectedStatus,
-      priority: selectedPriority,
+      status,
+      priority,
       project_id: projectId,
     };
     if (modal === "addTask") {
-      mutateAdd({ data, user_id: user.id });
+      mutateAdd({ data: taskData, user_id: user.id });
     } else {
-      mutateUpdate({ id: modalData.id, data });
+      mutateUpdate({ id: modalData.id, data: taskData });
     }
   }
   return (
@@ -86,55 +93,76 @@ function TaskForm() {
         </span>
         <div className="bg-linear-to-l from-transparent via-primary to-transparent h-0.5"></div>
       </div>
-      <form action="" className="space-y-4 flex flex-col">
+      <form
+        action=""
+        className="space-y-4 flex flex-col"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          inputName="task-name"
+          inputName="title"
           inputType="text"
           label="title"
+          error={errors.title}
           icon={<GrPlan />}
+          {...register("title", { required: "Title is required" })}
         />
         <Input
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
           inputName="description"
           inputType="text"
           label="Description"
+          error={errors.description}
           icon={<BsCardText />}
+          {...register("description")}
         />
         <Input
-          onChange={(e) => setDueDate(e.target.value)}
-          value={dueDate}
           inputName="dueDate"
           inputType="date"
           label="Due date"
+          error={errors.dueDate}
+          {...register("dueDate", { required: "Due date is required" })}
         />
         <div className="flex flex-col sm:flex-row gap-2">
           {modal === "editTask" && (
-            <CustomSelect
-              options={statusOptions}
-              value={selectedStatus}
-              onChange={setSelectedStatus}
-              placeholder="Status"
+            <Controller
+              name="status"
+              control={control}
+              render={({ field }) => (
+                <CustomSelect
+                  {...field}
+                  options={statusOptions}
+                  placeholder="Status"
+                />
+              )}
             />
           )}
-          <CustomSelect
-            options={priorityOptions}
-            value={selectedPriority}
-            onChange={setSelectedPriority}
-            placeholder="Priority"
+          <Controller
+            name="priority"
+            control={control}
+            render={({ field }) => (
+              <CustomSelect
+                {...field}
+                options={priorityOptions}
+                placeholder="Priority"
+              />
+            )}
           />
-          <CustomSelect
-            options={projectOptions}
-            value={selectedProject}
-            onChange={setSelectedProject}
-            placeholder="Projects"
+
+          <Controller
+            name="project"
+            control={control}
+            render={({ field }) => (
+              <CustomSelect
+                {...field}
+                options={projectOptions}
+                placeholder="Projects"
+              />
+            )}
           />
         </div>
 
         <div className="ml-auto flex flex-row items-center gap-3">
           <Button
+            onClick={() => reset()}
             type="cancel"
             type2="button"
             title="click to close and cancel project."
@@ -144,8 +172,8 @@ function TaskForm() {
           <Button
             loading={isUpadating || isLoading}
             type="secondary"
+            type2="submit"
             title="click to add the new project."
-            onClick={handleSubmitTask}
           >
             {modal === "addTask"
               ? `${isAdding ? "Creating..." : "Create task"}`

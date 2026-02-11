@@ -29,7 +29,6 @@ function LoginForm() {
   }
   async function onSubmit(data) {
     const { email, password } = data;
-    if (email === "" || password === "") return;
     setLoading(true);
     setError("");
     try {
