@@ -3,6 +3,7 @@ import { useUiStates } from "../../hooks/useUiContext";
 import generateCharecter from "../../utils/generateCharecter";
 import useDeleteTask from "../tasks/useDeleteTask";
 import useUpdateTask from "../tasks/useUpdateTask";
+import CalendarSidebarSkeleton from "../../components/skeletons/CalendarSidebarSkeleton";
 
 function CalendarTask({
   id,
@@ -21,7 +22,6 @@ function CalendarTask({
 
   // useDeleteTask for deleting task
   const { mutate: mutateDelete, isPending: isDeleting } = useDeleteTask();
-
   // dispatch for open form modal and get that current task data for modal
   const { dispatch } = useUiStates();
 

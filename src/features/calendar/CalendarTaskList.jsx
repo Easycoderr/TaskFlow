@@ -35,6 +35,7 @@ function CalendarTaskList({ tasks, selectedDay }) {
             </EmptyPage>
           </div>
         )}
+
         {filteredTask.map((task) => (
           <CalendarTask
             key={task.id}

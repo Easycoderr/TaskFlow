@@ -17,7 +17,7 @@ function StatsCards({ tasks }) {
   )?.length;
   const overDueTasks = countTask(tasks, isOverDue)?.length;
   return (
-    <div className="col-span-2 grid md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 ">
+    <div className="col-span-2 grid md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {/* card 1 */}
       <StatsCardItem record={todayTasks} title="Today">
         <IoTodaySharp className="text-cyan-600 text-4xl" />

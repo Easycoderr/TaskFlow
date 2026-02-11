@@ -19,6 +19,7 @@ import CalendarGrid from "../features/calendar/CalendarGrid";
 import { useUiStates } from "../hooks/useUiContext";
 import TaskForm from "../features/tasks/TaskForm";
 import Modal from "../UI/Modal";
+import CalendarSidebarSkeleton from "../components/skeletons/CalendarSidebarSkeleton";
 
 function Calendar() {
   // uiStates
@@ -29,8 +30,7 @@ function Calendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isMousehover, setIsMouseHover] = useState(null);
   const [selectedDay, setSelectedDay] = useState(new Date());
-
-  if (isPending) return <Spinner />;
+  if (isPending) return <CalendarSidebarSkeleton />;
   if (isError)
     return <ErrorState message="Something went wrong please try again!" />;
   const days = eachDayOfInterval({
