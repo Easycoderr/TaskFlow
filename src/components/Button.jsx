@@ -8,7 +8,7 @@ function Button({ children, type, onClick, title, type2, loading = false }) {
     secondary:
       "text-sm text-white font-medium  tracking-wider shadow-green-200  bg-linear-to-br from-secondary via-primary to-secondary bg-300 py-2 px-5 rounded-md transition-all duration-300 hover:shadow-sm cursor-pointer hover:animate-gradient",
     cancel:
-      "text-sm text-red-50 font-medium tracking-tight shadow-red-200 bg-linear-to-br from-red-500 hover:via-red-400 to-red-500 bg-300 py-2 px-5 rounded-md transition-all duration-300 hover:shadow-sm cursor-pointer hover:animate-gradient",
+      "text-sm text-red-50 font-medium tracking-tight shadow-red-200 bg-linear-to-br from-red-500 to-red-500 bg-300 py-2 px-5 rounded-md transition-all duration-300 hover:shadow-sm cursor-pointer hover:animate-gradient",
   };
   return (
     <button

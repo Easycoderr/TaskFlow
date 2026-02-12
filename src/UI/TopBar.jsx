@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import DarkModeButton from "../components/DarkModeButton";
 import { useAuth } from "../hooks/useAuth";
 import { useUiStates } from "../hooks/useUiContext";
@@ -9,18 +9,19 @@ import { CgProfile } from "react-icons/cg";
 import { BiLogOutCircle } from "react-icons/bi";
 import { logout } from "../services/auth";
 import { toast } from "react-toastify";
+import UseOutSideClicker from "../hooks/useOutSideClicker";
 
 function TopBar() {
   const navigate = useNavigate();
   // Local states
   const [drowpDownMenu, setDrowpDownMenu] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const ref = useRef();
   const { theme, dispatch } = useUiStates();
   const {
     state: { user },
   } = useAuth();
-
+  UseOutSideClicker(ref, () => setDrowpDownMenu(false));
   // handle logout
   async function handleLogout() {
     setLoading(true);
@@ -58,6 +59,7 @@ function TopBar() {
         </span>
         {/* profile avatar & name */}
         <div
+          ref={ref}
           onClick={() => setDrowpDownMenu((s) => !s)}
           role="button"
           tabIndex={0}
