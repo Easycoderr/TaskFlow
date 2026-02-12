@@ -22,10 +22,12 @@ function Header() {
       </div>
       {/* CTA and dark mode btn*/}
       <div className="flex text-gray-50  items-center">
-        <DarkModeButton
-          theme={theme}
-          handleDarkModeToggle={handleDarkModeToggle}
-        />
+        <div className="mr-4 flex items-center">
+          <DarkModeButton
+            theme={theme}
+            handleDarkModeToggle={handleDarkModeToggle}
+          />
+        </div>
 
         <div className="sm:flex hidden text-gray-50 items-center gap-2">
           <Button

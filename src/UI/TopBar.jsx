@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 function TopBar() {
   const navigate = useNavigate();
   // Local states
-  const [profileTab, setProfileTab] = useState(false);
+  const [drowpDownMenu, setDrowpDownMenu] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { theme, dispatch } = useUiStates();
@@ -58,7 +58,7 @@ function TopBar() {
         </span>
         {/* profile avatar & name */}
         <div
-          onClick={() => setProfileTab((s) => !s)}
+          onClick={() => setDrowpDownMenu((s) => !s)}
           role="button"
           tabIndex={0}
           className="relative flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-gray-900 transition-all duration-300 p-1 cursor-pointer rounded-full"
@@ -67,7 +67,7 @@ function TopBar() {
             <span>{avatarLetter}</span>
           </div>
           <p className="text-sm select-none">{userName}</p>
-          {profileTab && (
+          {drowpDownMenu && (
             <div className="z-80 absolute bg-card shadow-md dark:bg-card-dark top-15 right-0 flex flex-col rounded-md">
               <div className="p-2 py-4 border-b border-gray-200 dark:border-gray-700">
                 {user.user_metadata.email}
