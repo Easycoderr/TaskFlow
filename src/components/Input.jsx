@@ -36,7 +36,7 @@ const Input = forwardRef(
         />
 
         <label
-          htmlFor="email"
+          htmlFor={inputName}
           className="absolute  rounded-sm transition-all duration-300 ease-in-out pointer-events-none 
                          top-1/2 -translate-y-1/2 left-2 text-text-muted dark:text-text-muted-dark text-sm
                          peer-focus:-top-px peer-focus:text-xs peer-focus:text-primary

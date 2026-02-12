@@ -9,14 +9,19 @@ function Modal({ children }) {
   const refEl = useRef();
   useEffect(() => {
     document.addEventListener("keydown", handleCloseModal);
+    function handleCloseModal(event) {
+      console.log("close function excuted");
+      if (event?.key === "Escape") {
+        dispatch({ value: "CLOSE_MODAL" });
+      }
+    }
+
     return () => {
-      document.addEventListener("keydown", handleCloseModal);
+      document.removeEventListener("keydown", handleCloseModal);
     };
-  }, []);
-  function handleCloseModal(event) {
-    if (event?.key === "Escape") {
-      dispatch({ value: "CLOSE_MODAL" });
-    } else if (!event?.key) dispatch({ value: "CLOSE_MODAL" });
+  }, [dispatch]);
+  function handleCloseModal() {
+    dispatch({ value: "CLOSE_MODAL" });
   }
   UseOutSideClicker(refEl, handleCloseModal, true);
   return (
