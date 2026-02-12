@@ -31,6 +31,8 @@ const Input = forwardRef(
           type={showPassword ? "text" : inputType}
           value={value}
           placeholder=" "
+          aria-invalid={error ? "true" : "false"}
+          aria-describedby={error ? `${inputName}-error` : undefined}
           className={`peer bg-bg text-text  text-sm rounded-sm ${type === "settings" ? "p-2" : "p-3"} outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary ${error && "ring-red-400 border-red-400 focus:ring-red-400 focus:border-red-400"} w-full`}
           autoFocus={focus}
         />
@@ -43,7 +45,10 @@ const Input = forwardRef(
                          peer-[:not(:placeholder-shown)]:-top-px peer-[:not(:placeholder-shown)]:text-xs peer-focus:p-0.5 peer-[:not(:placeholder-shown)]:p-0.5 peer-focus:bg-bg peer-focus:dark:bg-bg-dark peer-[:not(:placeholder-shown)]:bg-bg peer-[:not(:placeholder-shown)]:dark:bg-bg-dark"
         >
           {error ? (
-            <span className="text-red-400">{error.message}</span>
+            <>
+              <span className="sr-only">{label}</span>
+              <span className="text-red-400">{error.message}</span>
+            </>
           ) : (
             label
           )}
