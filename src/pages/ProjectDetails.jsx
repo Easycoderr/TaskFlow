@@ -79,9 +79,9 @@ function ProjectDetails() {
         </button>
       </div>
 
-      <div className="bg-bg p-6 dark:bg-bg-dark space-y-10 overflow-y-auto grid grid-cols-2 gap-x-4">
+      <div className="bg-bg p-2 dark:bg-bg-dark space-y-10 overflow-y-auto grid grid-cols-2 gap-x-4">
         {/* project */}
-        <div className="text-text dark:text-text-dark gap-8 md:gap-0 col-span-2 flex flex-col md:flex-row items-center md:justify-between">
+        <div className="text-text dark:text-text-dark gap-8 lg:gap-0 col-span-2 flex flex-col lg:flex-row lg:items-center md:justify-between">
           <div className="space-y-3">
             <div>
               <Heading>{name}</Heading>
@@ -90,7 +90,7 @@ function ProjectDetails() {
               {description}
             </div>
             {/* status duedate and action buttons */}
-            <div className="flex md:justify-between gap-4  md:items-center md:flex-row flex-col">
+            <div className="flex md:justify-between gap-4 md:items-center md:flex-row flex-col">
               <div className="flex gap-4 md:gap-8 text-text-muted dark:text-text-muted-dark">
                 <div className="text-sm flex items-center gap-2">
                   <span
@@ -116,7 +116,7 @@ function ProjectDetails() {
                         })
                       : handleDeleteProject();
                   }}
-                  colorClasses="bg-red-100/70 text-red-700/90"
+                  colorClasses="bg-red-700/70 text-red-50"
                   type="button"
                   title="Delete project"
                   label="delete button"
@@ -127,7 +127,7 @@ function ProjectDetails() {
                   </span>
                 </Button>
                 <Button
-                  colorClasses="bg-green-100/70 text-green-700"
+                  colorClasses="bg-green-700/70 text-green-50"
                   type="button"
                   title="Edit project"
                   label="Edit button"
@@ -181,21 +181,23 @@ function ProjectDetails() {
           <h3 className="text-xl font-medium py-4">Project Tasks</h3>
           {/* task card */}
           {/* project tasks*/}
-          <div className="overflow-y-auto grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-2 gap-4 text-text dark:text-text-dark">
+          <div className="overflow-y-auto grid grid-cols-1 xl:grid-cols-2 gap-4 text-text dark:text-text-dark">
             {/* header */}
-            <div className="col-span-2">
-              {isTaskError && (
+            {isTaskError && (
+              <div className="col-span-2">
                 <ErrorState message="Something went wrong. Please try again." />
-              )}
-              {!filteredTasks?.length && (
+              </div>
+            )}
+            {!filteredTasks?.length && (
+              <div className="col-span-2">
                 <EmptyPage>
                   <span className="flex items-center flex-col gap-2 text-red-400">
                     <PiEmpty className="text-red-500" size={40} />
                     There is no task yet for "{name}" project.
                   </span>
                 </EmptyPage>
-              )}
-            </div>
+              </div>
+            )}
             {filteredTasks?.map((item) => (
               <TaskItem
                 key={item.id}

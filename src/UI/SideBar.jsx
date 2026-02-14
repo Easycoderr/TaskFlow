@@ -34,15 +34,15 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
     <>
       {/* if Expand make background blur overlay. */}
       {isExpand && (
-        <div className="bg-gray-50/30 dark:bg-gray-600/20 z-10 backdrop-blur-sm min-h-screen w-screen absolute top-0 bottom-0 right-0 left-0"></div>
+        <div className="bg-gray-50/30 dark:bg-gray-600/20 z-60 backdrop-blur-sm min-h-screen w-screen absolute top-0 bottom-0 right-0 left-0"></div>
       )}
       <aside
         aria-expanded={isExpand}
         ref={refEl}
-        className={`row-span-2 overflow-hidden z-30 bg-bg dark:bg-bg-dark min-h-screen text-text dark:text-text-dark col-span-1 row-start-1 border-r border-gray-200 dark:border-gray-700`}
+        className={`row-span-2 overflow-hidden z-70 bg-bg dark:bg-bg-dark min-h-screen text-text dark:text-text-dark col-span-1 row-start-1 border-r border-gray-200 dark:border-gray-700`}
       >
         <div className="relative flex flex-col gap-3 min-h-screen">
-          <div className="md:hidden absolute top-18 -right-2.5 text-xl">
+          <div className="md:hidden absolute top-10 -right-0.5 text-xl z-80">
             <SimpleButtonIcon onClick={handleExpanding}>
               {isExpand ? (
                 <GoSidebarExpand className="group-hover:text-primary transition-all duration-400" />
@@ -53,7 +53,7 @@ function SideBar({ isExpand, setIsExpand, handleExpanding, refEl }) {
           </div>
           {/* Logo  */}
           <div
-            className={`${isExpand ? "text-3xl" : "text-sm"} transition-all duration-300 md:text-3xl mx-auto flex items-center py-5 justify-between`}
+            className={`${isExpand ? "text-3xl" : "text-sm"} transition-all duration-300 md:text-3xl mx-auto flex py-5 justify-between`}
           >
             <Logo />
           </div>

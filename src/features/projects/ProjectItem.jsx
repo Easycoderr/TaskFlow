@@ -62,7 +62,7 @@ function ProjectItem({ id, name, description, status, dueDate, tasks }) {
             onClick={() => {
               navigate(`/project/${id}`);
             }}
-            colorClasses="bg-cyan-100 text-cyan-700"
+            colorClasses="bg-cyan-700/70 text-cyan-50"
             type="button"
             title="View"
             label="View button"
@@ -82,7 +82,7 @@ function ProjectItem({ id, name, description, status, dueDate, tasks }) {
                   })
                 : handleDeleteProject();
             }}
-            colorClasses="bg-red-100 text-red-700"
+            colorClasses="bg-red-700/70 text-red-50"
             type="button"
             title="Delete"
             label="delete button"
@@ -91,7 +91,7 @@ function ProjectItem({ id, name, description, status, dueDate, tasks }) {
             <span className="text-sm">Delete</span>
           </Button>
           <Button
-            colorClasses="bg-green-100 text-green-700"
+            colorClasses="bg-green-700/70 text-green-50"
             type="button"
             title="Edit"
             label="Edit button"
