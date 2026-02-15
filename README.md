@@ -1,18 +1,87 @@
 ![Alt](https://repobeats.axiom.co/api/embed/9334297acc16501b26aae1f7e6681292b7c16998.svg "Repobeats analytics image")
 
-# React + Vite
+# TaskFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern Task & Project Management Web Application
 
-Currently, two official plugins are available:
+## description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+TaskFlow is a full-stack task and project management application built with React and Supabase.  
+It allows users to create projects, manage tasks, track deadlines, and visualize progress using a dashboard and calendar view.  
+The app focuses on clean architecture, modern UI, and real-world production patterns.
 
-## React Compiler
+## Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+soon...
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- User Authentication (Supabase Auth)
+- Protected Routes
+- Task CRUD (Create, Read, Update, Delete)
+- Project CRUD
+- Task Filtering & Search
+- Dashboard with real-time statistics
+- Calendar view with date-based tasks
+- Optimistic UI updates (React Query)
+- Skeleton loading states
+- Toast notifications
+- Dark / Light mode
+- Row Level Security (RLS) policies
+
+## Tech Stack
+
+### Frontend
+
+- React
+- React Router
+- React Query
+- Context API + useReducer
+- Tailwind CSS
+- Vite
+
+### Backend
+
+- Supabase
+- PostgreSQL
+- Row-Level Security (RLS)
+
+## Architecture
+
+- Remote server state is managed using React Query.
+- Local UI state is handled using Context API and useReducer.
+- Optimistic updates are used for better user experience.
+- Protected layouts ensure authenticated route access.
+- Database access is secured using Supabase RLS policies.
+
+## Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/Easycoderr/TaskFlow.git
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Create a .env file and add your Supabase credentials
+
+VITE_SUPABASE_URL=your_url
+VITE_SUPABASE_ANON_KEY=your_key
+
+4. Run the development server
+
+```bash
+npm run dev
+```
+
+## Future Improvements
+
+- Email notifications
+- Activity logs
+- Multi-user collaboration
+- Mobile UI refinements
