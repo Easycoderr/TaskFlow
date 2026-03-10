@@ -51,6 +51,11 @@ export async function updateStatusProject(projectId, newStatus) {
 
 // delete project
 export async function deleteProject(projectId) {
+  // await new Promise((resolve, reject) => {
+  //   setTimeout(() => {
+  //     reject(new Error("Time's up!"));
+  //   }, 4000);
+  // });
   const { error } = await supabase
     .from("projects")
     .delete()
