@@ -10,6 +10,7 @@ import useAddTask from "./useAddTask";
 import { useAuth } from "../../hooks/useAuth";
 import useProjects from "../projects/useProjects";
 import { Controller, useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
 
 const statusOptions = [
   { value: "completed", label: "Completed" },
@@ -50,7 +51,7 @@ function TaskForm() {
     defaultValues: {
       title: modalData?.title || "",
       description: modalData?.description || "",
-      dueDate: modalData?.dueDate || "",
+      dueDate: modalData?.dueDate || null,
       status: modalData?.status || "incomplete",
       priority: modalData?.priority || null,
       project: modalData?.project?.name || null,
@@ -115,13 +116,27 @@ function TaskForm() {
           icon={<BsCardText />}
           {...register("description")}
         />
-        <Input
+        <Controller
+          control={control}
+          name="dueDate"
+          render={({ field }) => (
+            <DatePicker
+              selected={field.value}
+              onChange={(date) => field.onChange(date)}
+              minDate={new Date()} // Disables past dates
+              placeholderText="Select a due date"
+              className={`peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary w-full`}
+            />
+          )}
+        />
+
+        {/* <Input
           inputName="dueDate"
           inputType="date"
           label="Due date"
           error={errors.dueDate}
           {...register("dueDate", { required: "Due date is required" })}
-        />
+        /> */}
         <div className="flex flex-col sm:flex-row gap-2">
           {modal === "editTask" && (
             <Controller

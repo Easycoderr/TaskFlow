@@ -63,6 +63,7 @@ function ProfileForm({ name, email }) {
       toast.info("No changes detected.");
     }
   }
+
   return (
     <form action="" onSubmit={handleSubmit(onSave)}>
       <div className="flex gap-2 flex-col">
