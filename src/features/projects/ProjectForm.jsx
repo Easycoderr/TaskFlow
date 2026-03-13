@@ -26,7 +26,7 @@ function ProjectForm() {
     control,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { isDirty, errors },
   } = useForm({
     defaultValues: {
       name: modalData?.name || "",
@@ -124,7 +124,7 @@ function ProjectForm() {
           </Button>
           <Button
             type2="submit"
-            loading={isAdding}
+            loading={isAdding || isUpdating || !isDirty}
             type="secondary"
             title={`click to ${isAdding ? "add the new" : "update the"} project.`}
           >

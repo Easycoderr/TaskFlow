@@ -62,10 +62,10 @@ const CustomSelect = ({
             ))
           ) : (
             <li
-              className={`p-3 cursor-pointer select-none relative text-text text-center hover:bg-green-100 flex items-center gap-1`}
+              className={`p-3 cursor-pointer select-none relative text-text text-center hover:bg-green-100 flex items-center justify-center gap-1`}
             >
+              <span>there is no {placeholder.toLowerCase()}</span>
               <ImSad className="text-red-800 text-lg" />
-              <span>there is no project</span>
             </li>
           )}
         </ul>

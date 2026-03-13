@@ -46,7 +46,7 @@ function TaskForm() {
     control,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { isDirty, errors },
   } = useForm({
     defaultValues: {
       title: modalData?.title || "",
@@ -186,7 +186,7 @@ function TaskForm() {
             Cancel
           </Button>
           <Button
-            loading={isUpadating || isLoading}
+            loading={isUpadating || isLoading || !isDirty}
             type="secondary"
             type2="submit"
             title="click to add the new project."
