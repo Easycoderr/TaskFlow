@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
-const CustomSelect = ({ options, value, onChange, placeholder, icon }) => {
+const CustomSelect = ({
+  type,
+  options,
+  value,
+  onChange,
+  placeholder,
+  icon,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedOption =
@@ -13,7 +20,9 @@ const CustomSelect = ({ options, value, onChange, placeholder, icon }) => {
   };
 
   return (
-    <div className="relative w-72 text-sm">
+    <div
+      className={`relative ${type === "filter" ? "w-full sm:max-w-1/4" : "w-72"} text-sm`}
+    >
       {/* Select Button */}
       <button
         type="button"

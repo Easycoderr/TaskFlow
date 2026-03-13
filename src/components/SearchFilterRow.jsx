@@ -13,7 +13,7 @@ function SearchFilterRow({
   return (
     <div className="flex flex-col sm:flex-row gap-4 items-center">
       {/* search */}
-      <div className="relative min-w-2xs shadow-sm rounded-md">
+      <div className="relative w-full sm:max-w-1/4 shadow-sm rounded-md">
         <input
           onChange={(e) => setSearchValue(e.target.value)}
           value={searchValue}
@@ -39,6 +39,7 @@ function SearchFilterRow({
       </div>
       {/* Filter */}
       <CustomSelect
+        type="filter"
         icon={<FiFilter size={17} className="text-primary" />}
         options={options}
         value={selectedValue}

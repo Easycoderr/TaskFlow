@@ -42,7 +42,7 @@ function TaskItem({
   }
 
   return (
-    <div className="flex flex-col items-center py-4 sm:py-3 p-3 justify-between gap-4 border border-gray-200 dark:border-gray-700 hover:border-primary transition-all duration-300  shadow-md bg-bg dark:bg-card-dark rounded-md">
+    <div className="flex flex-col  py-4 sm:py-3 p-3 justify-between gap-4 border border-gray-200 dark:border-gray-700 hover:border-primary transition-all duration-300  shadow-md bg-bg dark:bg-card-dark rounded-md">
       {/* title checkbox */}
       <div className="flex flex-row items-center gap-2 sm:mr-auto">
         <input
@@ -64,9 +64,9 @@ function TaskItem({
           {title}
         </label>
       </div>
-      <div className="flex flex-col w-full items-center sm:flex-row sm:mr-auto sm:justify-between gap-4">
+      <div className="flex flex-col w-full  sm:flex-row gap-4">
         {/* project tag */}
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+        <div className="flex gap-4 items-center">
           <div
             className={`${project ? "bg-linear-to-l from-primary via-secondary to-primary animate-logo bg-300 text-transparent bg-clip-text" : "text-red-400 opacity-60"} font-medium`}
           >
@@ -88,7 +88,7 @@ function TaskItem({
           </div>
         </div>
         {/* actions */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 sm:ml-auto">
           <button
             onClick={handleDeleteTask}
             disabled={isDeleting}
