@@ -4,6 +4,9 @@ import { useUiStates } from "../../hooks/useUiContext";
 import useUpdateTask from "./useUpdateTask";
 import useDeleteTask from "./useDeleteTask";
 import generateCharecter from "../../utils/generateCharecter";
+import { TiMediaStopOutline } from "react-icons/ti";
+import { IoTimeOutline } from "react-icons/io5";
+import { CiAlarmOff } from "react-icons/ci";
 
 function TaskItem({
   id,
@@ -70,8 +73,11 @@ function TaskItem({
             {project ? `#${project?.name}` : "No project"}
           </div>
           {/* due date */}
-          <div className="text-sm text-text-muted dark:text-text-muted-dark">
-            {dueDate}
+          <div className="text-sm text-text-muted dark:text-text-muted-dark flex items-center gap-0.5">
+            <span>
+              <CiAlarmOff className="text-lg text-red-700" />
+            </span>
+            <span>{dueDate}</span>
           </div>
           {/* status */}
           <div className="text-sm flex items-center gap-1 text-text-muted dark:text-text-muted-dark">

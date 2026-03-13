@@ -8,6 +8,8 @@ import useAddProject from "./useAddProject";
 import { useAuth } from "../../hooks/useAuth";
 import useUpdateProject from "./useUpdateProject";
 import { Controller, useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import { CgCalendar } from "react-icons/cg";
 
 const options = [
   { value: "active", label: "Active" },
@@ -82,13 +84,27 @@ function ProjectForm() {
           error={errors.description}
           {...register("description")}
         />
-        <Input
+        <Controller
+          control={control}
+          name="dueDate"
+          render={({ field }) => (
+            <DatePicker
+              selected={field.value}
+              onChange={(date) => field.onChange(date)}
+              minDate={new Date()} // Disables past dates
+              placeholderText="Select a due date"
+              className={`peer bg-bg text-text  text-sm rounded-sm p-3 outline-none ring-[0.5px] focus:ring-2 focus:ring-primary focus:border-primary w-full`}
+            />
+          )}
+        />
+
+        {/* <Input
           inputName="dueDate"
           inputType="date"
           label="Due date"
           error={errors.dueDate}
           {...register("dueDate", { required: "Due date is required" })}
-        />
+        /> */}
         {modal === "editProject" && (
           <Controller
             name="status"
