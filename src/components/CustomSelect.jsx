@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ImSad } from "react-icons/im";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 const CustomSelect = ({
@@ -11,8 +12,9 @@ const CustomSelect = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const selectedOption =
-    options?.find((option) => option.value === value) || null;
+  const selectedOption = options
+    ? options?.find((option) => option.value === value)
+    : null;
 
   const handleSelect = (option) => {
     onChange(option.value);
@@ -44,19 +46,28 @@ const CustomSelect = ({
       {/* Options Dropdown */}
       {isOpen && (
         <ul className="absolute z-10 w-full mt-1 overflow-auto bg-white rounded-md shadow-sm max-h-60 focus:outline-none">
-          {options.map((option) => (
+          {options ? (
+            options.map((option) => (
+              <li
+                key={option.value}
+                className={`p-3 cursor-pointer select-none relative ${
+                  option.value === value
+                    ? "bg-primary text-text"
+                    : "text-text hover:bg-green-100"
+                }`}
+                onClick={() => handleSelect(option)}
+              >
+                {option.label}
+              </li>
+            ))
+          ) : (
             <li
-              key={option.value}
-              className={`p-3 cursor-pointer select-none relative ${
-                option.value === value
-                  ? "bg-primary text-text"
-                  : "text-text hover:bg-green-100"
-              }`}
-              onClick={() => handleSelect(option)}
+              className={`p-3 cursor-pointer select-none relative text-text text-center hover:bg-green-100 flex items-center gap-1`}
             >
-              {option.label}
+              <ImSad className="text-red-800 text-lg" />
+              <span>there is no project</span>
             </li>
-          ))}
+          )}
         </ul>
       )}
     </div>

@@ -169,7 +169,7 @@ function TaskForm() {
             render={({ field }) => (
               <CustomSelect
                 {...field}
-                options={projectOptions}
+                options={projectOptions?.length ? projectOptions : null}
                 placeholder="Projects"
               />
             )}

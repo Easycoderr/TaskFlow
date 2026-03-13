@@ -9,7 +9,6 @@ import { useAuth } from "../../hooks/useAuth";
 import useUpdateProject from "./useUpdateProject";
 import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import { CgCalendar } from "react-icons/cg";
 
 const options = [
   { value: "active", label: "Active" },
